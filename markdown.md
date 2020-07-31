@@ -33,9 +33,63 @@
        - 四
 
 ## 有序列表
-使用`数字.`作为表示有序列表
+使用`数字.`作为表示有序列表，可嵌套
 1. 一
    1. 二
       1. 三
 
-## 
+## 文字引用
+引用降级需在后面加一行`>`
+> 第一层次引用
+>> 第二层次引用
+>
+>第一层次引用
+
+## 行内代码块
+使用 \` 表示，`行内代码块`，转义使用`\`字符
+
+## 代码块
+使用四个空格作为代码块,前一行应空出:
+
+    #include <stdio.h>
+    int main(){
+        printf("hello world!")
+    }
+使用```作为代码块标识:
+```
+#include <stdio.h>
+int main(){
+    printf("hello world!")
+}
+```
+---
+## 表格
+第二行表示每一列的对其方式，如：
+|编号|数量|价格|
+|---|---:|---:|
+|1|50|￥50|
+|2|100|￥20|
+其中:`---`左对齐、`---:`右对齐
+
+## 流程图
+主要的语法为 `name=>type: describe`,其中 type 主要有以下几种：
+1.开始和结束：`start` `end`
+2.输入输出：`inputoutput`
+3.操作：`operation`
+4.条件：`condition`
+5.子程序：`subroutine`
+第一步：创建节点
+第二部：编写节点连接图
+第三部：放入表示符` ```flow` 和` ``` `之间
+```flow
+ ST=>start: ST A=0:>https://www.baidu.com/
+ io=>inputoutput: IO N=?
+ op=>operation: OP A+N
+ can=>condition: Choice A>100
+ SUB=>subroutine: NEXT 2*A
+ E=>end: END
+
+ ST->io->op->can
+ can(yes)->E
+ can(no)->SUB->io
+```
