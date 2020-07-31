@@ -56,14 +56,16 @@ __粗体__
 <img src='链接' alt="加载失败提示" width="100px"><\a>
 html格式可用于更改图片尺寸
 ```
-<img src='https://t7.baidu.com/it/u=3616242789,1098670747&fm=79&app=86&size=h300&n=0&g=4n&f=jpeg?sec=1596728289&t=3800c381ea16ec4bd6f34174132e74a9' alt="hello" width="100px">
+
 其中alt为对象,属性文本为加载失败的文字,图片地址为连接
 图片链接可使用类似于网址的方括号代替
 
 [第一种写法](https://www.baidu.com/)
 [第二种写法][1]:此方法对应的网址另起一行
 ![图片链接](https://t7.baidu.com/it/u=3616242789,1098670747&fm=79&app=86&size=h300&n=0&g=4n&f=jpeg?sec=1596728289&t=3800c381ea16ec4bd6f34174132e74a9)
-显示可点击链接 <https://www.baidu.com/>
+<img src='https://t7.baidu.com/it/u=3616242789,1098670747&fm=79&app=86&size=h300&n=0&g=4n&f=jpeg?sec=1596728289&t=3800c381ea16ec4bd6f34174132e74a9' alt="hello" width="100px">
+
+可视链接 <https://www.baidu.com/>
 
 [1]: https://www.baidu.com/
 
