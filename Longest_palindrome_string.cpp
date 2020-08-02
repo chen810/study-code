@@ -5,6 +5,9 @@
  * 结果将长度除以2为插入前字串的下标
  * 复杂的为O(n)----> Manacher_NB
  * */
+#include <iostream>
+#include <vector>
+using namespace std;
 static string manacher(const string&s){
     // 对字串进行插入构造，形如$#a#...#z#&
     string p("$");
