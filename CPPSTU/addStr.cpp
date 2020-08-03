@@ -23,9 +23,6 @@ public:
         int lr = max(l1,l2)+1;
         int flagOF = 0;
         string res(lr,'0');
-        for(int i=0;i<l1;++i){
-           
-        }
         for(int i=0;i<lr;++i){
             if(i<l1){
                  res[lr-1-i] = num1[l1-1-i];
