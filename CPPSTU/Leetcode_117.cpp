@@ -31,37 +31,23 @@ class Solution {
 public:
     Node* connect(Node* root) {
         Node* next_index = root;    // 父层的起点
+        Node fake_node;
         while(next_index!=nullptr){
             Node* index = next_index;   // 父层的指针
-            Node* opt = nullptr;    // 子节点层的起点
-            while(index!=nullptr&&index->left==nullptr&&index->right==nullptr){
-                index = index->next;
-            }   // 找到第一个包含下一层节点所在父节点
-            if(index!=nullptr){
-                opt = index->left==nullptr?index->right:index->left;    // 取出节点靠前的一个
-                next_index = opt;   // 下一层节点起始位置定位在此节点
-                if(index->left!=nullptr&&index->right!=nullptr){    // 若左右节点均有则进行连接
-                    index->left->next = index->right;   // 连接
-                    opt = index->right; // 向后移动
-                }
-                index = index->next;    // 向后移动
-            }else{
-                next_index = nullptr;   // 若未找到下一层节点则置空下一层的起始节点
-            }
+            Node* opt = &fake_node;    // 子节点层的起点初始化为虚拟节点
             while(index!=nullptr){  // 循环链接next参数
                 if(index->left!=nullptr&&index->right!=nullptr){    // 若即将链接的节点有左右节点
                     index->left->next = index->right;
                     opt->next = index->left;
                     opt = index->right;
-                    index = index->next;
                 }else if(index->left!=nullptr||index->right!=nullptr){  // 若即将链接的节点只有一个节点
                     opt ->next = index->left==nullptr?index->right:index->left;
                     opt = opt->next;
-                    index = index->next;
-                }else{  // 若即将链接的节点没有节点
-                    index = index->next;
                 }
+                index = index->next;
             }
+            next_index = fake_node.next;
+            fake_node.next = nullptr;
         }
         return root;
     }
