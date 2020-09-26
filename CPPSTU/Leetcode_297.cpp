@@ -22,7 +22,6 @@ using namespace std;
 };
 class Codec {
 public:
-
     // Encodes a tree to a single string.
     string serialize(TreeNode* root) {
         string res;
@@ -39,6 +38,7 @@ public:
             serializeDFS(root->right,data);
         }
     }
+
     // Decodes your encoded data to tree.
     TreeNode* deserialize(string data) {
         vector<string> valueList;
@@ -65,7 +65,6 @@ public:
         temp->right = deserializeDFS(data,index);
         return temp;
     }
-
 };
 
 // Your Codec object will be instantiated and called as such:
