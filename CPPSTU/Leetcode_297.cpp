@@ -56,11 +56,11 @@ public:
         return deserializeDFS(valueList,index);
     }
     TreeNode* deserializeDFS(vector<string> &data,int &index){
-        index++;
         if(index>=data.size()||data[index]=="None"){
+            index++;
             return nullptr;
         }
-        TreeNode* temp = new TreeNode(stoi(data[index]));
+        TreeNode* temp = new TreeNode(stoi(data[index++]));
         temp->left = deserializeDFS(data,index);
         temp->right = deserializeDFS(data,index);
         return temp;
