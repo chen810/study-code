@@ -203,7 +203,6 @@ bool Solution::isPalindrome(int x){
 bool Solution::isMatch_Re(string s, string p) {
     // 建立一个空间存储每个匹配节点
     bool dp[s.length()+1][p.length()+1];
-    auto dp = new dp[s.length()+1][p.length()+1];
     dp[0][0]=true;
     //更新周围行,标出连续a*a*a*....
     for(int i=0;i<p.length();i++){
