@@ -1,4 +1,16 @@
 {
     "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
-    "C_Cpp.default.cppStandard": "c++20"
+    "C_Cpp.default.cppStandard": "c++20",
+    "[cpp]": {
+        // "editor.wordBasedSuggestions": false,
+        // "editor.suggest.insertMode": "replace",
+        // "editor.semanticHighlighting.enabled": true,
+        "files.encoding": "gbk"
+    },
+    "[c]": {
+        // "editor.wordBasedSuggestions": false,
+        // "editor.suggest.insertMode": "replace",
+        // "editor.semanticHighlighting.enabled": true,
+        "files.encoding": "gbk"
+    }
 }
