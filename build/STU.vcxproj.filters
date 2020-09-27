@@ -4,11 +4,22 @@
     <ClCompile Include="E:\study-code\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="E:\study-code\leetcode_solution.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="E:\study-code\leetcode_solution.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="E:\study-code\CMakeLists.txt" />
   </ItemGroup>
   <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{284516D3-684C-3869-9ACB-B2F9033A0F64}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Source Files">
       <UniqueIdentifier>{5FD7B524-6BEE-3FA0-A62C-1008471E810F}</UniqueIdentifier>
     </Filter>
