@@ -2,5 +2,5 @@
 // #include "leetcode_solution.h"
 using namespace std;
 int main(int, char**) {
-    cout << "ä¸€åˆ‡OK"<<endl;
+    cout << "Ò»Æðok"<<endl;
 }
