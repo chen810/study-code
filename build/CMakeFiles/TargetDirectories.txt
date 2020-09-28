@@ -1,9 +1,0 @@
-E:/study-code/build/CMakeFiles/NightlyMemoryCheck.dir
-E:/study-code/build/CMakeFiles/Experimental.dir
-E:/study-code/build/CMakeFiles/Continuous.dir
-E:/study-code/build/CMakeFiles/Nightly.dir
-E:/study-code/build/CMakeFiles/STU.dir
-E:/study-code/build/CMakeFiles/PACKAGE.dir
-E:/study-code/build/CMakeFiles/RUN_TESTS.dir
-E:/study-code/build/CMakeFiles/ALL_BUILD.dir
-E:/study-code/build/CMakeFiles/ZERO_CHECK.dir
