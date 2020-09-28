@@ -1,4 +1,4 @@
-// KMP�㷨
+// KMP算法
 
 #include <vector>
 #include <string>
