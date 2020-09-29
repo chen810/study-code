@@ -8,4 +8,5 @@ int main() {
         k++;
     }
     cout << k << "ok" << endl;
+    cout << Solution::addStrings("123","467")<<endl;
 }
