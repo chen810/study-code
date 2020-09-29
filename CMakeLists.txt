@@ -4,7 +4,7 @@ project(study_code)
 set(CMAKE_CXX_STANDARD 20)
 add_subdirectory(src)
 
-add_subdirectory(libhello)
+add_subdirectory(liblibrary)
 
 #set(LIB_SRC leetcode_solution.cpp MyHashset.cpp MyHashMap.cpp  MyTree.cpp)
 
