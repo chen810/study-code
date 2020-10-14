@@ -239,6 +239,7 @@ public:
     static int calculateMinimumHP(vector<vector<int>> &dungeon);
     static int longestIncreasingPath(vector<vector<int>> &matrix);
     static string addStrings(string num1, string num2);
+    static vector<string> ommonChars(vector<string> &A);
 };
 
 #endif //LEETCODE_STU_LEETCODE_SOLUTION_H

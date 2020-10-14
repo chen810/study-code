@@ -5596,3 +5596,58 @@ string Solution::addStrings(string num1, string num2) {
     }
     return res;
 }
+
+// 查找常用字符
+/*给定仅有小写字母组成的字符串数组 A，返回列表中的每个字符串中都显示的全部字符（包括重复字符）组成的列表
+ * 例如，如果一个字符在每个字符串中出现 3 次，但不是 4 次，则需要在最终答案中包含该字符 3 次
+ * 你可以按任意顺序返回答案
+ * */
+vector<string> Solution::ommonChars(vector<string>& A) {
+    vector<string> p;
+    if(A.empty()){  // 如果A数组为空则直接返回空
+        return p;
+    }
+    int res[26] = {0};  // 初始化前n-1个单词的共同字符
+    for(auto i:A[0]){   // 首先载入第一个单词
+        res[i-'a']++;
+    }
+    for(int i=1;i<A.size();++i){    // 取出第n个单词进行计数
+        int temp[26] = {0};
+        for(auto j:A[i]){   // 计数
+            temp[i-'a']++;
+        }
+        for(int k=0;k<26;k++){  // 取数组每个字母的最小个数
+            res[k] = res[k]>temp[k]?temp[k]:res[k];
+        }
+    }
+    for(int i=0;i<26;++i){  // 从数组构建结果
+        for(int j=0;j<res[i];++j){  // 多个字母时循环
+            p.push_back(string{static_cast<char>('a'+i)});
+        }
+    }
+    return p;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
