@@ -3,10 +3,10 @@
 #include "leetcode_solution.h"
 using namespace std;
 int main() {
-    int k=1;
-    for(int i=0;i<1000;i+=k){
-        k++;
+    vector<string> p{"abcd","bcd"};
+    auto q = Solution::ommonChars(p);
+    for(auto i:q){
+        cout << i << ", ";
     }
-    cout << k << "ok" << endl;
-    cout << Solution::addStrings("123","467")<<endl;
+    cout << endl;
 }

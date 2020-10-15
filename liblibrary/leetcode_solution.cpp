@@ -5614,7 +5614,7 @@ vector<string> Solution::ommonChars(vector<string>& A) {
     for(int i=1;i<A.size();++i){    // 取出第n个单词进行计数
         int temp[26] = {0};
         for(auto j:A[i]){   // 计数
-            temp[i-'a']++;
+            temp[j-'a']++;
         }
         for(int k=0;k<26;k++){  // 取数组每个字母的最小个数
             res[k] = res[k]>temp[k]?temp[k]:res[k];
