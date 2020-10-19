@@ -1,4 +1,4 @@
 /cmake-build-debug
 /.idea/
-/build/bin/*
-/build/lib/*
+/build/bin/study_code.exe
+/build/lib/libmylibrary.a
