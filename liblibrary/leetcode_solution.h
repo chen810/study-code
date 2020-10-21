@@ -240,6 +240,8 @@ public:
     static int longestIncreasingPath(vector<vector<int>> &matrix);
     static string addStrings(string num1, string num2);
     static vector<string> ommonChars(vector<string> &A);
+
+    static bool isLongPressedName(string name, string typed);
 };
 
 #endif //LEETCODE_STU_LEETCODE_SOLUTION_H

@@ -5627,6 +5627,26 @@ vector<string> Solution::ommonChars(vector<string>& A) {
     }
     return p;
 }
+// 长按键入
+/*你的朋友正在使用键盘输入他的名字 name
+ * 偶尔，在键入字符 c 时，按键可能会被长按，而字符可能被输入 1 次或多次
+ * 你将会检查键盘输入的字符 typed。如果它对应的可能是你的朋友的名字（其中一些字符可能被长按），那么就返回 True
+ * */
+bool Solution::isLongPressedName(string name, string typed) {
+    int left = 0;
+    int right = 0;
+    while(right<typed.size()){
+        if(left<name.size()&&name[left]==typed[right]){ // 第一种情况:相同字母同时向后移动
+            left++;
+            right++;
+        }else if(right>0&&typed[right]==typed[right-1]){ // 第二种情况:不同，但是与前一个相同，忽略字符
+            right++;
+        }else{  // 第三种情况不与对应字母相同，也不与之前字母相同，返回FALSE
+            return false;
+        }
+    }
+    return left==name.size();   // 结果应该扫描完全部名称
+}
 
 
 
