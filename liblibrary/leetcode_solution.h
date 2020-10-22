@@ -242,6 +242,8 @@ public:
     static vector<string> ommonChars(vector<string> &A);
 
     static bool isLongPressedName(string name, string typed);
+
+    static vector<int> partitionLabels(string S);
 };
 
 #endif //LEETCODE_STU_LEETCODE_SOLUTION_H

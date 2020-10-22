@@ -5627,6 +5627,7 @@ vector<string> Solution::ommonChars(vector<string>& A) {
     }
     return p;
 }
+
 // 长按键入
 /*你的朋友正在使用键盘输入他的名字 name
  * 偶尔，在键入字符 c 时，按键可能会被长按，而字符可能被输入 1 次或多次
@@ -5647,6 +5648,31 @@ bool Solution::isLongPressedName(string name, string typed) {
     }
     return left==name.size();   // 结果应该扫描完全部名称
 }
+
+//  划分字母区间
+/* 字符串 S 由小写字母组成
+ * 我们要把这个字符串划分为尽可能多的片段
+ * 同一个字母只会出现在其中的一个片段
+ * 返回一个表示每个字符串片段的长度的列表
+ * */
+vector<int> Solution::partitionLabels(string S) {
+    int last[26];
+    int length = S.size();
+    for (int i = 0; i < length; i++) {
+        last[S[i] - 'a'] = i;
+    }
+    vector<int> partition;
+    int start = 0, end = 0;
+    for (int i = 0; i < length; i++) {
+        end = max(end, last[S[i] - 'a']);
+        if (i == end) {
+            partition.push_back(end - start + 1);
+            start = end + 1;
+        }
+    }
+    return partition;
+}
+
 
 
 
