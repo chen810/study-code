@@ -244,6 +244,8 @@ public:
     static bool isLongPressedName(string name, string typed);
 
     static vector<int> partitionLabels(string S);
+
+    static int videoStitching(vector<vector<int>> &clips, int T);
 };
 
 #endif //LEETCODE_STU_LEETCODE_SOLUTION_H

@@ -5673,6 +5673,50 @@ vector<int> Solution::partitionLabels(string S) {
     return partition;
 }
 
+// 视频拼接
+/* 你将会获得一系列视频片段，这些片段来自于一项持续时长为 T 秒的体育赛事
+ * 这些片段可能有所重叠，也可能长度不一
+ * 视频片段 clips[i] 都用区间进行表示：开始于 clips[i][0] 并于 clips[i][1] 结束
+ * 我们甚至可以对这些片段自由地再剪辑，例如片段 [0, 7] 可以剪切成 [0, 1] + [1, 3] + [3, 7] 三部分
+ * 我们需要将这些片段进行再剪辑，并将剪辑后的内容拼接成覆盖整个运动过程的片段（[0, T]）
+ * 返回所需片段的最小数目，如果无法完成该任务，则返回 -1
+ * */
+int Solution::videoStitching(vector<vector<int>>& clips, int T) {
+    vector<int> dp(T + 1, INT_MAX - 1); // dp[i]表示[0,i)的最优解
+    dp[0] = 0;  // 当[0，0)时解的个数为0
+    for (int i = 1; i <= T; i++) {  // 对每个位置进行计算dp[i]
+        for (auto& it : clips) {    // 考察每个区间,若数组包含自己则更新dp[i]
+            if (it[0] < i && i <= it[1]) {  // 在多个包含自己的数组种寻找到一个最小次数的数组
+                dp[i] = min(dp[i], dp[it[0]] + 1);  // 此处可能溢出,故在最初采用INT_MAX-1作为初始值
+            }
+        }
+    }
+    return dp[T] == INT_MAX - 1 ? -1 : dp[T];   // 判断是否改变了末尾的值,若无则说明未到到达末尾
+}
+/*
+ * 贪心算法
+    int videoStitching(vector<vector<int>>& clips, int T) {
+        vector<int> maxn(T);
+        int last = 0, ret = 0, pre = 0;
+        for (vector<int>& it : clips) { // 确定每个从i处起点的最长区间
+            if (it[0] < T) {
+                maxn[it[0]] = max(maxn[it[0]], it[1]);
+            }
+        }
+        for (int i = 0; i < T; i++) {   // 遍历每个起始点
+            last = max(last, maxn[i]);  // 更新last,last为能到达的最大地方即max(曾经最大,当前位置末尾)
+            if (i == last) {    // 若最后的位置和当前位置重合,则无法向后移动,返回-1
+                return -1;
+            }
+            if (i == pre) { //当i到达正在使用的区间的末尾时进行跳转到下一个区间末尾,计数器+1
+                ret++;
+                pre = last;
+            }
+        }
+        return ret; // 若成功则可以返回
+    }
+*/
+
 
 
 
