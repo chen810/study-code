@@ -5717,11 +5717,65 @@ int Solution::videoStitching(vector<vector<int>>& clips, int T) {
     }
 */
 
+// 数组中的最长山脉
+/* 我们把数组 A 中符合下列属性的任意连续子数组 B 称为 “山脉”
+ * B.length >= 3
+ * 存在 0 < i < B.length - 1 使得 B[0] < B[1] < ... B[i-1] < B[i] > B[i+1] > ... > B[B.length - 1]
+ * （注意：B 可以是 A 的任意子数组，包括整个数组 A。）
+ * 给出一个整数数组 A，返回最长 “山脉” 的长度
+ * 如果不含有 “山脉” 则返回 0
+ * */
+int Solution::longestMountain(vector<int>& A) {
+    int n = A.size();
+    int ans = 0;
+    int left = 0;
+    while (left + 2 < n) {  // 山脉最短长度为3
+        int right = left + 1;   // 山脉右山脚在左山脚后面
+        if (A[left] < A[left + 1]) {    // 如果左山腰呈递增
+            while (right + 1 < n && A[right] < A[right + 1]) {  // 寻找递增的左山腰
+                ++right;
+            }
+            if (right < n - 1 && A[right] > A[right + 1]) { // 如果右山腰出现递减
+                while (right + 1 < n && A[right] > A[right + 1]) {  // 寻找递减的右山腰
+                    ++right;
+                }
+                ans = max(ans, right - left + 1);   // 比较和计算山脉长度
+            }
+            else {  // 若右山腰不递减则+1并重置左山脚
+                ++right;
+            }
+        }
+        left = right;   // 左山脚等于原右山脚
+    }
+    return ans; // 返回最大值
+}
+/*
+class Solution {
+public:
+    int longestMountain(vector<int>& A) {
+        int n = A.size();   // 取得数组总长度
+        if (!n) {   // 数组不应为空
+            return 0;
+        }
+        vector<int> left(n);    // 从左向右数递增长度,比前一个大则+1,否则等于0
+        for (int i = 1; i < n; ++i) {
+            left[i] = (A[i - 1] < A[i] ? left[i - 1] + 1 : 0);
+        }
+        vector<int> right(n);   // 从右向左数递增长度,比前一个大则+1,否则等于0
+        for (int i = n - 2; i >= 0; --i) {
+            right[i] = (A[i + 1] < A[i] ? right[i + 1] + 1 : 0);
+        }
 
-
-
-
-
+        int ans = 0;
+        for (int i = 0; i < n; ++i) {   // 以每个位置作为山峰计算山脉长度left[i] + right[i] + 1
+            if (left[i] > 0 && right[i] > 0) {
+                ans = max(ans, left[i] + right[i] + 1);
+            }
+        }
+        return ans; // 返回结果
+    }
+};
+*/
 
 
 

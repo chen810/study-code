@@ -246,6 +246,8 @@ public:
     static vector<int> partitionLabels(string S);
 
     static int videoStitching(vector<vector<int>> &clips, int T);
+
+    static int longestMountain(vector<int> &A);
 };
 
 #endif //LEETCODE_STU_LEETCODE_SOLUTION_H
