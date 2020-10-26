@@ -252,6 +252,8 @@ public:
     static int mySqrt(int x);
 
     static int findMin(vector<int> &nums);
+
+    static vector<int> findClosestElements(vector<int> &arr, int k, int x);
 };
 
 #endif //LEETCODE_STU_LEETCODE_SOLUTION_H
