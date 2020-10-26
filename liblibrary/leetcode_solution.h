@@ -248,6 +248,10 @@ public:
     static int videoStitching(vector<vector<int>> &clips, int T);
 
     static int longestMountain(vector<int> &A);
+
+    static int mySqrt(int x);
+
+    static int findMin(vector<int> &nums);
 };
 
 #endif //LEETCODE_STU_LEETCODE_SOLUTION_H

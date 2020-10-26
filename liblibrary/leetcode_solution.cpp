@@ -5777,9 +5777,59 @@ public:
 };
 */
 
+// x 的平方根
+/* 实现 int sqrt(int x) 函数
+ * 计算并返回 x 的平方根，其中 x 是非负整数
+ * 由于返回类型是整数，结果只保留整数的部分，小数部分将被舍去
+ * */
+// 此处采用二分查找的第二类模板,当符合mid^2<=x时,left移动到mid+1处,并记录mid.
+int Solution::mySqrt(int x) {
+    int res = 0;
+    int left = 1,right = x;
+    while(left<=right){
+        int mid = left + (right-left)/2;
+        if(mid*mid<=x){
+            res = mid;
+            left = mid+1;
+        }else{
+            right = mid-1;
+        }
+    }
+    return res;
+}
 
-
-
+// 寻找旋转排序数组中的最小值
+/* 假设按照升序排序的数组在预先未知的某个点上进行了旋转
+ * ( 例如，数组 [0,1,2,4,5,6,7] 可能变为 [4,5,6,7,0,1,2] )
+ * 请找出其中最小的元素
+ * 你可以假设数组中不存在重复元素
+ * */
+int Solution::findMin(vector<int>& nums) {
+    if(nums.size()==1){ // 仅有一个元素则唯一元素为最小
+        return nums[0];
+    }
+    int left = 0, right = static_cast<int>(nums.size())-1;
+    if(nums[left]<nums[right]){ // 若左端小于右端说明是增序，故第一个数最小
+        return nums[left];
+    }
+    while (right >= left) { // 二分查找
+        int mid = left + (right - left) / 2;    // 取中间元素
+        // 由于数组非完全递增,故此处mid不可能取到nums.size()位置
+        if (nums[mid] > nums[mid + 1]) {    // 如果元素比下一个元素大,则下一个元素必是最小值
+            return nums[mid + 1];
+        }
+        // 由于数组非完全递增,故此处mid不可能取到0位置
+        if (nums[mid - 1] > nums[mid]) {    // 如果前一个元素比自己大,则自己必是最小的
+            return nums[mid];
+        }
+        if (nums[mid] > nums[0]) {  // 若中间值比第一个值大,则前半段未被翻转过,搜索后半段;否则搜索前半段
+            left = mid + 1;
+        } else {
+            right = mid - 1;
+        }
+    }
+    return -1;
+}
 
 
 
