@@ -254,6 +254,8 @@ public:
     static int findMin(vector<int> &nums);
 
     static vector<int> findClosestElements(vector<int> &arr, int k, int x);
+
+    static int findRotateSteps(string ring, string key);
 };
 
 #endif //LEETCODE_STU_LEETCODE_SOLUTION_H
