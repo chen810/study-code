@@ -256,6 +256,8 @@ public:
     static vector<int> findClosestElements(vector<int> &arr, int k, int x);
 
     static int findRotateSteps(string ring, string key);
+
+    static int canCompleteCircuit(vector<int> &gas, vector<int> &cost);
 };
 
 #endif //LEETCODE_STU_LEETCODE_SOLUTION_H
