@@ -156,19 +156,19 @@ void Solution::mergeSort_merge(vector<int> &nums, int left, int mid, int right) 
     int st = left;
     // 一个临时容器存储
     vector<int> temp(right-left+1);
-    int index = 0;
+    int lastNode = 0;
     // 两个容器中数值进行比较,直到有一个容器中的数值被取完,则停止循环
     while(st <= mid&&mp<=right){
         int num = nums[st] <= nums[mp]?nums[st++]:nums[mp++];
-        temp[index++] = num;
+        temp[lastNode++] = num;
     }
     // 若左半段未被取完,则整串接在临时容器后面
     while(st <= mid){
-        temp[index++] = nums[st++];
+        temp[lastNode++] = nums[st++];
     }
     // 若右半段未被取完,则整串接在临时容器后面
     while(mp <= right){
-        temp[index++] = nums[mp++];
+        temp[lastNode++] = nums[mp++];
     }
     // 将临时容器中的数值拷贝回原容器
     for(int k=0;k<temp.size();++k){
@@ -2001,14 +2001,14 @@ bool Solution::canThreePartsEqualSum(vector<int>& A){
     }
     // 均分为3份
     sum /= 3;
-    int index=0;
+    int lastNode=0;
     int count = 0;
     int temp=0;
     int le=A.size();
     // 循环相加,当等于sum时计数加一,加到2时跳出循环
-    while(index!=le){
-        temp += A[index];
-        ++index;
+    while(lastNode!=le){
+        temp += A[lastNode];
+        ++lastNode;
         if(temp==sum){
             temp=0;
             ++count;
@@ -2019,7 +2019,7 @@ bool Solution::canThreePartsEqualSum(vector<int>& A){
 
     }
     // 若已经取出两份且第三份不为空则说明足以被分为三份
-    return count == 2&&index!=le;
+    return count == 2&&lastNode!=le;
 }
 
 // 字符串相乘
@@ -2091,29 +2091,29 @@ bool Solution::isMatch_Wildcard(string s, string p) {
     }
     dp[0][0] = true;
     // 用模式字符串的每个字符去匹配待匹配的字符串
-    for(auto p_index=1;p_index<lp+1;++p_index){
+    for(auto p_lastNode=1;p_lastNode<lp+1;++p_lastNode){
         // 若模式字符为*,则匹配已经匹配部分之后的所有字符
         // 若为？则匹配所有已经匹配字符后的一个字符
         // 其他则匹配已经匹配之后的相同字符
-        if(p[p_index-1]=='*'){
-            int s_index=1;
+        if(p[p_lastNode-1]=='*'){
+            int s_lastNode=1;
             // 查找已经匹配的位置的首位置
-            while(!dp[p_index-1][s_index-1]&&s_index<ls+1){
-                ++s_index;
+            while(!dp[p_lastNode-1][s_lastNode-1]&&s_lastNode<ls+1){
+                ++s_lastNode;
             }
-            dp[p_index][s_index-1] = dp[p_index-1][s_index-1];
-            while(s_index<ls+1){
-                dp[p_index][s_index++] = true;
+            dp[p_lastNode][s_lastNode-1] = dp[p_lastNode-1][s_lastNode-1];
+            while(s_lastNode<ls+1){
+                dp[p_lastNode][s_lastNode++] = true;
             }
-        }else if(p[p_index-1]=='?'){
+        }else if(p[p_lastNode-1]=='?'){
             // 查找已经匹配字符的下一个
-            for(int s_index=1;s_index<ls+1;++s_index){
-                dp[p_index][s_index] = dp[p_index-1][s_index-1];
+            for(int s_lastNode=1;s_lastNode<ls+1;++s_lastNode){
+                dp[p_lastNode][s_lastNode] = dp[p_lastNode-1][s_lastNode-1];
             }
         }else{
             // 匹配已经匹配字符下一个相同的字符
-            for(int s_index = 1; s_index < ls + 1; s_index++) {
-                dp[p_index][s_index] = dp[p_index - 1][s_index - 1] &&(p[p_index - 1] == s[s_index - 1]);
+            for(int s_lastNode = 1; s_lastNode < ls + 1; s_lastNode++) {
+                dp[p_lastNode][s_lastNode] = dp[p_lastNode - 1][s_lastNode - 1] &&(p[p_lastNode - 1] == s[s_lastNode - 1]);
             }
         }
     }
@@ -2609,15 +2609,15 @@ vector<int> Solution::getLeastNumbers(vector<int>& arr, int k) {
     for(auto i:arr){
         ++info[i];
     }
-    int index = 0;
+    int lastNode = 0;
     vector<int> res;
     while(k>0){
-        if(info[index]){
-            res.push_back(index);
-            --info[index];
+        if(info[lastNode]){
+            res.push_back(lastNode);
+            --info[lastNode];
             --k;
         }else{
-            ++index;
+            ++lastNode;
         }
     }
     return res;
@@ -2634,15 +2634,15 @@ vector<vector<int>> Solution::mergeRange(vector<vector<int>>& intervals) {
     vector<vector<int>> res;
     sort(intervals.begin(),intervals.end());
     res.push_back(intervals[0]);
-    int index = 0;
+    int lastNode = 0;
     for(int i=1;i<intervals.size();++i){
-        if(intervals[i][0]<=res[index][1]){
-            if(res[index][1] < intervals[i][1]){
-                res[index][1] = intervals[i][1];
+        if(intervals[i][0]<=res[lastNode][1]){
+            if(res[lastNode][1] < intervals[i][1]){
+                res[lastNode][1] = intervals[i][1];
             }
         }else{
             res.push_back(intervals[i]);
-            ++index;
+            ++lastNode;
         }
     }
     return res;
@@ -2655,38 +2655,38 @@ vector<vector<int>> Solution::mergeRange(vector<vector<int>>& intervals) {
 // 一次遍历,在插入位置进行插入,后接合并
 vector<vector<int>> Solution::insertRange(vector<vector<int>>& intervals, vector<int>& newInterval) {
     vector<vector<int>> res;
-    int index = -1;
+    int lastNode = -1;
     int t = 0;
     // 寻找插入位置
     while(t<intervals.size()&&intervals[t][0]<newInterval[0]){
         if(intervals[t][1]>newInterval[0]){
             res.push_back(intervals[t]);
-            ++index;
+            ++lastNode;
             ++t;
             break;
         }
         res.push_back(intervals[t]);
-        ++index;
+        ++lastNode;
         ++t;
     }
     // 插入新区间,若需要合并则合并
-    if(index>=0&&newInterval[0]<=res[index][1]){
-        if(res[index][1] < newInterval[1]){
-            res[index][1] = newInterval[1];
+    if(lastNode>=0&&newInterval[0]<=res[lastNode][1]){
+        if(res[lastNode][1] < newInterval[1]){
+            res[lastNode][1] = newInterval[1];
         }
     }else{
         res.push_back(newInterval);
-        ++index;
+        ++lastNode;
     }
     // 从插入位置之后继续拷贝
     while(t<intervals.size()){
-        if(intervals[t][0]<=res[index][1]){
-            if(res[index][1] < intervals[t][1]){
-                res[index][1] = intervals[t][1];
+        if(intervals[t][0]<=res[lastNode][1]){
+            if(res[lastNode][1] < intervals[t][1]){
+                res[lastNode][1] = intervals[t][1];
             }
         }else{
             res.push_back(intervals[t]);
-            ++index;
+            ++lastNode;
         }
         ++t;
     }
@@ -2758,19 +2758,19 @@ string Solution::getPermutation(int n, int k) {
     for(int i=1;i<n;++i){info[i] = info[i-1]*i;}
     bool *counter = static_cast<bool *>(malloc(sizeof(bool)*n));
     for(int i=0;i<n;++i){counter[i] = true;}
-    int index = 0;
+    int lastNode = 0;
     --k;
     // 循环填入数字
-    while(index<n){
-        int temp = k/info[n-index-1];
-        k -= temp*info[n-index-1];
+    while(lastNode<n){
+        int temp = k/info[n-lastNode-1];
+        k -= temp*info[n-lastNode-1];
         // 扫描counter从而选出一个未被使用的数字,先进行偏移量的计算
         for(int j=0;j<n;++j){
             if(counter[j]){
                 if(temp==0){
                     counter[j] = false;
-                    res[index] += j+1;
-                    ++index;
+                    res[lastNode] += j+1;
+                    ++lastNode;
                     break;
                 }
                 --temp;
@@ -3048,17 +3048,17 @@ bool Solution::isNumber(const string& s) {
     };
     int state = 0;
     int le = s.size();
-    for(int index=0;index<le;++index){
+    for(int lastNode=0;lastNode<le;++lastNode){
         int t = 0;
         // 判断取得的字符
-        switch(s[index]){
+        switch(s[lastNode]){
             case ' ': t = 0;break;
             case '+':
             case '-': t = 1;break;
             case '.': t = 3;break;
             case 'e': t = 4;break;
             default:
-                if(s[index] >= 48 && s[index] <= 57){
+                if(s[lastNode] >= 48 && s[lastNode] <= 57){
                     t = 2;
                 }else{
                     return false;
@@ -3255,11 +3255,11 @@ int Solution::maxDistance(vector<vector<int>>& grid) {
 // 约瑟夫环问题,在多次删除后,只剩下一个数字其下标为0,根据分析下标变化可反推出剩余的数字在原数组的位置
 int Solution::lastRemaining(int n, int m) {
     // 初始下标
-    int index = 0;
+    int lastNode = 0;
     // 反推,上一次下标=(步长+当前下标)%上一次长度
     for (int i = 2; i != n + 1; ++i)
-        index = (m + index) % i;
-    return index;
+        lastNode = (m + lastNode) % i;
+    return lastNode;
 }
 
 // 有效括号的嵌套深度
@@ -3337,10 +3337,10 @@ vector<string> Solution::fullJustify(vector<string>& words, int maxWidth) {
         int blanks=maxWidth-line+i-st;
         if(i == wordsSum - 1){          // 若包含了最后一个单词,则使用左对齐且用一个空格隔开
             string temp(words[st]);
-            for(int index= st + 1; index <= i; ++index){
+            for(int lastNode= st + 1; lastNode <= i; ++lastNode){
                 --blanks;
                 temp += ' ';
-                temp += words[index];
+                temp += words[lastNode];
             }
             temp += string(blanks,' ');     // 补齐空格
             res.push_back(temp);
@@ -3355,9 +3355,9 @@ vector<string> Solution::fullJustify(vector<string>& words, int maxWidth) {
                 --blanks;
             }
             string temp(words[st]);
-            for(int index= st + 1; index <= i; ++index){
-                temp += string(info[index - st - 1], ' ');
-                temp += words[index];
+            for(int lastNode= st + 1; lastNode <= i; ++lastNode){
+                temp += string(info[lastNode - st - 1], ' ');
+                temp += words[lastNode];
             }
             res.push_back(temp);
         }
@@ -3420,16 +3420,16 @@ string Solution::simplifyPath(string path) {
     vector<int> dv(le,0);
     int before = 0;
     string res(le,'/');
-    int s_index = 0;
+    int s_lastNode = 0;
     int temp = 0;
     for(int k=0;k<le;++k){
         switch(path[k]){
             case '/':
-                if(res[s_index]!='/'){
-                    ++s_index;
-                    res[s_index] =  '/';
-                    dv[s_index] = before;
-                    before = s_index;
+                if(res[s_lastNode]!='/'){
+                    ++s_lastNode;
+                    res[s_lastNode] =  '/';
+                    dv[s_lastNode] = before;
+                    before = s_lastNode;
                 }
                 break;
             case '.':
@@ -3437,17 +3437,17 @@ string Solution::simplifyPath(string path) {
                     while(k<le&&path[k]=='.'){
                         ++temp;
                         ++k;
-                        ++s_index;
-                        dv[s_index] = before;
-                        res[s_index] = '.';
+                        ++s_lastNode;
+                        dv[s_lastNode] = before;
+                        res[s_lastNode] = '.';
                     }
                     if(k==le||path[k]=='/'){
                         if(temp==1){
-                            s_index -= 1;
+                            s_lastNode -= 1;
                         }else if(temp==2){
-                            s_index -= 2;
-                            s_index = dv[s_index];
-                            before = s_index;
+                            s_lastNode -= 2;
+                            s_lastNode = dv[s_lastNode];
+                            before = s_lastNode;
                         }else{
                             --k;
                         }
@@ -3458,12 +3458,12 @@ string Solution::simplifyPath(string path) {
                     break;
                 }
             default:
-                ++s_index;
-                dv[s_index] = before;
-                res[s_index] = path[k];
+                ++s_lastNode;
+                dv[s_lastNode] = before;
+                res[s_lastNode] = path[k];
         }
     }
-    return s_index==0?"/":res.substr(0,s_index);
+    return s_lastNode==0?"/":res.substr(0,s_lastNode);
 }
 
 // 编辑距离
@@ -3687,45 +3687,45 @@ bool Solution::exist(vector<vector<char>>& board, const string& word) {
     // 若未搜索到则返回false
     return false;
 }
-bool Solution::co_exist(vector<vector<char>>& board, const string& word,int index,int x,int y) {
+bool Solution::co_exist(vector<vector<char>>& board, const string& word,int lastNode,int x,int y) {
     // 搜索到末尾则直接返回true
-    if(index==word.size()){
+    if(lastNode==word.size()){
         return true;
     }
     int row = board.size();
     int col = board[0].size();
     // 判断下方
-    if(x+1<row&&board[x+1][y]!='#'&&board[x+1][y]==word[index]){
+    if(x+1<row&&board[x+1][y]!='#'&&board[x+1][y]==word[lastNode]){
         board[x+1][y] = '#';
-        bool temp = co_exist(board,word,index+1,x+1,y);
-        board[x+1][y] = word[index];
+        bool temp = co_exist(board,word,lastNode+1,x+1,y);
+        board[x+1][y] = word[lastNode];
         if(temp){
             return true;
         }
     }
     // 判断上方
-    if(x-1>=0&&board[x-1][y]!='#'&&board[x-1][y]==word[index]){
+    if(x-1>=0&&board[x-1][y]!='#'&&board[x-1][y]==word[lastNode]){
         board[x-1][y] = '#';
-        bool temp = co_exist(board,word,index+1,x-1,y);
-        board[x-1][y] = word[index];
+        bool temp = co_exist(board,word,lastNode+1,x-1,y);
+        board[x-1][y] = word[lastNode];
         if(temp){
             return true;
         }
     }
     // 判断右方
-    if(y+1<col&&board[x][y+1]!='#'&&board[x][y+1]==word[index]){
+    if(y+1<col&&board[x][y+1]!='#'&&board[x][y+1]==word[lastNode]){
         board[x][y+1] = '#';
-        bool temp = co_exist(board,word,index+1,x,y+1);
-        board[x][y+1] = word[index];
+        bool temp = co_exist(board,word,lastNode+1,x,y+1);
+        board[x][y+1] = word[lastNode];
         if(temp){
             return true;
         }
     }
     // 判断左方
-    if(y-1>=0&&board[x][y-1]!='#'&&board[x][y-1]==word[index]){
+    if(y-1>=0&&board[x][y-1]!='#'&&board[x][y-1]==word[lastNode]){
         board[x][y-1] = false;
-        bool temp = co_exist(board,word,index+1,x,y-1);
-        board[x][y-1] = word[index];
+        bool temp = co_exist(board,word,lastNode+1,x,y-1);
+        board[x][y-1] = word[lastNode];
         if(temp){
             return true;
         }
@@ -3739,21 +3739,21 @@ bool Solution::co_exist(vector<vector<char>>& board, const string& word,int inde
  * */
 // 遍历并填入
 int Solution::removeDuplicates2(vector<int>& nums) {
-    int index = -1;
+    int lastNode = -1;
     int count = 1;
     for(int i=0;i<nums.size();++i){
         cout <<nums[i]<<" ";
-        if(i==0||nums[i]!=nums[index]){
-            ++index;
-            nums[index] = nums[i];
+        if(i==0||nums[i]!=nums[lastNode]){
+            ++lastNode;
+            nums[lastNode] = nums[i];
             count = 1;
-        }else if(count<2&&nums[i]==nums[index]){
-            ++index;
-            nums[index] = nums[i];
+        }else if(count<2&&nums[i]==nums[lastNode]){
+            ++lastNode;
+            nums[lastNode] = nums[i];
             ++count;
         }
     }
-    return index+1;
+    return lastNode+1;
 }
 
 // 机器人的运动范围
@@ -3897,7 +3897,7 @@ bool Solution::searchII(vector<int>& nums, int target) {
 // 和记录中上一个值相比较看是否相同,相同则跳过
 ListNode* Solution::deleteDuplicates(ListNode* head) {
     ListNode res(0);
-    ListNode *index = &res;
+    ListNode *lastNode = &res;
     ListNode *p = head;
     int temp = p->val+1;
     while(p){
@@ -3905,13 +3905,13 @@ ListNode* Solution::deleteDuplicates(ListNode* head) {
         p = p->next;
         if(t->val!=temp){
             temp = t->val;
-            index->next = t;
-            index = index->next;
+            lastNode->next = t;
+            lastNode = lastNode->next;
         }else{
             delete t;
         }
     }
-    index->next = nullptr;
+    lastNode->next = nullptr;
     return res.next;
 }
 
@@ -3921,24 +3921,24 @@ ListNode* Solution::deleteDuplicates(ListNode* head) {
 // 和记录的末尾相比较,若相同则删除末尾并跳过
 ListNode* Solution::deleteDuplicatesII(ListNode* head) {
     ListNode res(0);
-    ListNode *index = &res;
+    ListNode *lastNode = &res;
     ListNode *p = head;
-    index->next = p;
+    lastNode->next = p;
     p = p->next;
     while(p){
         // 不同直接插入
-        if(index->next->val!=p->val){
-            index = index->next;
-            index->next = p;
+        if(lastNode->next->val!=p->val){
+            lastNode = lastNode->next;
+            lastNode->next = p;
             p = p->next;
         }else{
             // 跳过相同值的节点
-            while(p&&p->val==index->next->val){
+            while(p&&p->val==lastNode->next->val){
                 p = p->next;
             }
-            index->next = p;
+            lastNode->next = p;
             // 判断是否到达末尾
-            if(!index->next){
+            if(!lastNode->next){
                 return res.next;
             }
             p = p->next;
@@ -4031,19 +4031,19 @@ int Solution::largestRectangleArea(vector<int>& heights) {
     int le = heights.size();
     // 模拟栈--存储下标
     int *dp = (int *)malloc(sizeof(int)*(le+1));
-    int index = 0;
+    int lastNode = 0;
     dp[0] = -1;
     int max = 0;
     for(int i=0;i<le+1;++i){
-        while(index!=0&&(i==le||heights[i]< heights[dp[index]])){
+        while(lastNode!=0&&(i==le||heights[i]< heights[dp[lastNode]])){
             // 弹出栈顶
-            int temp = heights[dp[index--]];
+            int temp = heights[dp[lastNode--]];
             // 计算面积
-            int sum = temp*(i-dp[index]-1);
+            int sum = temp*(i-dp[lastNode]-1);
             max = max>sum?max:sum;
         }
         if(i<le){
-            dp[++index] = i;
+            dp[++lastNode] = i;
         }
     }
     free(dp);
@@ -4201,7 +4201,7 @@ int Solution::maximalRectangle(vector<vector<char>>& matrix) {
     int col = matrix[0].size();
     int max = 0;
     int *dp = static_cast<int *>(malloc(sizeof(int)*(col+1)));
-    int index = 0;
+    int lastNode = 0;
     dp[0] = -1;
     for(int i=0;i<row;++i){
         for(int j=0;j<col+1;++j){
@@ -4211,13 +4211,13 @@ int Solution::maximalRectangle(vector<vector<char>>& matrix) {
             if(j<col){
                 cout << matrix[i][j] <<" ";
             }
-            while(index!=0&&(j==col||matrix[i][j]<matrix[i][dp[index]])){
-                int temp = matrix[i][dp[index--]]-48;
-                int s = (j-dp[index]-1)*temp;
+            while(lastNode!=0&&(j==col||matrix[i][j]<matrix[i][dp[lastNode]])){
+                int temp = matrix[i][dp[lastNode--]]-48;
+                int s = (j-dp[lastNode]-1)*temp;
                 max = max<s?s:max;
             }
             if(j<col){
-                dp[++index] = j;
+                dp[++lastNode] = j;
             }
         }
         cout <<endl;
@@ -4238,8 +4238,8 @@ int Solution::maximalSquare(vector<vector<char>>& matrix){
     int col = matrix[0].size();
     // 压缩数组,一维代替二维
     int *dp = new int[col+1];
-    for(int index=0;index<=col;++index){
-        dp[index] = 0;
+    for(int lastNode=0;lastNode<=col;++lastNode){
+        dp[lastNode] = 0;
     }
     int maxN = 0;
     // 动规遍历
@@ -4723,12 +4723,12 @@ bool Solution::isValidBST(TreeNode* root) {
 int Solution::mincostTickets(vector<int>& days, vector<int>& costs) {
     int le = days.size();
     int dp[366]={0};
-    int index = le-1;
+    int lastNode = le-1;
     for(int i=365;i>0;--i){
-        if(i==days[index]){
+        if(i==days[lastNode]){
             dp[i] = min(min((i<365?dp[i+1]:0)+costs[0],(i<358?dp[i+7]:0)+costs[1]),(i<335?dp[i+30]:0)+costs[2]);
-            --index;
-            if(index<0){
+            --lastNode;
+            if(lastNode<0){
                 dp[1] = dp[i];
                 break;
             }
@@ -5388,15 +5388,15 @@ bool Solution::possibleBipartitiondfs(int node, int c,vector<int> &color,vector<
 vector<int> Solution::dailyTemperatures(vector<int>& T) {
     vector<int> stackTemp(T.size(),-1);
     vector<int> res(T.size(),0);
-    int indexTop = -1;
+    int lastNodeTop = -1;
     for(int i=0;i<T.size();i++){
-        if(indexTop!=-1&&(T[stackTemp[indexTop]]<T[i])){
-            while(indexTop!=-1&&T[stackTemp[indexTop]]<T[i]){
-                res[stackTemp[indexTop]] = i-stackTemp[indexTop];
-                indexTop--;
+        if(lastNodeTop!=-1&&(T[stackTemp[lastNodeTop]]<T[i])){
+            while(lastNodeTop!=-1&&T[stackTemp[lastNodeTop]]<T[i]){
+                res[stackTemp[lastNodeTop]] = i-stackTemp[lastNodeTop];
+                lastNodeTop--;
             }
         }
-        stackTemp[++indexTop] = i;
+        stackTemp[++lastNodeTop] = i;
     }
     return res;
 }
@@ -5925,8 +5925,34 @@ int Solution::canCompleteCircuit(vector<int>& gas, vector<int>& cost) {
     return -1;  // 失败返回-1
 }
 
-
-
+// 对链表进行插入排序
+/* 对链表进行插入排序
+ * 插入排序算法
+ * 插入排序是迭代的，每次只移动一个元素，直到所有元素可以形成一个有序的输出列表
+ * 每次迭代中，插入排序只从输入数据中移除一个待排序的元素，找到它在序列中适当的位置，并将其插入
+ * 重复直到所有输入数据插入完为止
+ * */
+ListNode* Solution::insertionSortList(ListNode* head) {
+    ListNode res(0);    // 哑结点
+    res.next = head;    // 接上链表
+    ListNode *p = head; // 链表待排节点
+    ListNode *lastNode = &res; // 链表已经拍好的末尾节点
+    while(p!=nullptr){  // 循环取出待排节点
+        ListNode *temp = &res;  // 遍历比待排节点小的最后一个位置
+        while(temp!=lastNode&&(temp->next->val<=p->val)){   // 在已经排好的起始位置与末尾位置寻找插入位置
+            temp = temp->next;
+        }
+        ListNode *t = p->next;  // 取出当前待排节点
+        p->next = temp->next;   // 插入节点
+        temp->next = p;
+        if(temp==lastNode){ // 若在末尾节点后进行插入,更新末尾节点
+            lastNode = p;
+        }
+        p = t;  // 更新待排节点
+    }
+    lastNode->next = nullptr;   // 末尾节点添加空指针
+    return res.next;    // 返回结果
+}
 
 
 

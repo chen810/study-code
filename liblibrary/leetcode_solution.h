@@ -258,6 +258,8 @@ public:
     static int findRotateSteps(string ring, string key);
 
     static int canCompleteCircuit(vector<int> &gas, vector<int> &cost);
+
+    static ListNode *insertionSortList(ListNode *head);
 };
 
 #endif //LEETCODE_STU_LEETCODE_SOLUTION_H
