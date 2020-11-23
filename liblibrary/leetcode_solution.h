@@ -240,27 +240,16 @@ public:
     static int longestIncreasingPath(vector<vector<int>> &matrix);
     static string addStrings(string num1, string num2);
     static vector<string> ommonChars(vector<string> &A);
-
     static bool isLongPressedName(string name, string typed);
-
     static vector<int> partitionLabels(string S);
-
     static int videoStitching(vector<vector<int>> &clips, int T);
-
     static int longestMountain(vector<int> &A);
-
     static int mySqrt(int x);
-
     static int findMin(vector<int> &nums);
-
     static vector<int> findClosestElements(vector<int> &arr, int k, int x);
-
     static int findRotateSteps(string ring, string key);
-
     static int canCompleteCircuit(vector<int> &gas, vector<int> &cost);
-
     static ListNode *insertionSortList(ListNode *head);
-
     static int findMinArrowShots(vector<vector<int>> &points);
 };
 
