@@ -5953,7 +5953,95 @@ ListNode* Solution::insertionSortList(ListNode* head) {
     lastNode->next = nullptr;   // 末尾节点添加空指针
     return res.next;    // 返回结果
 }
+// 用最少数量的箭引爆气球
+/* 在二维空间中有许多球形的气球。对于每个气球，提供的输入是水平方向上，气球直径的开始和结束坐标
+ * 由于它是水平的，所以纵坐标并不重要，因此只要知道开始和结束的横坐标就足够了
+ * 开始坐标总是小于结束坐标
+ * 一支弓箭可以沿着 x 轴从不同点完全垂直地射出
+ * 在坐标 x 处射出一支箭，若有一个气球的直径的开始和结束坐标为 xstart，xend
+ * 且满足  xstart ≤ x ≤ xend，则该气球会被引爆。可以射出的弓箭的数量没有限制
+ * 弓箭一旦被射出之后，可以无限地前进
+ * 我们想找到使得所有气球全部被引爆，所需的弓箭的最小数量
+ * 给你一个数组 points ，其中 points [i] = [xstart,xend]
+ * 返回引爆所有气球所必须射出的最小弓箭数
+ * */
+/*
+三种解法:
+class Solution1 {
+// 根据题意若想使得弓箭数目最少,只需要将相交集合交集,最后剩余集合个数即结果
+// 若直接求交集,时间复杂度为n^2,故先排序求再交集,时间复杂度为n  (优化1)
+public:
+    int findMinArrowShots(vector<vector<int>>& points) {
+        if(points.size()<2){    // 集合大小小于2直接返回结果
+            return points.size();
+        }
+        // 根据左端点排序
+        sort(points.begin(),points.end(),[](const vector<int> &a,const vector<int> &b){
+            return a[0]<b[0];
+        }); // 排序集合
+        vector<vector<int>> res;    // 存储交集
+        res.push_back(points[0]);   // 预存入第0个集合
+        for(int i=1;i<points.size();i++){   // 循环计算交集
+            int t = res.size();
+            // 碰撞检测:A区间左侧小于B区间右侧且B区间左侧小于A区间右侧,即相交,此处取等于号
+            // 相交结果为 [两区间左侧较大值,两区间右侧较小值]
+            if(res[t-1][0]<=points[i][1]&&res[t-1][1]>=points[i][0]){
+                res[t-1][0] = res[t-1][0]>points[i][0]?res[t-1][0]:points[i][0];
+                res[t-1][1] = res[t-1][1]<points[i][1]?res[t-1][1]:points[i][1];
+            }else{
+                res.push_back(points[i]); // 不相交,直接加入
+            }
+        }
+        return res.size();  // 集合个数即结果
+    }
+};
 
-
-
-
+class Solution2 {
+// 由于求交集仅仅与上一个加入的相关,故只需记录上一个集合 (优化2)
+// 当不交的时候更新上一个集合
+public:
+    int findMinArrowShots(vector<vector<int>>& points) {
+        if(points.size()<2){
+            return points.size();
+        }
+        // 根据左端点排序
+        sort(points.begin(),points.end(),[](const vector<int> &a,const vector<int> &b){
+            return a[0]<b[0];
+        });
+        int res=1;  // 计数器
+        auto p = points[0]; // 上一个集合,初始化为第0个
+        // 碰撞检测
+        for(int i=1;i<points.size();i++){
+            if(p[0]<=points[i][1]&&p[1]>=points[i][0]){
+                p[0] = p[0]>points[i][0]?p[0]:points[i][0];
+                p[1] = p[1]<points[i][1]?p[1]:points[i][1];
+            }else{
+                p[0] = points[i][0];    // 更新上一个集合为当前比较的集合
+                p[1] = points[i][1];
+                res += 1;
+            }
+        }
+        return res; // 返回计数器
+    }
+};
+*/
+// 根据求交集,交集一定小于等于集合中最小的集合
+// 故根据集合右端点进行排序,再从左进行贪心计算
+int Solution::findMinArrowShots(vector<vector<int>>& points) {
+    if(points.size()<2){
+        return points.size();
+    }   // 数量小于2直接返回
+    // 根据右端点排序
+    sort(points.begin(),points.end(),[](const vector<int> &a,const vector<int> &b){return a[1]<b[1];});
+    int res=1;  // 计数器
+    int p = points[0][1];   // 记录第一个集合的右端点
+    // 循环判断
+    for(auto & point : points){
+        // 若point[0]<=p则说明有交集,且最右端点为p.否则,更新最右端点,并且计数器+1
+        if(point[0]> p){
+            p = point[1];
+            res += 1;
+        }
+    }
+    return res; // 返回计数器
+}

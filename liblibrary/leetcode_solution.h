@@ -260,6 +260,8 @@ public:
     static int canCompleteCircuit(vector<int> &gas, vector<int> &cost);
 
     static ListNode *insertionSortList(ListNode *head);
+
+    static int findMinArrowShots(vector<vector<int>> &points);
 };
 
 #endif //LEETCODE_STU_LEETCODE_SOLUTION_H
