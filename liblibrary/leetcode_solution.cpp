@@ -6045,3 +6045,59 @@ int Solution::findMinArrowShots(vector<vector<int>>& points) {
     }
     return res; // 返回计数器
 }
+
+// 完全二叉树的节点个数
+/* 给出一个完全二叉树，求出该树的节点个数
+ * 说明：
+ * 完全二叉树的定义如下:
+ * 在完全二叉树中，除了最底层节点可能没填满外，其余每层节点数都达到最大值
+ * 并且最下面一层的节点都集中在该层最左边的若干位置
+ * 若最底层为第 h 层，则该层包含 1~ 2^h 个节点
+ * 根据完全二叉树的性质,最后一个行节点的编号即为数量
+ * 故直接从最后一行中寻找末尾节点
+ * 第一步、计算行数
+ * 第二步、从最后一行中寻找最后的节点
+ * 其中利用完全二叉树的性质,根据编号的二进制数直接寻路到节点
+ * */
+// 节点存在于完全二叉树,层编号为level的层节点,二进制需要从倒数第level-1位置开始读取
+bool Solution::exists(TreeNode* root, int level, int k) {
+    int bits = 1 << (level - 1);   // 将二进制中1移动到对应判断的第一个位置
+    TreeNode* node = root;  // 起始节点
+    while (node != nullptr && bits > 0) {   // 节点不为空且还能进行操作
+        if (!(bits & k)) {  // 编号二进制对应位置为0
+            node = node->left;
+        } else {    // 对应为1
+            node = node->right;
+        }
+        bits >>= 1; // 位置右移一位
+    }
+    return node != nullptr; // 若节点不为空则存在,否则不存在
+}
+int Solution::countNodes(TreeNode* root) {
+    if (root == nullptr) {  // 节点为空返回0个
+        return 0;
+    }
+    int level = 0;  // 层编号,0开始
+    TreeNode* node = root;  // 起始节点
+    while (node->left != nullptr) { // 计算层数
+        level++;
+        node = node->left;
+    }
+    int low = 1 << level, high = (1 << (level + 1)) - 1;    // 计算最后一层的编号范围[2^level,2^(level+1)-1]
+    while (low < high) {    // 在最后一层进行二分查找,左右边界重合时,所在节点为最后一层最后一个节点
+        int mid = (high - low + 1) / 2 + low;   // 取中点
+        if (exists(root, level, mid)) { // 左边是存在右边不存在,故若中点存在,则左边界移到中点
+            low = mid;
+        } else {    // 右边不存才,当中点不存在,右边界设置为中点的左边一个节点
+            high = mid - 1;
+        }
+    }
+    return low; // 返回节点编号,也可返回high
+}
+
+
+
+
+
+
+
