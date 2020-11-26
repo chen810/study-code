@@ -6095,7 +6095,42 @@ int Solution::countNodes(TreeNode* root) {
     return low; // 返回节点编号,也可返回high
 }
 
-
+// 最大间距
+/* 给定一个无序的数组，找出数组在排序之后，相邻元素之间最大的差值
+ * 如果数组元素个数小于 2，则返回 0
+ * */
+// 桶排序,计算平均值,可知最大距离一定大于等于平均值,故将桶的范围设定为小于平均值
+// 故最大距离一定在两个桶之间产生
+int Solution::maximumGap(vector<int>& nums) {
+    int n = nums.size();    // 数组数量
+    if (n < 2) {
+        return 0;
+    }
+    int minVal = *min_element(nums.begin(), nums.end());    // 最小值
+    int maxVal = *max_element(nums.begin(), nums.end());    // 最大值
+    int d = max(1, (maxVal - minVal) / (n - 1));    // 平均值
+    int bucketSize = (maxVal - minVal) / d + 1;     // 桶的数量,在平均的基础上+1,从而使得桶大小小于平均长度
+    vector<pair<int, int>> bucket(bucketSize, {-1, -1});  // 存储 (桶内最小值，桶内最大值) 对，(-1, -1) 表示该桶是空的
+    for (int i = 0; i < n; i++) {   // 向桶内存储数组
+        int idx = (nums[i] - minVal) / d;   // 计算桶编号
+        if (bucket[idx].first == -1) {  // 若桶是空的,直接加入
+            bucket[idx].first = bucket[idx].second = nums[i];
+        } else {    // 若桶非空,分布比较最大值最小值,两条语句只会生效一句
+            bucket[idx].first = min(bucket[idx].first, nums[i]);    // 1、比小的小
+            bucket[idx].second = max(bucket[idx].second, nums[i]);  // 2、比大的大
+        }
+    }
+    int ret = 0;    // 最大长度
+    int prev = -1;  // 上一个非空的桶
+    for (int i = 0; i < bucketSize; i++) {  // 遍历桶
+        if (bucket[i].first == -1) continue;    // 若桶为空则直接跳过
+        if (prev != -1) {   // 若桶不为空,且之前扫到非空桶,则更新最大长度
+            ret = max(ret, bucket[i].first - bucket[prev].second);
+        }
+        prev = i;   // 更新上一个非空桶的下标
+    }
+    return ret; // 返回最大长度
+}
 
 
 

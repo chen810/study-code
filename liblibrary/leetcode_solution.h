@@ -255,6 +255,8 @@ public:
     static bool exists(TreeNode *root, int level, int k);
 
     static int countNodes(TreeNode *root);
+
+    static int maximumGap(vector<int> &nums);
 };
 
 #endif //LEETCODE_STU_LEETCODE_SOLUTION_H
