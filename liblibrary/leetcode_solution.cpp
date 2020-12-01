@@ -6131,6 +6131,44 @@ int Solution::maximumGap(vector<int>& nums) {
     }
     return ret; // 返回最大长度
 }
+// 二叉树展开为链表
+/* 给定一个二叉树，原地将它展开为一个单链表
+ * */
+// 右树接到左树的右下角,左树整体移动到右树
+void Solution::flatten(TreeNode* root) {
+    TreeNode*p = root;
+    while(p!=nullptr){  // 判断是否还有剩余节点
+        TreeNode*q = p->left;   // 取左树
+        if(q!=nullptr){ // 右树接到左树右下角
+            while(q->right!=nullptr){
+                q = q->right;
+            }
+            q->right = p->right;    // 拼接
+            p->right = p->left;     // 移动
+            p->left = nullptr;      // 置空
+        }
+        p = p->right;   // 向下移动节点
+    }
+}
+// 平衡二叉树
+/* 给定一个二叉树，判断它是否是高度平衡的二叉树
+ * 一个二叉树每个节点 的左右两个子树的高度差的绝对值不超过 1
+ * */
+int Solution::isBalancedTreeheight(TreeNode* root) {
+    if (root == nullptr) {  // 空节点是平衡的且高度为0
+        return 0;
+    }
+    int leftHeight = isBalancedTreeheight(root->left);  // 左树高度
+    int rightHeight = isBalancedTreeheight(root->right);    // 右树高度
+    if (leftHeight == -1 || rightHeight == -1 || abs(leftHeight - rightHeight) > 1) {
+        return -1;  // 不平衡返回-1
+    } else {
+        return max(leftHeight, rightHeight) + 1;    // 平衡时的高度
+    }
+}
+bool Solution::isBalanced(TreeNode* root) {
+    return isBalancedTreeheight(root) >= 0; // 若不为-1则平衡
+}
 
 
 
