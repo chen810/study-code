@@ -1,31 +1,13 @@
+// 对角线遍历
 #include <iostream>
 #include <vector>
 using namespace std;
-
+/* 给定一个含有 M x N 个元素的矩阵（M 行，N 列），请以对角线遍历的顺序返回这个矩阵中的所有元素
+ * 如:vector<vector<int>> p{{1,2,3},{4,5,6},{7,8,9}};
+ * 输出为:{1,2,4,7,5,3,6,8,9}
+ * */
 class Solution {
 public:
-    void setZeroes(vector<vector<int>>& matrix) {
-        int row = matrix.size();
-        int col = matrix[0].size();
-        vector<bool> rowSign(row,false);
-        vector<bool> colSign(col,false);
-        for(int i=0;i<row;++i){
-            for(int j=0;j<col;++j){
-                if(matrix[i][j]==0){
-                    rowSign[i] = true;
-                    colSign[j] = true;
-                }
-            }
-        }
-        for(int i=0;i<row;++i){
-            for(int j=0;j<col;++j){
-                if(rowSign[i]||colSign[j]){
-                    matrix[i][j] = 0;
-                }
-            }
-        }
-    }
-
     vector<int> findDiagonalOrder(vector<vector<int>>& matrix) {
         int row = matrix.size();
         int col = matrix[0].size();
@@ -56,6 +38,7 @@ public:
         return res;
     }
 };
+/*
 int main(){
     vector<vector<int>> p{
         {1,2,3},
@@ -68,3 +51,4 @@ int main(){
         cout <<i << endl;
     }
 }
+*/
