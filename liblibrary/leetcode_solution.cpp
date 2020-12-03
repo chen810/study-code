@@ -6170,7 +6170,29 @@ bool Solution::isBalanced(TreeNode* root) {
     return isBalancedTreeheight(root) >= 0; // 若不为-1则平衡
 }
 
-
+// 计数质数
+/* 统计所有小于非负整数 n 的质数的数量
+ * */
+// 埃氏筛:i从2起,若i为质数则计数+1,然后将所有i的倍数置为合数
+// 欧拉筛(线性筛):i从2起,若i为质数则加入质数列表P[]
+// 然后分别将i*P[j],0<=j<P.size()对应的数置为合数,若i%P[j]==0则停止循环
+// 由于能整除则之后的合数,必有i被(i/P[j])*P[j+1]整除故避免多次置为合数
+int Solution::countPrimes(int n) {
+    vector<int> primes; // 质数列表
+    vector<int> isPrime(n, 1);  // 质数标记
+    for (int i = 2; i < n; ++i) {   // 遍历标记
+        if (isPrime[i]) {   // 若标记为质数则加入质数列表,若为合数必在i之前被置为合数
+            primes.push_back(i);
+        }
+        for (int j = 0; j < primes.size() && i * primes[j] < n; ++j) {  // i*P[j]
+            isPrime[i * primes[j]] = 0; // 必为合数
+            if (i % primes[j] == 0) {   // 能被整除==>i*P[j+1]必可被后面的数置为合数
+                break;  // 停止置为合数
+            }
+        }
+    }
+    return primes.size();   // 返回合数列表大小,即合数数量
+}
 
 
 

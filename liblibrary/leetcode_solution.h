@@ -257,6 +257,7 @@ public:
     static void flatten(TreeNode *root);
     static int isBalancedTreeheight(TreeNode *root);
     static bool isBalanced(TreeNode *root);
+    static int countPrimes(int n);
 };
 
 #endif //LEETCODE_STU_LEETCODE_SOLUTION_H
