@@ -13,7 +13,7 @@
 class Solution {
 public:
     //
-    vector<int> maxNumber(vector<int>& nums1, vector<int>& nums2, int k) {
+    vector<int> maxNumber(vector<int> &nums1, vector<int> &nums2, int k) {
         int m = nums1.size(), n = nums2.size(); // 两数组长度
         vector<int> maxSubsequence(k, 0);   // 最大队列结果
         int start = max(0, k - n), end = min(k, m); // 第一个子串的长度范围
@@ -27,8 +27,9 @@ public:
         }
         return maxSubsequence;  // 返回最大子串
     }
+
     // 求长度为k的最大子串
-    vector<int> MaxSubsequence(vector<int>& nums, int k) {
+    vector<int> MaxSubsequence(vector<int> &nums, int k) {
         int length = nums.size();   // 串长度
         vector<int> stack(k, 0);    // 单调栈
         int top = -1;   // 栈顶指针位置
@@ -48,8 +49,9 @@ public:
         }
         return stack;   // 返回最大子串
     }
+
     // 合并两数字串
-    vector<int> merge(vector<int>& subsequence1, vector<int>& subsequence2) {
+    vector<int> merge(vector<int> &subsequence1, vector<int> &subsequence2) {
         int x = subsequence1.size(), y = subsequence2.size();   // 两子串长度
         if (x == 0) {   // 若其中一个数组串长度小于0则直接返回另一串
             return subsequence2;
@@ -70,8 +72,9 @@ public:
         }
         return merged; // 返回合并结果
     }
+
     // 比较函数,(strcmp的比较方式)
-    int compare(vector<int>& subsequence1, int index1, vector<int>& subsequence2, int index2) {
+    int compare(vector<int> &subsequence1, int index1, vector<int> &subsequence2, int index2) {
         int x = subsequence1.size(), y = subsequence2.size();   // 子串长度
         while (index1 < x && index2 < y) {  // 当两串均有剩余字符进行比较
             int difference = subsequence1[index1] - subsequence2[index2]; // 比较处的差值

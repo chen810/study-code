@@ -14,50 +14,52 @@
 #include <vector>
 #include <queue>
 #include <unordered_set>
+
 using namespace std;
 
 class Solution {
 public:
-    string clockerOp(string clocker, int index, bool dir){
+    string clockerOp(string clocker, int index, bool dir) {
         int temp = clocker[index] - '0';
-        temp += dir?1:-1;
-        if(temp>9){
+        temp += dir ? 1 : -1;
+        if (temp > 9) {
             temp -= 10;
-        }else if(temp<0){
+        } else if (temp < 0) {
             temp += 10;
         }
         clocker[index] = temp + '0';
         return clocker;
     }
-    int openLock(vector<string>& deadends, string target) {
+
+    int openLock(vector<string> &deadends, string target) {
         queue<string> temp; // 临时队列
         unordered_set<string> visited;  // 记录已经访问的密码
         unordered_set<string> deads;    // 记录无法访问密码
         temp.push("0000");  // 初始化队列
         visited.insert("0000"); // 已访问"0000"
-        for(auto i:deadends){   // 用set记录无法访问的密码
+        for (auto i:deadends) {   // 用set记录无法访问的密码
             deads.insert(i);
         }
         int step = 0;   // 记录步数
-        while(!temp.empty()){
+        while (!temp.empty()) {
             int l = temp.size();    // 循环遍历队列
-            for(int i=0;i<l;++i){
+            for (int i = 0; i < l; ++i) {
                 string t = temp.front();    // 取出队首
                 temp.pop();
-                if(deads.find(t)!=deads.end()){ // 判断是否存在于无法访问列表
+                if (deads.find(t) != deads.end()) { // 判断是否存在于无法访问列表
                     continue;
                 }
-                if(t == target){
+                if (t == target) {
                     return step;
                 }
-                for(int j=0;j<4;++j){
-                    string t1 =  clockerOp(t,j,true);
-                    string t2 = clockerOp(t,j,false);
-                    if(visited.find(t1)==visited.end()){
+                for (int j = 0; j < 4; ++j) {
+                    string t1 = clockerOp(t, j, true);
+                    string t2 = clockerOp(t, j, false);
+                    if (visited.find(t1) == visited.end()) {
                         temp.push(t1);
                         visited.insert(t1);
                     }
-                    if(visited.find(t2)==visited.end()){
+                    if (visited.find(t2) == visited.end()) {
                         temp.push(t2);
                         visited.insert(t2);
                     }
@@ -67,5 +69,5 @@ public:
         }
         return -1;
     }
-    
+
 };

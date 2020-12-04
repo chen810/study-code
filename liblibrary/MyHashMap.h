@@ -4,6 +4,7 @@
 
 #ifndef STUDY_CODE_MYHASHMAP_H
 #define STUDY_CODE_MYHASHMAP_H
+
 #include <vector>
 #include <string>
 #include "MyTree.h"
@@ -13,6 +14,7 @@ class MyHashMap {
 public:
     /** Initialize your data structure here. */
     MyHashMap();
+
     /** value will always be non-negative. */
     void put(int key, int value);
 

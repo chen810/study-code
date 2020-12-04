@@ -12,28 +12,29 @@
 
 #include <vector>
 #include <queue>
+
 using namespace std;
 
 class Solution {
 public:
-    bool canVisitAllRooms(vector<vector<int>>& rooms) {
+    bool canVisitAllRooms(vector<vector<int>> &rooms) {
         int n = rooms.size();   // 房间数
         bool *keySign = new bool[n]();  // 标记钥匙是否拿到
         keySign[0] = true;  // 0号房钥匙一直存在
         queue<int> keys;    // 钥匙串
         keys.push(0);   // 加入0号钥匙
-        while(!keys.empty()){   // 循环打开房间
+        while (!keys.empty()) {   // 循环打开房间
             int key = keys.front(); //从钥匙串中拿出钥匙
             keys.pop(); // 从待选钥匙串中去除
-            for(auto i:rooms[key]){ //房间里拿出没拿到的钥匙
-                if(!keySign[i]){
+            for (auto i:rooms[key]) { //房间里拿出没拿到的钥匙
+                if (!keySign[i]) {
                     keys.push(i);
                     keySign[i] = true;
                 }
             }
         }
-        for(int i=0;i<n;i++){   // 数钥匙,有钥匙没拿到说明有房间无法进入
-            if(!keySign[i]){
+        for (int i = 0; i < n; i++) {   // 数钥匙,有钥匙没拿到说明有房间无法进入
+            if (!keySign[i]) {
                 return false;
             }
         }

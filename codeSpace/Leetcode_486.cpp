@@ -18,7 +18,7 @@ using namespace std;
 */
 class Solution {
 public:
-    bool PredictTheWinner(vector<int>& nums) {
+    bool PredictTheWinner(vector<int> &nums) {
         int length = nums.size();
         auto dp = vector<int>(length);
         for (int i = 0; i < length; i++) {

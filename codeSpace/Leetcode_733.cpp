@@ -9,32 +9,34 @@
  * */
 #include <vector>
 #include <queue>
+
 using namespace std;
 
 class Solution {
 public:
-    vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int newColor) {
-        int row = image.size(); 
+    vector<vector<int>> floodFill(vector<vector<int>> &image, int sr, int sc, int newColor) {
+        int row = image.size();
         int col = image[0].size();  // 记录图像大小
         int rawColor = image[sr][sc];   // 记录初始颜色
         queue<vector<int>> temp;    // 搜索未染色区域
-        temp.push({sr,sc}); // 加入起始点
-        while(!temp.empty()){   // 重复判断,直到不存在未染色区域
+        temp.push({sr, sc}); // 加入起始点
+        while (!temp.empty()) {   // 重复判断,直到不存在未染色区域
             int i = temp.front()[0];    // 取得下一个未染色块横坐标
             int j = temp.front()[1];    // 取得下一个未染色块纵坐标
             image[i][j] = newColor; // 染色
             temp.pop(); // 删除染色完成点
-            if(i-1>=0&&image[i-1][j]==rawColor&&image[i-1][j]!=newColor){    // 加入四个方向的点,条件:区域内,与起始点连通,未染色
-                temp.push({i-1,j});
+            if (i - 1 >= 0 && image[i - 1][j] == rawColor &&
+                image[i - 1][j] != newColor) {    // 加入四个方向的点,条件:区域内,与起始点连通,未染色
+                temp.push({i - 1, j});
             }
-            if(i+1<row&&image[i+1][j]==rawColor&&image[i+1][j]!=newColor){
-                temp.push({i+1,j});
+            if (i + 1 < row && image[i + 1][j] == rawColor && image[i + 1][j] != newColor) {
+                temp.push({i + 1, j});
             }
-            if(j-1>=0&&image[i][j-1]==rawColor&&image[i][j-1]!=newColor){
-                temp.push({i,j-1});
+            if (j - 1 >= 0 && image[i][j - 1] == rawColor && image[i][j - 1] != newColor) {
+                temp.push({i, j - 1});
             }
-            if(j+1<col&&image[i][j+1]==rawColor&&image[i][j+1]!=newColor){
-                temp.push({i,j+1});
+            if (j + 1 < col && image[i][j + 1] == rawColor && image[i][j + 1] != newColor) {
+                temp.push({i, j + 1});
             }
         }
         return image;

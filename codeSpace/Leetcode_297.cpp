@@ -11,58 +11,63 @@
 #include <iostream>
 #include <string>
 #include <vector>
+
 using namespace std;
 
- // Definition for a binary tree node.
- struct TreeNode {
+// Definition for a binary tree node.
+struct TreeNode {
     int val;
-        TreeNode *left;
-        TreeNode *right;
-        TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+    TreeNode *left;
+    TreeNode *right;
+
+    TreeNode(int x) : val(x), left(NULL), right(NULL) {}
 };
+
 class Codec {
 public:
     // Encodes a tree to a single string.
-    string serialize(TreeNode* root) {
+    string serialize(TreeNode *root) {
         string res;
-        serializeDFS(root,res);
+        serializeDFS(root, res);
         return res;
     }
-    void serializeDFS(TreeNode* root, string &data) {
-        if(root==nullptr){
+
+    void serializeDFS(TreeNode *root, string &data) {
+        if (root == nullptr) {
             data += "None,";
-        }else{
+        } else {
             data += to_string(root->val);
             data += ",";
-            serializeDFS(root->left,data);
-            serializeDFS(root->right,data);
+            serializeDFS(root->left, data);
+            serializeDFS(root->right, data);
         }
     }
 
     // Decodes your encoded data to tree.
-    TreeNode* deserialize(string data) {
+    TreeNode *deserialize(string data) {
         vector<string> valueList;
-        int left=0;
-        int length=0;
-        while(left<data.size()){
-            while(left+length<data.size()&&data[left+length]!=','){
+        int left = 0;
+        int length = 0;
+        while (left < data.size()) {
+            while (left + length < data.size() && data[left + length] != ',') {
                 ++length;
             }
-            valueList.push_back(data.substr(left,length));
-            left += length+1;
+            valueList.push_back(data.substr(left, length));
+            left += length + 1;
             length = 0;
         }
         int index = 0;
-        return deserializeDFS(valueList,index);
+        return deserializeDFS(valueList, index);
     }
-    TreeNode* deserializeDFS(vector<string> &data,int &index){
-        if(index>=data.size()||data[index]=="None"){
+
+    TreeNode *deserializeDFS(vector<string> &data, int &index) {
+        if (index >= data.size() || data[index] == "None") {
             index++;
             return nullptr;
         }
-        TreeNode* temp = new TreeNode(stoi(data[index++]));
-        temp->left = deserializeDFS(data,index);
-        temp->right = deserializeDFS(data,index);
+        TreeNode *temp = new TreeNode(stoi(data[index++]));
+        temp->left = deserializeDFS(data, index);
+        temp->right = deserializeDFS(data, index);
         return temp;
     }
 };

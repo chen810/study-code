@@ -17,12 +17,14 @@
  * */
 
 #include <vector>
+
 using namespace std;
 
-struct ListNode{
+struct ListNode {
     int val;
     ListNode *next;
-    ListNode(int v):val(v),next(nullptr){}
+
+    ListNode(int v) : val(v), next(nullptr) {}
 };
 
 // 单链表
@@ -35,39 +37,40 @@ public:
         head = new ListNode(-1);
         capacity = 0;
     }
-    
+
     /** Get the value of the index-th node in the linked list. If the index is invalid, return -1. */
     int get(int index) {
-        if(index<0||index>=capacity){
+        if (index < 0 || index >= capacity) {
             return -1;
         }
         ListNode *p = head;
-        while(index+1>0){
+        while (index + 1 > 0) {
             p = p->next;
             index--;
         }
         return p->val;
     }
-    
+
     /** Add a node of value val before the first element of the linked list. After the insertion, the new node will be the first node of the linked list. */
     void addAtHead(int val) {
-        addAtIndex(0,val);
+        addAtIndex(0, val);
     }
-    
+
     /** Append a node of value val to the last element of the linked list. */
     void addAtTail(int val) {
-        addAtIndex(capacity,val);
+        addAtIndex(capacity, val);
     }
+
     /** Add a node of value val before the index-th node in the linked list. If index equals to the length of linked list, the node will be appended to the end of linked list. If index is greater than the length, the node will not be inserted. */
     void addAtIndex(int index, int val) {
-        if(index<0){
+        if (index < 0) {
             index = 0;
         }
-        if(index>capacity){
+        if (index > capacity) {
             return;
         }
         ListNode *p = head;
-        while(index>0){
+        while (index > 0) {
             p = p->next;
             index--;
         }
@@ -76,14 +79,14 @@ public:
         temp->next = p->next;
         p->next = temp;
     }
-    
+
     /** Delete the index-th node in the linked list, if the index is valid. */
     void deleteAtIndex(int index) {
-        if(index<0||index>=capacity){
+        if (index < 0 || index >= capacity) {
             return;
         }
         ListNode *p = head;
-        while(index>0){
+        while (index > 0) {
             p = p->next;
             index--;
         }
@@ -96,12 +99,14 @@ public:
 
 
 // 双向链表
-struct ListNodeT{
+struct ListNodeT {
     int val;
     ListNodeT *next;
     ListNodeT *prev;
-    ListNodeT(int v):val(v),next(nullptr),prev(nullptr){}
+
+    ListNodeT(int v) : val(v), next(nullptr), prev(nullptr) {}
 };
+
 class MyTwoWayLinkedList {
     ListNodeT *head;
     ListNodeT *tail;
@@ -115,28 +120,29 @@ public:
         tail->prev = head;
         capacity = 0;
     }
+
     /** Get the value of the index-th node in the linked list. If the index is invalid, return -1. */
     int get(int index) {
-        if(index<0||index>=capacity){
+        if (index < 0 || index >= capacity) {
             return -1;
         }
-        if(index+index<capacity){
+        if (index + index < capacity) {
             ListNodeT *p = head;
-            while(index+1>0){
+            while (index + 1 > 0) {
                 p = p->next;
                 index--;
             }
             return p->val;
-        }else{
+        } else {
             ListNodeT *p = tail;
-            while(capacity-index>0){
+            while (capacity - index > 0) {
                 p = p->prev;
                 index++;
             }
             return p->val;
         }
     }
-    
+
     /** Add a node of value val before the first element of the linked list. After the insertion, the new node will be the first node of the linked list. */
     void addAtHead(int val) {
         capacity++;
@@ -146,7 +152,7 @@ public:
         temp->next->prev = temp;
         temp->prev = head;
     }
-    
+
     /** Append a node of value val to the last element of the linked list. */
     void addAtTail(int val) {
         capacity++;
@@ -155,21 +161,22 @@ public:
         tail->prev = temp;
         temp->prev->next = temp;
         temp->next = tail;
-        
+
     }
+
     /** Add a node of value val before the index-th node in the linked list. If index equals to the length of linked list, the node will be appended to the end of linked list. If index is greater than the length, the node will not be inserted. */
     void addAtIndex(int index, int val) {
-        if(index<0){
+        if (index < 0) {
             index = 0;
         }
-        if(index>capacity){
+        if (index > capacity) {
             return;
         }
         capacity++;
         ListNodeT *temp = new ListNodeT(val);
-        if(index+index<capacity){
+        if (index + index < capacity) {
             ListNodeT *p = head;
-            while(index>0){
+            while (index > 0) {
                 p = p->next;
                 index--;
             }
@@ -177,9 +184,9 @@ public:
             p->next = temp;
             temp->next->prev = temp;
             temp->prev = p;
-        }else{
+        } else {
             ListNodeT *p = tail;
-            while(capacity-index-1>0){
+            while (capacity - index - 1 > 0) {
                 p = p->prev;
                 index++;
             }
@@ -188,17 +195,17 @@ public:
             temp->prev->next = temp;
             temp->next = p;
         }
-        
+
     }
-    
+
     /** Delete the index-th node in the linked list, if the index is valid. */
     void deleteAtIndex(int index) {
-        if(index<0||index>=capacity){
+        if (index < 0 || index >= capacity) {
             return;
         }
-        if(index+index<capacity){
+        if (index + index < capacity) {
             ListNodeT *p = head;
-            while(index>0){
+            while (index > 0) {
                 p = p->next;
                 index--;
             }
@@ -206,9 +213,9 @@ public:
             p->next = temp->next;
             p->next->prev = p;
             delete temp;
-        }else{
+        } else {
             ListNodeT *p = tail;
-            while(capacity-index-1>0){
+            while (capacity - index - 1 > 0) {
                 p = p->prev;
                 index++;
             }
