@@ -493,6 +493,8 @@ public:
     static bool isBalanced(TreeNode *root);
 
     static int countPrimes(int n);
+
+    static int matrixScore(vector<vector<int>> &A);
 };
 
 #endif //LEETCODE_STU_LEETCODE_SOLUTION_H

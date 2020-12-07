@@ -1491,7 +1491,7 @@ bool Solution::sudokumnisValid(vector<vector<char>> &board, int x, int y, int dx
     vector<int> res(9, 0);
     for (int i = 0; i < dx; ++i) {
         for (int j = 0; j < dy; ++j) {
-            int temp = board[x + i][y + j];
+            char temp = board[x + i][y + j];
             if (temp != '.') {
                 if (res[temp - 49]) {
                     return false;
@@ -1910,7 +1910,7 @@ void Solution::reverseString(vector<char> &s) {
 
 void Solution::reverse_coString(vector<char> &s, int left, int right) {
     if (left < right) {
-        int temp = s[left];
+        char temp = s[left];
         s[left] = s[right];
         s[right] = temp;
         reverse_coString(s, left + 1, right - 1);
@@ -5441,7 +5441,7 @@ bool Solution::possibleBipartitiondfs(int node, int c, vector<int> &color, vecto
     }
     color[node] = c;
     for (int nei: graph[node])
-        if (!possibleBipartitiondfs(nei, c ^ 1u, color, graph))
+        if (!possibleBipartitiondfs(nei, static_cast<int>(c ^ 1u), color, graph))
             return false;
     return true;
 }
@@ -5937,7 +5937,7 @@ int Solution::findRotateSteps(string ring, string key) {
         pos[ring[i] - 'a'].push_back(i);
     }
     int dp[m][n];
-    memset(dp, 0x3f3f3f3f, sizeof(dp));
+    memset(dp, 0x3f, sizeof(dp));
     for (auto &i: pos[key[0] - 'a']) {
         dp[0][i] = min(i, n - i) + 1;
     }
@@ -6265,5 +6265,26 @@ int Solution::countPrimes(int n) {
     return primes.size();   // 返回合数列表大小,即合数数量
 }
 
-
-
+// 翻转矩阵后的得分
+/* 有一个二维矩阵 A 其中每个元素的值为 0 或 1
+ * 移动是指选择任一行或列，并转换该行或列中的每一个值
+ * 将所有 0 都更改为 1，将所有 1 都更改为 0
+ * 在做出任意次数的移动后，将该矩阵的每一行都按照二进制数来解释，矩阵的得分就是这些数字的总和
+ * 返回尽可能高的分数
+ * */
+// 保证第一列均为1,保证后面1的总数最多,故可采用模拟法
+// 由于二进制权重不同,可直接进行加权相加,避免模拟
+int Solution::matrixScore(vector<vector<int>> &A) {
+    if (A.empty() || A[0].empty()) return 0;    // 若空数组返回0
+    int row = A.size(), col = A[0].size(), q = 1, res = 0;  // 数组尺寸,权值,结果和
+    for (int j = col - 1; j >= 0; --j) {    // 最后一列遍历到第一列
+        int s = 0;  // 当前列中的1的数量,受第一列是否为0的影响
+        for (int i = 0; i < row; ++i) { // 计数
+            s += (A[i][0] == 1) ? A[i][j] : 1 - A[i][j];    // 第一列为0则取反
+        }
+        // cout << s << " " << q << "\n";
+        res += (s + s < row ? row - s : s) * q; // 将1的数量与权相乘并相加即为同权之和
+        q <<= 1;    // 权乘以2
+    }
+    return res; // 返回结果
+}

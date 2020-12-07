@@ -3,7 +3,7 @@
 #include "leetcode_solution.h"
 using namespace std;
 int main() {
-    vector<vector<int>> p{{5,7},{1,8},{0,0},{2,3},{4,5},{0,6},{5,10},{7,10}};
-    cout << Solution::videoStitching(p,5);
+    vector<vector<int>> p{{0,0,1,1},{1,0,1,0},{1,1,0,0}};
+    cout << Solution::matrixScore(p)<<"\n";
 
 }
