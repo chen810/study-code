@@ -4,37 +4,6 @@
 //
 #include "leetcode_solution.h"
 
-// 创建链表,vector<int>为链表值,bool值为控制是否排序
-ListNode *makeListNodeChain(vector<int> s, bool sortControl) {
-    if (sortControl) {
-        sort(s.begin(), s.end());
-    }
-    auto *head = new ListNode(0);
-    auto p = head;
-    for (auto i:s) {
-        p->next = new ListNode(i);
-        p = p->next;
-    }
-    return head->next;
-}
-
-// 打印链表,按顺序打印,end可控制分隔符
-void printListNodeChain(ListNode *head, const string &end) {
-    while (head != nullptr) {
-        cout << head->val;
-        if (head->next) {
-            cout << end;
-        }
-        head = head->next;
-    }
-}
-
-
-/* 以上为辅助函数算法
- * =========================================================================
- * 以下为Leetcode_solution算法实现
- * */
-
 
 // 桶排序算法
 /* 取最大值max和最小值min用来计算计数容器count大小max-min

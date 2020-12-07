@@ -3,6 +3,32 @@
 //
 
 #include "my_base_structs.h"
+
+// 创建链表,vector<int>为链表值,bool值为控制是否排序
+ListNode *makeListNodeChain(vector<int> &s, bool sortControl) {
+    if (sortControl) {
+        sort(s.begin(), s.end());
+    }
+    auto *head = new ListNode(0);
+    auto p = head;
+    for (auto i:s) {
+        p->next = new ListNode(i);
+        p = p->next;
+    }
+    return head->next;
+}
+
+// 打印链表,按顺序打印,end可控制分隔符
+void printListNodeChain(ListNode *head, const string &end) {
+    while (head != nullptr) {
+        cout << head->val;
+        if (head->next) {
+            cout << end;
+        }
+        head = head->next;
+    }
+}
+
 // 向搜索二叉树中加入节点
 TreeNode *addToSearchTree(TreeNode *root, int val) {
     if (root == nullptr) {

@@ -1,9 +1,10 @@
 //
 // Created by WOOO on 2020/12/7.
 //
+#include <iostream>
 #include <vector>
 #include <string>
-
+#include <algorithm>
 #ifndef MY_BASE_STRUCTS_H
 #define MY_BASE_STRUCTS_H
 using namespace std;
@@ -34,7 +35,7 @@ struct TreeNode {
 
 
 // 数组构建链表,可选是否排序
-ListNode *makeListNodeChain(vector<int>, bool = true);
+ListNode *makeListNodeChain(vector<int>&, bool = true);
 // 链表打印
 void printListNodeChain(ListNode *, const string & = "->");
 
