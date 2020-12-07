@@ -13,34 +13,14 @@
 #include <unordered_set>
 #include <malloc.h>
 #include <algorithm>
+#include "my_base_structs.h"
 
-#ifndef LEETCODE_STU_LEETCODE_SOLUTION_H
-#define LEETCODE_STU_LEETCODE_SOLUTION_H
-
-
+#ifndef LEETCODE_STU_SOLUTION_H
+#define LEETCODE_STU_SOLUTION_H
 using namespace std;
 
-struct ListNode {
-    int val;
-    ListNode *next;
 
-    explicit ListNode(int x) : val(x), next(nullptr) {}
-};
-
-struct TreeNode {
-    int val;
-    TreeNode *left;
-    TreeNode *right;
-
-    explicit TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
-};
-
-ListNode *makeListNodeChain(vector<int>, bool = true);
-
-void printListNodeChain(ListNode *, const string & = "->");
-
-
-class Solution {
+class Leetcode_solution {
     static void mergeSort_sort(vector<int> &, int, int);
 
     static void mergeSort_merge(vector<int> &, int, int, int);
@@ -506,6 +486,4 @@ public:
     static int matrixScore(vector<vector<int>> &A);
 };
 
-void Luogu_P1803();
-
-#endif //LEETCODE_STU_LEETCODE_SOLUTION_H
+#endif //LEETCODE_STU_SOLUTION_H

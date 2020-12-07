@@ -1,4 +1,4 @@
-set(LIB_SRC leetcode_solution.cpp MyHashset.cpp MyHashMap.cpp  MyTree.cpp)
+set(LIB_SRC leetcode_solution.cpp luogu_solution.cpp luogu_solution.h my_base_structs.cpp my_base_structs.h)
 
 add_library(liblibrary ${LIB_SRC})
 
