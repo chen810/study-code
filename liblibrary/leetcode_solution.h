@@ -1,13 +1,22 @@
 //
 // Created by WOOO on 2020/2/14.
 //
+#include <iostream>
+#include <cstring>
+#include <string>
+#include <vector>
+#include <queue>
+#include <stack>
+#include <map>
+#include <unordered_map>
+#include <set>
+#include <unordered_set>
+#include <malloc.h>
+#include <algorithm>
 
 #ifndef LEETCODE_STU_LEETCODE_SOLUTION_H
 #define LEETCODE_STU_LEETCODE_SOLUTION_H
 
-#include <string>
-#include <vector>
-#include <map>
 
 using namespace std;
 
@@ -496,5 +505,7 @@ public:
 
     static int matrixScore(vector<vector<int>> &A);
 };
+
+void Luogu_P1803();
 
 #endif //LEETCODE_STU_LEETCODE_SOLUTION_H
