@@ -20,6 +20,10 @@ using namespace std;
 class Luogu_solution {
 public:
     static void Luogu_P1803();
+
+    static void Luogu_P2006();
+
+    static void Luogu_P2084();
 };
 
 
