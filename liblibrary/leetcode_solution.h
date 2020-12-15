@@ -484,6 +484,8 @@ public:
     static int countPrimes(int n);
 
     static int matrixScore(vector<vector<int>> &A);
+
+    static int monotoneIncreasingDigits(int N);
 };
 
 #endif //LEETCODE_STU_SOLUTION_H

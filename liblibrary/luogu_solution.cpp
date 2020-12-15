@@ -58,7 +58,7 @@ void Luogu_solution::Luogu_P2006(){
     //===========打印结果完成=======================
 }
 
-string itos(int n){
+/*string itos(int n){
     if(n==0) return "0";
     string res;
     while(n>0){
@@ -68,12 +68,12 @@ string itos(int n){
     }
     reverse(res.begin(),res.end());
     return res;
-}
+}*/
 void Luogu_solution::Luogu_P2084(){
     //===========开始录入数据=======================
     string k,s;
     cin >> k >>s;
-    cout << k << " " <<s << "\n";
+    // cout << k << " " <<s << "\n";
     //===========录入数据结束=======================
     string res;
     int n = s.size();
@@ -81,10 +81,8 @@ void Luogu_solution::Luogu_P2084(){
     for(int i=0;i<s.size();++i){
         if(s[i]!='0'){
             if(flag) res += "+";
-            char temp[6];
-            _itoa_s(n-1-i,temp,6,10);
             res += s[i];
-            res += "*"+k+"^"+ temp;
+            res += "*"+k+"^"+to_string(n-1-i);
             flag = true;
         }
     }

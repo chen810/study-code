@@ -6248,4 +6248,27 @@ int Leetcode_solution::matrixScore(vector<vector<int>> &A) {
     return res; // 返回结果
 }
 
+// 单调递增的数字
+/* 给定一个非负整数 N，找出小于或等于 N 的最大的整数
+ * 同时这个整数需要满足其各个位数上的数字是单调递增
+ * 当且仅当每个相邻位数上的数字 x 和 y 满足 x <= y 时，我们称这个整数是单调递增的
+ * */
+int Leetcode_solution::monotoneIncreasingDigits(int N) {
+    string temp = to_string(N); // 数字转字符串处理
+    size_t n = temp.size(); // 字符串长度
+    size_t i = 1;   // 起始坐标
+    while(i<n&&temp[i]>=temp[i-1]){ // 找到第一个比前一个数字小的位置
+        i += 1;
+    }
+    if(i<n){
+        while(i>0&&temp[i]<temp[i-1]){  // 如果前一个比当前位置大,则
+            temp[i-1] -= 1;
+            i -= 1;
+        }
+        for(i+=1;i<n;++i){  // 此时之前的全部不递减,将后面所有位置置为‘9’
+            temp[i] = '9';
+        }
+    }
+    return stoi(temp);  // 字符串转回数字
 
+}

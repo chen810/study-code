@@ -4,7 +4,6 @@
 #include "luogu_solution.h"
 using namespace std;
 int main() {
-    Luogu_solution::Luogu_P2084();
-
+    cout << Leetcode_solution::monotoneIncreasingDigits(1234444321);
     return 0;
 }
