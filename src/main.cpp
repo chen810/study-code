@@ -4,6 +4,6 @@
 #include "luogu_solution.h"
 using namespace std;
 int main() {
-    cout << Leetcode_solution::monotoneIncreasingDigits(1234444321);
+    cout << Leetcode_solution::wordPattern("abbc","ab bc cd cc");
     return 0;
 }

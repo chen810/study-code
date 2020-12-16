@@ -6272,3 +6272,33 @@ int Leetcode_solution::monotoneIncreasingDigits(int N) {
     return stoi(temp);  // 字符串转回数字
 
 }
+
+// 单词规律
+bool Leetcode_solution::wordPattern(string pattern,string s) {
+    unordered_map<char,string> char2s;  // {char, string} 对
+    unordered_map<string,char> s2char;  // {string, char} 对
+    int sIndex = 0; // 字符串起始下标
+    int pIndex = 0; // 模式串下标
+    for(int i=0;i<=s.size();++i){
+        if(i==s.size()||s[i]==' '){
+            // 当前字符串
+            string t = s.substr(sIndex, i - sIndex);
+            // 字符对应的字符串不对则返回false
+            if(char2s.find(pattern[pIndex]) != char2s.end() && char2s[pattern[pIndex]] != t){
+                return false;
+            }
+            // 字符串对应的字符不对则返回false
+            if(s2char.find(t) != s2char.end() && s2char[t] != pattern[pIndex]){
+                return false;
+            }
+            // 无冲突则更新哈希表,只会覆盖相同内容
+            char2s[pattern[pIndex]] = t;
+            s2char[t] = pattern[pIndex];
+            // 移动到下一个字符串和模式
+            sIndex = i + 1;
+            pIndex += 1;
+        }
+    }
+    return pIndex == pattern.size();    // 模式串未匹配完也算失败
+}
+

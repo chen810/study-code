@@ -486,6 +486,8 @@ public:
     static int matrixScore(vector<vector<int>> &A);
 
     static int monotoneIncreasingDigits(int N);
+
+    static bool wordPattern(string pattern, string s);
 };
 
 #endif //LEETCODE_STU_SOLUTION_H
