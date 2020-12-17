@@ -6257,15 +6257,15 @@ int Leetcode_solution::monotoneIncreasingDigits(int N) {
     string temp = to_string(N); // 数字转字符串处理
     size_t n = temp.size(); // 字符串长度
     size_t i = 1;   // 起始坐标
-    while(i<n&&temp[i]>=temp[i-1]){ // 找到第一个比前一个数字小的位置
+    while (i < n && temp[i] >= temp[i - 1]) { // 找到第一个比前一个数字小的位置
         i += 1;
     }
-    if(i<n){
-        while(i>0&&temp[i]<temp[i-1]){  // 如果前一个比当前位置大,则
-            temp[i-1] -= 1;
+    if (i < n) {
+        while (i > 0 && temp[i] < temp[i - 1]) {  // 如果前一个比当前位置大,则
+            temp[i - 1] -= 1;
             i -= 1;
         }
-        for(i+=1;i<n;++i){  // 此时之前的全部不递减,将后面所有位置置为‘9’
+        for (i += 1; i < n; ++i) {  // 此时之前的全部不递减,将后面所有位置置为‘9’
             temp[i] = '9';
         }
     }
@@ -6274,21 +6274,21 @@ int Leetcode_solution::monotoneIncreasingDigits(int N) {
 }
 
 // 单词规律
-bool Leetcode_solution::wordPattern(string pattern,string s) {
-    unordered_map<char,string> char2s;  // {char, string} 对
-    unordered_map<string,char> s2char;  // {string, char} 对
+bool Leetcode_solution::wordPattern(string pattern, string s) {
+    unordered_map<char, string> char2s;  // {char, string} 对
+    unordered_map<string, char> s2char;  // {string, char} 对
     int sIndex = 0; // 字符串起始下标
     int pIndex = 0; // 模式串下标
-    for(int i=0;i<=s.size();++i){
-        if(i==s.size()||s[i]==' '){
+    for (int i = 0; i <= s.size(); ++i) {
+        if (i == s.size() || s[i] == ' ') {
             // 当前字符串
             string t = s.substr(sIndex, i - sIndex);
             // 字符对应的字符串不对则返回false
-            if(char2s.find(pattern[pIndex]) != char2s.end() && char2s[pattern[pIndex]] != t){
+            if (char2s.find(pattern[pIndex]) != char2s.end() && char2s[pattern[pIndex]] != t) {
                 return false;
             }
             // 字符串对应的字符不对则返回false
-            if(s2char.find(t) != s2char.end() && s2char[t] != pattern[pIndex]){
+            if (s2char.find(t) != s2char.end() && s2char[t] != pattern[pIndex]) {
                 return false;
             }
             // 无冲突则更新哈希表,只会覆盖相同内容

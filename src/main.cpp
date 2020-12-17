@@ -4,6 +4,6 @@
 #include "luogu_solution.h"
 using namespace std;
 int main() {
-    cout << Leetcode_solution::wordPattern("abbc","ab bc cd cc");
+    Luogu_solution::Luogu_5710();
     return 0;
 }

@@ -17,13 +17,16 @@
 #ifndef STUDY_CODE_LUOGU_SOLUTION_H
 #define STUDY_CODE_LUOGU_SOLUTION_H
 using namespace std;
+
 class Luogu_solution {
 public:
-    static void Luogu_P1803();
+    static void Luogu_P1830();
 
     static void Luogu_P2006();
 
     static void Luogu_P2084();
+
+    static void Luogu_5710();
 };
 
 
