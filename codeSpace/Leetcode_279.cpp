@@ -3,7 +3,6 @@
  * 使得它们的和等于 n。你需要让组成和的完全平方数的个数最少
  * */
 #include <iostream>
-#include <vector>
 #include <cmath>
 
 class Solution {

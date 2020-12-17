@@ -23,7 +23,7 @@ public:
 
 Trie::Trie(){
     TrieRoot = new TrieNode;
-};
+}
 
 void Trie::insert(string word) {
     TrieNode *p = TrieRoot;

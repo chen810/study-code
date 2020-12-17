@@ -15,31 +15,21 @@
  * */
 void Leetcode_solution::bucketSort(vector<int> &nums) {
     // 容器中数字数量大于1才进行排序
-    if (nums.size() > 1) {
-        // 判断排序数据的最大值与最小值
-        int max = nums[0], min = nums[0];
-        for (auto i:nums) {
-            if (i > max) {
-                max = i;
-            }
-            if (i < min) {
-                min = i;
-            }
-        }
-        // 建立count计数容器
-        vector<int> count(max - min + 1, 0);
-        // 计数,将数值映射为下标,并进行自加
-        for (auto i:nums) {
-            ++count[i - min];
-        }
-        // 将下标映射为数值,按顺序填入原排序容器,并对count对应位置进行自减操作
-        int k = 0;
-        for (int n = 0; n < max - min + 1; ++n) {
-            while (count[n]) {
-                nums[k] = n + min;
-                --count[n];
-                ++k;
-            }
+    if (nums.empty()) return;
+    // 判断排序数据的最大值与最小值
+    int max_num = *max_element(nums.begin(), nums.end());
+    int min_num = *min_element(nums.begin(), nums.end());
+    // 建立count计数容器
+    vector<int> counts(static_cast<unsigned long long int>(max_num - min_num + 1));
+    // 计数,将数值映射为下标,并进行自加
+    for (auto i:nums) {
+        ++counts[i - min_num];
+    }
+    // 将下标映射为数值,按顺序填入原排序容器,并对count对应位置进行自减操作
+    int k = 0;
+    for (int n = 0; n < counts.size(); ++n) {
+        for (int i = 0; i < counts[n]; ++i) {
+            nums[k++] = n + min_num;
         }
     }
 }
@@ -50,9 +40,9 @@ void Leetcode_solution::bucketSort(vector<int> &nums) {
  * O = 1+2+3+4+5+···+(n-1)
  * 时间复杂度为O(n*n)
  * */
-void Leetcode_solution::bubbleSort(vector<int> &nums) {
+[[maybe_unused]] void Leetcode_solution::bubbleSort(vector<int> &nums) {
     // 取长度
-    int le = nums.size();
+    int le = static_cast<int>(nums.size());
     // 倒着遍历至第一个待求数值
     for (int i = le - 1; i >= 0; --i) {
         // 从第一对数值,两两遍历至末尾,若后一个小于前一个则换位
@@ -72,7 +62,7 @@ void Leetcode_solution::bubbleSort(vector<int> &nums) {
  * O = 1+2+3+4+5+···+(n-1)
  * 时间复杂度O(n*n)
  * */
-void Leetcode_solution::insertionSort(vector<int> &nums) {
+[[maybe_unused]] void Leetcode_solution::insertionSort(vector<int> &nums) {
     // 从第一个待求数值位遍历到末尾
     for (int i = 0; i < nums.size(); ++i) {
         // 保存待排数值,并循环向前检测下一个取得的数值
@@ -92,7 +82,7 @@ void Leetcode_solution::insertionSort(vector<int> &nums) {
  * */
 void Leetcode_solution::mergeSort(vector<int> &nums) {
     // 执行递归运算,为其添加初始值
-    int l = nums.size();
+    int l = static_cast<int>(nums.size());
     mergeSort_sort(nums, 0, l - 1);
 }
 
@@ -112,7 +102,7 @@ void Leetcode_solution::mergeSort_merge(vector<int> &nums, int left, int mid, in
     int mp = mid + 1;
     int st = left;
     // 一个临时容器存储
-    vector<int> temp(right - left + 1);
+    vector<int> temp(static_cast<unsigned long long int>(right - left + 1));
     int lastNode = 0;
     // 两个容器中数值进行比较,直到有一个容器中的数值被取完,则停止循环
     while (st <= mid && mp <= right) {
@@ -136,7 +126,7 @@ void Leetcode_solution::mergeSort_merge(vector<int> &nums, int left, int mid, in
 // 回文数:
 /* 判断一个整数是否是回文数。回文数是指正序（从左向右）和倒序（从右向左）读都是一样的整数
  * */
-bool Leetcode_solution::isPalindrome(int x) {
+[[maybe_unused]] bool Leetcode_solution::isPalindrome(int x) {
     if (x < 0 || (x % 10 == 0 && x != 0)) {
         return false;
     }
@@ -158,7 +148,7 @@ bool Leetcode_solution::isPalindrome(int x) {
  * s 可能为空，且只包含从 a-z 的小写字母
  * p 可能为空，且只包含从 a-z 的小写字母，以及字符 . 和 *
  * */
-bool Leetcode_solution::isMatch_Re(string s, string p) {
+[[maybe_unused]] bool Leetcode_solution::isMatch_Re(string s, string p) {
     // 建立一个空间存储每个匹配节点
     bool dp[s.length() + 1][p.length() + 1];
     dp[0][0] = true;
@@ -207,7 +197,7 @@ bool Leetcode_solution::isMatch_Re(string s, string p) {
  * X-X-X-X-X-X-X
  * 横线部分为水，图示为第一和最后一个之间的水
  * */
-int Leetcode_solution::maxArea(vector<int> &height) {
+[[maybe_unused]] int Leetcode_solution::maxArea(vector<int> &height) {
     // 初始化两个变量分别用于存储最大值，和每次算出来的值
     int max = 0, temp = 0;
     // 创建两个指针，一个指向首元素，一个指向尾元素
@@ -231,7 +221,7 @@ int Leetcode_solution::maxArea(vector<int> &height) {
  * 特例:4-IV 9-IX 40-XL 90-XC 400-CD 900-CM
  * 输入数字范围1-3999
  * */
-string Leetcode_solution::intToRoman(int num) {
+[[maybe_unused]] string Leetcode_solution::intToRoman(int num) {
     // 建立转换表按顺序IXCMVLD排序
     string s, p("IXCMVLD");
     // 记录下当前权重,sign记录罗马数字权重,temp用于存储临时变量
@@ -258,7 +248,7 @@ string Leetcode_solution::intToRoman(int num) {
                 temp -= 5;
             }
             // 将剩余部分重复temp次，此处用string直接初始化一定数量的相同字符构成的字符串
-            s += string(temp, p[sign]);
+            s += string(static_cast<unsigned long long int>(temp), p[sign]);
         }
     }
     return s;
@@ -271,7 +261,7 @@ string Leetcode_solution::intToRoman(int num) {
  * 特例:4-IV 9-IX 40-XL 90-XC 400-CD 900-CM
  * 输出数字范围1-3999
  * */
-int Leetcode_solution::romanToInt(const string &s) {
+[[maybe_unused]] int Leetcode_solution::romanToInt(const string &s) {
     // 转换表,标明每个罗马数字的权重
     map<char, int> m{{'I', 1},
                      {'V', 5},
@@ -297,7 +287,7 @@ int Leetcode_solution::romanToInt(const string &s) {
  * 输入: ["flower","flow","flight"]
  * 输出: "fl"
  * */
-string Leetcode_solution::longestCommonPrefix(vector<string> &strs) {
+[[maybe_unused]] string Leetcode_solution::longestCommonPrefix(vector<string> &strs) {
     // 若提供的容器为空则直接返回空串
     if (strs.empty()) { return ""; }
     // 取出第一个
@@ -326,10 +316,10 @@ string Leetcode_solution::longestCommonPrefix(vector<string> &strs) {
  * 注意：答案中不可以包含重复的三元组
  * */
 // 三数之和120ms算法
-vector<vector<int>> Leetcode_solution::threeSum_1(vector<int> &nums) {
+[[maybe_unused]] vector<vector<int>> Leetcode_solution::threeSum_1(vector<int> &nums) {
     // 排序算法,内置排序，类似于快排,时间复杂度为N*log2N
     sort(nums.begin(), nums.end());
-    int le = nums.size();
+    int le = static_cast<int>(nums.size());
     // 存储结果的容器
     vector<vector<int>> sp;
     int i = 0;
@@ -389,11 +379,10 @@ vector<vector<int>> Leetcode_solution::threeSum_1(vector<int> &nums) {
 }
 
 // 三数之和50ms算法
-vector<vector<int>> Leetcode_solution::threeSum_2(vector<int> &nums) {
+[[maybe_unused]] vector<vector<int>> Leetcode_solution::threeSum_2(vector<int> &nums) {
     // 重拍,从小到大
     sort(nums.begin(), nums.end());
     vector<vector<int>> sp;
-    int n = nums.size();
     // 对于每个元素执行操作,由于3个数,到end-3处终止
     for (auto i = nums.begin(); i != nums.end() - 2;) {
         // 若第一个值大于0,则三个数必定大于0，跳出循环
@@ -444,7 +433,7 @@ vector<vector<int>> Leetcode_solution::threeSum_2(vector<int> &nums) {
  * 找出 nums 中的三个整数，使得它们的和与 target 最接近,返回这三个数的和
  * 假定每组输入只存在唯一答案
  * */
-int Leetcode_solution::threeSumClosest(vector<int> &nums, int target) {
+[[maybe_unused]] int Leetcode_solution::threeSumClosest(vector<int> &nums, int target) {
     // 重新排序后,采用定一个值,两指针的解法
     sort(nums.begin(), nums.end());
     int min = nums[0] + nums[1] + nums[2] - target, res = nums[0] + nums[1] + nums[2];
@@ -497,7 +486,7 @@ int Leetcode_solution::threeSumClosest(vector<int> &nums, int target) {
  * 给出数字到字母的映射如下(与电话按键相同)注意1不对应任何字母
  * 2:"abc",3:"def",4:"ghi",5:"jkl",6:"mno",7:"pqrs",8:"tuv",9:"wxyz"
  * */
-vector<string> Leetcode_solution::letterCombinations(string digits) {
+[[maybe_unused]] vector<string> Leetcode_solution::letterCombinations(string digits) {
     // 制作一个映射表'2'->0->"abc",其中'2'-50 = 0,2-9依次排下去
     vector<string> s{"abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"}, p{""};
     // 依次判断digits中的数字字符将其映射为字符串
@@ -524,7 +513,7 @@ vector<string> Leetcode_solution::letterCombinations(string digits) {
  * 判断 nums 中是否存在四个元素 a,b,c 和 d,使得 a + b + c + d 的值与 target 相等?
  * 找出所有满足条件且不重复的四元组
  * */
-vector<vector<int>> Leetcode_solution::fourSum(vector<int> &nums, int target) {
+[[maybe_unused]] vector<vector<int>> Leetcode_solution::fourSum(vector<int> &nums, int target) {
     // 算法参照Leetcode_solution::threeSum解法,为三数之和拓展版,采用先固定一个数改为三数之和问题
     vector<vector<int>> res;
     if (nums.size() < 4) { return res; }
@@ -589,7 +578,7 @@ vector<vector<int>> Leetcode_solution::fourSum(vector<int> &nums, int target) {
  *      ListNode(int x) : val(x), next(NULL) {}
  *  };
  * */
-ListNode *Leetcode_solution::removeNthFromEnd(ListNode *head, int n) {
+[[maybe_unused]] ListNode *Leetcode_solution::removeNthFromEnd(ListNode *head, int n) {
     // 创建一个哑节点,避免讨论删除头结点情况
     auto *p = new ListNode(0);
     p->next = head;
@@ -622,7 +611,7 @@ ListNode *Leetcode_solution::removeNthFromEnd(ListNode *head, int n) {
  * 左括号必须以正确的顺序闭合
  * 注意空字符串可被认为是有效字符串。
  * */
-bool Leetcode_solution::isValid(const string &s) {
+[[maybe_unused]] bool Leetcode_solution::isValid(const string &s) {
     // 创建一个vector<char>作为存储字符的栈使用
     vector<char> res;
     // 逐个判读,若栈的最后一个字符,与新取得的字符能成一对括号,则将最后一字符弹出,否则将新字符插入
@@ -644,7 +633,7 @@ bool Leetcode_solution::isValid(const string &s) {
  * 结果中不存在重复
  * */
 // 算法1:回溯法-->递归
-vector<string> Leetcode_solution::generateParenthesis_1(int n) {
+[[maybe_unused]] vector<string> Leetcode_solution::generateParenthesis_1(int n) {
     vector<string> res;
     if (n == 0) { return res; }
     recursion4generateParenthesis_1(res, "", 0, 0, n);
@@ -700,7 +689,7 @@ vector<string> Leetcode_solution::generateParenthesis_2(int n) {
 /* 返回合并后的排序链表
  * */
 // 暴力法:将给定链表进行直接串联,取出节点的值,进行整体排序,在合成链表上进行赋值,返回其首节点
-ListNode *Leetcode_solution::mergeKLists_1(vector<ListNode *> &lists) {
+[[maybe_unused]] ListNode *Leetcode_solution::mergeKLists_1(vector<ListNode *> &lists) {
     // 若未给任何链表,则直接返回空指针
     if (lists.empty()) { return nullptr; }
     // 新建一个哑节点,避免所给链表中出现nullptr
@@ -742,10 +731,10 @@ ListNode *Leetcode_solution::mergeKLists_1(vector<ListNode *> &lists) {
 }
 
 // 分治法:将相邻两个链表合并排序,多次执行直到仅剩1条链
-ListNode *Leetcode_solution::mergeKLists_2(vector<ListNode *> &lists) {
+[[maybe_unused]] ListNode *Leetcode_solution::mergeKLists_2(vector<ListNode *> &lists) {
     if (lists.empty()) { return nullptr; }
     int dx = 1;
-    int le = lists.size();
+    int le = static_cast<int>(lists.size());
     while (dx < le) {
         for (int l = 0; l < le; l += 2 * dx) {
             if (l + dx < le) {
@@ -794,7 +783,7 @@ ListNode *Leetcode_solution::mergeTwoLists(ListNode *l1, ListNode *l2) {
  * 你不能只是单纯的改变节点内部的值，而是需要实际的进行节点交换
  * */
 // 迭代法,分别标记要交换的两节点以及前驱节点,交换节点完成后前驱节点移动到下一组的前驱节点位置
-ListNode *Leetcode_solution::swapPairs_1(ListNode *head) {
+[[maybe_unused]] ListNode *Leetcode_solution::swapPairs_1(ListNode *head) {
     // 创建哑结点
     ListNode temp(0);
     temp.next = head;
@@ -838,7 +827,7 @@ ListNode *Leetcode_solution::swapPairs_2(ListNode *head) {
 // 利用栈原理,使用一个容器进行存储,再反向链接
 ListNode *Leetcode_solution::reverseKGroup_1(ListNode *head, int k) {
     // 建立存储节点的容器
-    vector<ListNode *> temp(k);
+    vector<ListNode *> temp(static_cast<unsigned long long int>(k));
     ListNode *p = head;
     // 将节点按序存入容器
     int t = 0;
@@ -919,13 +908,13 @@ ListNode *Leetcode_solution::reverseLists(ListNode *head) {
  * 不要使用额外的数组空间，你必须在原地修改输入数组并在使用 O(1) 额外空间的条件下完成
  * */
 // 算法：双指针+上一个值的记录
-int Leetcode_solution::removeDuplicates(vector<int> &nums) {
+[[maybe_unused]] int Leetcode_solution::removeDuplicates(vector<int> &nums) {
     // 数组为空则返回0
     if (nums.empty()) {
         return 0;
     }
     // 初始化双指针在第二个数,上一个值记录为第一个数
-    int left = 1, right, max = nums[0], le = nums.size();
+    int left = 1, right, max = nums[0], le = static_cast<int>(nums.size());
     // 循环判断,若右指针所指的值与上一个取得的值不相等则插入到左指针处,若插入则左指针后移
     for (right = 1; right < le; ++right) {
         if (nums[right] != max) {
@@ -941,8 +930,8 @@ int Leetcode_solution::removeDuplicates(vector<int> &nums) {
  * 不要使用额外的数组空间，你必须在原地修改输入数组并在使用 O(1) 额外空间的条件下完成
  * 元素的顺序可以改变。你不需要考虑数组中超出新长度后面的元素
  * */
-int Leetcode_solution::removeElement(vector<int> &nums, int val) {
-    int left = 0, right, le = nums.size();
+[[maybe_unused]] int Leetcode_solution::removeElement(vector<int> &nums, int val) {
+    int left = 0, right, le = static_cast<int>(nums.size());
     // 循环判断,若右指针所指的值与待删除的值不相等则插入到左指针处,若插入则左指针后移
     for (right = 0; right < le; ++right) {
         if (nums[right] != val) {
@@ -958,7 +947,7 @@ int Leetcode_solution::removeElement(vector<int> &nums, int val) {
  * 如果不存在，则返回 -1。
  * */
 // 暴力搜索,效率低重复判断多,时间复杂度O(MN)
-int Leetcode_solution::strStr_1(const string &haystack, const string &needle) {
+[[maybe_unused]] int Leetcode_solution::strStr_1(const string &haystack, const string &needle) {
     if (needle.empty()) {
         return 0;
     }
@@ -981,7 +970,7 @@ int Leetcode_solution::strStr_1(const string &haystack, const string &needle) {
 }
 
 // KMP算法,避免了反复回退,时间复杂度为O(N),先制作一个自身的映射,根据映射合理回退带匹配的字符串,辅助函数next_map
-int Leetcode_solution::strStr_2(const string &haystack, const string &needle) {
+[[maybe_unused]] int Leetcode_solution::strStr_2(const string &haystack, const string &needle) {
     // 若带匹配字符串为空则返回0
     if (needle.empty()) {
         return 0;
@@ -1010,8 +999,8 @@ int Leetcode_solution::strStr_2(const string &haystack, const string &needle) {
 
 // KMP算法辅助函数,用于生成待匹配字符串的最长公共前后缀长度,用数组进行记录
 vector<int> Leetcode_solution::next_map(string p) {
-    int le = p.size(), k = 0;
-    vector<int> table(le);
+    int le = static_cast<int>(p.size()), k = 0;
+    vector<int> table(static_cast<unsigned long long int>(le));
     // 前0个字符匹配固定为0
     table[0] = 0;
     // 进行扫描,若前指针等于尾指针处的值,则将k自增1并赋值给数组对应位置
@@ -1037,7 +1026,7 @@ vector<int> Leetcode_solution::next_map(string p) {
  * 假设我们的环境只能存储 32 位有符号整数，其数值范围是[INT_MIN, INT_MAX]
  * 本题中，如果除法结果溢出，则返回INT_MAX
  * */
-int Leetcode_solution::divide(int dividend, int divisor) {
+[[maybe_unused]] int Leetcode_solution::divide(int dividend, int divisor) {
     // 若被除数为0或者除数为1则直接返回被除数
     if (dividend == 0 || divisor == 1) {
         return dividend;
@@ -1087,7 +1076,7 @@ int Leetcode_solution::divide(int dividend, int divisor) {
  * 注意子串要与 words 中的单词完全匹配，中间不能有其他字符，但不需要考虑 words 中单词串联的顺序
  * */
 // 采用窗口按单词判断,若出现了指定次数则进行添加开始位置
-vector<int> Leetcode_solution::findSubstring(const string &s, vector<string> &words) {
+[[maybe_unused]] vector<int> Leetcode_solution::findSubstring(const string &s, vector<string> &words) {
     // 存储答案的下标
     vector<int> res;
     // 若s或words为空则返回一个空的结果
@@ -1095,9 +1084,9 @@ vector<int> Leetcode_solution::findSubstring(const string &s, vector<string> &wo
         return res;
     }
     // 取得单词数量word_count,单词长度one_word,待搜索s的长度s_len,窗口大小win_len
-    int word_count = words.size();
-    int one_word = words[0].size();
-    int s_len = s.size();
+    int word_count = static_cast<int>(words.size());
+    int one_word = static_cast<int>(words[0].size());
+    int s_len = static_cast<int>(s.size());
     // int win_len = word_count * one_word;
     unordered_map<string, int> refer;
     for (const auto &word : words) {
@@ -1112,7 +1101,8 @@ vector<int> Leetcode_solution::findSubstring(const string &s, vector<string> &wo
         // 循环向后判断,直至最后没有单词
         while (right + one_word <= s_len) {
             // 取出单词放入窗口
-            string temp = s.substr(right, one_word);
+            string temp = s.substr(static_cast<unsigned long long int>(right),
+                                   static_cast<unsigned long long int>(one_word));
             right += one_word;
             // 取得的单词不存在待选单词中,则进行清空sign,count置零,left移动至right处
             if (refer[temp] == 0) {
@@ -1124,7 +1114,8 @@ vector<int> Leetcode_solution::findSubstring(const string &s, vector<string> &wo
                 ++count;
                 ++sign[temp];
                 while (sign[temp] > refer[temp]) {
-                    string po = s.substr(left, one_word);
+                    string po = s.substr(static_cast<unsigned long long int>(left),
+                                         static_cast<unsigned long long int>(one_word));
                     --count;
                     left += one_word;
                     --sign[po];
@@ -1149,13 +1140,13 @@ vector<int> Leetcode_solution::findSubstring(const string &s, vector<string> &wo
  * 如：4132,只能通过增加1的大小来增大数值,因此从32中选一个大于1的最小值进行替换
  * 变换成4231此时并不是以42开头的最小数,因此将31逆序变成4213即大于4132的下一个数
  * */
-void Leetcode_solution::nextPermutation(vector<int> &nums) {
+[[maybe_unused]] void Leetcode_solution::nextPermutation(vector<int> &nums) {
     // 为空不进行操作
     if (nums.empty()) {
         return;
     }
     // 取得数组长度,从后向前两个两个进行比较,若前一个比后一个小则停止,指针指向较小的那个数
-    int le = nums.size();
+    int le = static_cast<int>(nums.size());
     int st = le - 2;
     while (st >= 0 && nums[st] >= nums[st + 1]) {
         --st;
@@ -1193,7 +1184,7 @@ inline void Leetcode_solution::my_swap(int &x, int &y) {
  * 找出最长的包含有效括号的子串的长度。
  * */
 // 栈辅助,利用弹栈时的差的最大值获取最大长度,较为玄学
-int Leetcode_solution::longestValidParentheses_1(const string &s) {
+[[maybe_unused]] int Leetcode_solution::longestValidParentheses_1(const string &s) {
     int max = 0;
     // 建立栈预先压入-1
     vector<int> stackTemp;
@@ -1217,8 +1208,8 @@ int Leetcode_solution::longestValidParentheses_1(const string &s) {
 }
 
 // 动态规划,利用数组存储每个字符之前所能构成的有效扩号长度
-int Leetcode_solution::longestValidParentheses_2(const string &s) {
-    int le = s.size();
+[[maybe_unused]] int Leetcode_solution::longestValidParentheses_2(const string &s) {
+    int le = static_cast<int>(s.size());
     // 动规数组,dp[i]表示以第i位结尾的有效括号长度
     vector<int> dp(le, 0);
     int max = 0;
@@ -1241,7 +1232,7 @@ int Leetcode_solution::longestValidParentheses_2(const string &s) {
 }
 
 // 双向遍历,分别计算两个方向的有效括号长度,取较大值
-int Leetcode_solution::longestValidParentheses_3(const string &s) {
+[[maybe_unused]] int Leetcode_solution::longestValidParentheses_3(const string &s) {
     // 初始化一个left和right用于记录左右括号数量,和记录最大值的max
     int right = 0, left = 0, max = 0;
     // 正向判断,若右括号大于左括号数量,则进行重置,如果相等则进行计算最大值
@@ -1287,11 +1278,11 @@ int Leetcode_solution::longestValidParentheses_3(const string &s) {
  * 你的算法时间复杂度必须是 O(log n) 级别
  * */
 // 递归,二分查找
-int Leetcode_solution::search(vector<int> &nums, int target) {
+[[maybe_unused]] int Leetcode_solution::search(vector<int> &nums, int target) {
     if (nums.empty()) {
         return -1;
     }
-    int le = nums.size(), res = -1, pot = le - 1;
+    int le = static_cast<int>(nums.size()), res, pot = le - 1;
     int st = 0;
     // 二分查找查找翻转点
     while (st <= pot) {
@@ -1308,7 +1299,7 @@ int Leetcode_solution::search(vector<int> &nums, int target) {
             }
         }
     }
-    cout << pot << endl;
+    // cout << pot << endl;
     // 和尾部值进行比较,即翻转前前半段的最大值,若大于最大值则在翻转点之前进行查找,否则在翻转点之后进行查找
     if (target > nums[le - 1] || pot == le - 1) {
         res = divide_search(nums, 0, pot, target);
@@ -1340,7 +1331,7 @@ int Leetcode_solution::divide_search(vector<int> &nums, int left, int right, int
  * 如果数组中不存在目标值，返回 [-1, -1]
 */
 // 二分法搜索第一个大于等于target的值,搜索第一个大于target的值
-vector<int> Leetcode_solution::searchRange(vector<int> &nums, int target) {
+[[maybe_unused]] vector<int> Leetcode_solution::searchRange(vector<int> &nums, int target) {
     vector<int> res(2, -1);
     // 先查一个大于等于target的值,若不存在则返回{-1,-1}
     int temp = search_le(nums, target, true);
@@ -1355,7 +1346,7 @@ vector<int> Leetcode_solution::searchRange(vector<int> &nums, int target) {
 
 // 辅助二分查找算法,>=查找第一个等于target,>查找第一个大于target
 int Leetcode_solution::search_le(vector<int> &nums, int target, bool left) {
-    int st = 0, en = nums.size();
+    int st = 0, en = static_cast<int>(nums.size());
     while (st < en) {
         int mid = (st + en) / 2;
         if (nums[mid] > target || (left && nums[mid] == target)) {
@@ -1376,7 +1367,7 @@ int Leetcode_solution::search_le(vector<int> &nums, int target, bool left) {
  * 输出: [1,2,2,3,5,6]
  * */
 // 两两比较按序插入临时数组,排序完成复制回A
-void Leetcode_solution::merge(vector<int> &A, int m, vector<int> &B, int n) {
+[[maybe_unused]] void Leetcode_solution::merge(vector<int> &A, int m, vector<int> &B, int n) {
     int left = 0, right = 0;
     vector<int> res(m + n, 0);
     while (left < m && right < n) {
@@ -1461,8 +1452,8 @@ bool Leetcode_solution::sudokumnisValid(vector<vector<char>> &board, int x, int 
 /* 编写一个程序，通过已填充的空格来解决数独问题
  * */
 // 暴力法,对于每个空格进行填入1-9,判断是否有效,若有效则继续向下填,直到所有空格填完
-void Leetcode_solution::solveSudoku(vector<vector<char>> &board) {
-    bool res = co_solveSudoku(board);
+[[maybe_unused]] void Leetcode_solution::solveSudoku(vector<vector<char>> &board) {
+    co_solveSudoku(board);
 }
 
 // 暴力法的递归辅助函数,若成立则进行深入,不成立则回退
@@ -1484,12 +1475,11 @@ bool Leetcode_solution::co_solveSudoku(vector<vector<char>> &board) {
         return true;
     }
     // 首先填入,判断是否有效,若无效则进行重新填入,若有效则判断递归的是否成立不成立则将自己置空进行回退
-    bool res;
     for (int i = 0; i < 9; ++i) {
-        board[left][right] = i + 49;
+        board[left][right] = static_cast<char>(i + 49);
         bool temp = isValidSudoku(board);
         if (temp) {
-            res = co_solveSudoku(board);
+            bool res = co_solveSudoku(board);
             if (res) {
                 return true;
             } else {
@@ -1518,7 +1508,7 @@ bool Leetcode_solution::co_solveSudoku(vector<vector<char>> &board) {
  * 21 被读作 "one 2",  "one 1" （"一个二" ,  "一个一") , 即 1211
  * 给定一个正整数 n（1 ≤ n ≤ 30），输出外观数列的第 n 项。
  * */
-string Leetcode_solution::countAndSay(int n) {
+[[maybe_unused]] string Leetcode_solution::countAndSay(int n) {
     string ori("1");
     while (n > 1) {
         string new_s;
@@ -1550,14 +1540,14 @@ string Leetcode_solution::countAndSay(int n) {
  * 每分钟，任何与腐烂的橘子（在 4 个正方向上）相邻的新鲜橘子都会腐烂
  * 返回直到单元格中没有新鲜橘子为止所必须经过的最小分钟数。如果不可能，返回 -1
  * */
-int Leetcode_solution::orangesRotting(vector<vector<int>> &grid) {
+[[maybe_unused]] int Leetcode_solution::orangesRotting(vector<vector<int>> &grid) {
     // 如果为空则返回-1
     if (grid.empty() || grid[0].empty()) {
         return -1;
     }
     // 记录感染分钟,判定是否发生了感染lock为1为未发生感染,lock为0为发生了感染
     int count = 0, lock = 0;
-    int row = grid.size(), col = grid[0].size();
+    int row = static_cast<int>(grid.size()), col = static_cast<int>(grid[0].size());
     auto temp = grid;
     // 反复执行,直到不发生感染
     while (true) {
@@ -1617,7 +1607,7 @@ int Leetcode_solution::rotOranges(vector<vector<int>> &grid, int x, int y, int r
 /* 给定一个无重复元素的数组 candidates 和一个目标数 target ，找出 candidates 中所有可以使数字和为 target 的组合
  * candidates 中的数字可以无限制重复被选取
  * */
-vector<vector<int>> Leetcode_solution::combinationSum(vector<int> &candidates, int target) {
+[[maybe_unused]] vector<vector<int>> Leetcode_solution::combinationSum(vector<int> &candidates, int target) {
     vector<vector<int>> res;
     violenceSwitch(candidates, vector<int>{}, target, 0, res);
     return res;
@@ -1652,7 +1642,7 @@ void Leetcode_solution::violenceSwitch(vector<int> &candidates, const vector<int
  * 返回一个长度为 num_people、元素之和为 candies 的数组，以表示糖果的最终分发情况（即 ans[i] 表示第 i 个小朋友分到的糖果数）。
  * */
 // 暴力--分发按顺序给
-vector<int> Leetcode_solution::distributeCandies(int candies, int num_people) {
+[[maybe_unused]] vector<int> Leetcode_solution::distributeCandies(int candies, int num_people) {
     // 存储结果
     vector<int> res(num_people, 0);
     // 该分发的个数
@@ -1682,7 +1672,7 @@ vector<int> Leetcode_solution::distributeCandies(int candies, int num_people) {
  * 序列内的数字由小到大排列，不同序列按照首个数字从小到大排列。
  * */
 // 使用vector当做窗口
-vector<vector<int>> Leetcode_solution::findContinuousSequence_1(int target) {
+[[maybe_unused]] vector<vector<int>> Leetcode_solution::findContinuousSequence_1(int target) {
     // 记录结果
     vector<vector<int>> res;
     vector<int> getList;
@@ -1713,7 +1703,7 @@ vector<vector<int>> Leetcode_solution::findContinuousSequence_1(int target) {
 }
 
 // 使用双指针作为窗口边界,窗口内总值使用求和公式
-vector<vector<int>> Leetcode_solution::findContinuousSequence_2(int target) {
+[[maybe_unused]] vector<vector<int>> Leetcode_solution::findContinuousSequence_2(int target) {
     // 存储答案
     vector<vector<int>> res;
     int left = 1, right = 2;
@@ -1741,7 +1731,7 @@ vector<vector<int>> Leetcode_solution::findContinuousSequence_2(int target) {
  * candidates 中的每个数字在每个组合中只能使用一次
  * */
 // 暴力法,先进行排序,再进行选数在同一层中避免选择同一个数
-vector<vector<int>> Leetcode_solution::combinationSum2(vector<int> &candidates, int target) {
+[[maybe_unused]] vector<vector<int>> Leetcode_solution::combinationSum2(vector<int> &candidates, int target) {
     mergeSort(candidates);
     vector<vector<int>> res;
     violenceSwitch2(candidates, vector<int>{}, target, 0, res);
@@ -1777,7 +1767,7 @@ void Leetcode_solution::violenceSwitch2(vector<int> &candidates, const vector<in
 /* 给定一个未排序的整数数组，找出其中没有出现的最小的正整数
  * */
 // 很容易想到若复杂度为n则需要桶排序,然而空间复杂度为1,我们不能额外创建桶,因此我们原位使用符号进行标记
-int Leetcode_solution::firstMissingPositive(vector<int> &nums) {
+[[maybe_unused]] int Leetcode_solution::firstMissingPositive(vector<int> &nums) {
     // 检查是否含有1,若不含有则直接返回1
     int sign = 0;
     for (auto i:nums) {
@@ -1790,7 +1780,7 @@ int Leetcode_solution::firstMissingPositive(vector<int> &nums) {
         return 1;
     }
     // 将大于长度的数和非正数改为1,用于简化计算
-    int le = nums.size();
+    int le = static_cast<int>(nums.size());
     for (auto &i:nums) {
         if (i <= 0 || i > le) {
             i = 1;
@@ -1830,8 +1820,8 @@ int Leetcode_solution::firstMissingPositive(vector<int> &nums) {
  * 向前弹出并且计算填充大小,知道所有的列全部扫描完成
  * */
 // 双指针法,若左端存在一个大于自己的柱子则自己一定被填满
-int Leetcode_solution::trap(vector<int> &height) {
-    int le = height.size();
+[[maybe_unused]] int Leetcode_solution::trap(vector<int> &height) {
+    int le = static_cast<int>(height.size());
     int left_max = 0, right_max = 0, left = 0, right = le - 1, sum = 0;
     while (left < right) {
         if (height[left] < height[right]) {
@@ -1858,8 +1848,8 @@ int Leetcode_solution::trap(vector<int> &height) {
  * 不要给另外的数组分配额外的空间，你必须原地修改输入数组、使用 O(1) 的额外空间解决这一问题
  * 你可以假设数组中的所有字符都是 ASCII 码表中的可打印字符
  * */
-void Leetcode_solution::reverseString(vector<char> &s) {
-    int le = s.size();
+[[maybe_unused]] void Leetcode_solution::reverseString(vector<char> &s) {
+    int le = static_cast<int>(s.size());
     reverse_coString(s, 0, le - 1);
 }
 
@@ -1877,7 +1867,7 @@ void Leetcode_solution::reverse_coString(vector<char> &s, int left, int right) {
  * 编写一个函数来计算可以凑成总金额所需的最少的硬币个数
  * 如果没有任何一种硬币组合能组成总金额，返回 -1
  * */
-int Leetcode_solution::coinChange(vector<int> &coins, int amount) {
+[[maybe_unused]] int Leetcode_solution::coinChange(vector<int> &coins, int amount) {
     int Max = amount + 1;
     vector<int> dp(amount + 1, Max);
     dp[0] = 0;
@@ -1897,9 +1887,9 @@ int Leetcode_solution::coinChange(vector<int> &coins, int amount) {
  * 注意你不能在买入股票前卖出股票
  * */
 // 动态规划1--利用了dp数组,时间复杂度O(n),空间复杂度O(n)
-int Leetcode_solution::maxProfit_1(vector<int> &prices) {
+[[maybe_unused]] int Leetcode_solution::maxProfit_1(vector<int> &prices) {
     // 取得长度,若为0则返回0,否则创建一个dp数组,从后向前遍历,最后一个直接跳过
-    int le = prices.size();
+    int le = static_cast<int>(prices.size());
     if (le == 0) {
         return 0;
     }
@@ -1922,9 +1912,9 @@ int Leetcode_solution::maxProfit_1(vector<int> &prices) {
 }
 
 // 动态规划2--1的优化,时间复杂度O(n),空间复杂度O(1)
-int Leetcode_solution::maxProfit_2(vector<int> &prices) {
+[[maybe_unused]] int Leetcode_solution::maxProfit_2(vector<int> &prices) {
     // 取得长度,若为0则返回0
-    int le = prices.size();
+    int le = static_cast<int>(prices.size());
     if (le == 0) {
         return 0;
     }
@@ -1949,7 +1939,7 @@ int Leetcode_solution::maxProfit_2(vector<int> &prices) {
  * 这条路径可能穿过根结点
  * */
 // 分别计算每个节点作为根节点时的长度,若大于max则更新max
-int Leetcode_solution::diameterOfBinaryTree(TreeNode *root) {
+[[maybe_unused]] int Leetcode_solution::diameterOfBinaryTree(TreeNode *root) {
     int max = 1;
     deep4Tree(root, max);
     return max - 1;
@@ -1979,7 +1969,7 @@ int Leetcode_solution::deep4Tree(TreeNode *root, int &max) {
  * 就可以将数组三等分
  * */
 // 将其分为三份可以先将其总和求出来取查看是否能取出来两份,再判断第三份是否为空
-bool Leetcode_solution::canThreePartsEqualSum(vector<int> &A) {
+[[maybe_unused]] bool Leetcode_solution::canThreePartsEqualSum(vector<int> &A) {
     // 求和数组
     int sum = 0;
     for (const auto &i:A) {
@@ -1994,7 +1984,7 @@ bool Leetcode_solution::canThreePartsEqualSum(vector<int> &A) {
     int lastNode = 0;
     int count = 0;
     int temp = 0;
-    int le = A.size();
+    int le = static_cast<int>(A.size());
     // 循环相加,当等于sum时计数加一,加到2时跳出循环
     while (lastNode != le) {
         temp += A[lastNode];
@@ -2019,15 +2009,15 @@ bool Leetcode_solution::canThreePartsEqualSum(vector<int> &A) {
  * 如："12"×"5"="60"
  * */
 // 列竖式进行相乘
-string Leetcode_solution::multiply(string num1, string num2) {
+[[maybe_unused]] string Leetcode_solution::multiply(string num1, string num2) {
     // 任意一个值为零则结果必定为0
     if (num1 == "0" || num2 == "0") {
         return "0";
     }
     // m位和n位相乘最长是m+n位,创建一个长为m+n的字符串进行存储
-    int l1 = num1.size();
-    int l2 = num2.size();
-    string res(l1 + l2, '0');
+    int l1 = static_cast<int>(num1.size());
+    int l2 = static_cast<int>(num2.size());
+    string res(static_cast<unsigned long long int>(l1 + l2), '0');
     // 存储进位
     int over_sign = 0;
     // 取出num1的一个数分别于num2中的每个相乘
@@ -2061,7 +2051,7 @@ string Leetcode_solution::multiply(string num1, string num2) {
  * 两个字符串完全匹配才算匹配成功。
  */
 // 进行匹配,在dp[i-1][j-1]为真的情况下,分别对?,*进行匹配 ※※※
-bool Leetcode_solution::isMatch_Wildcard(string s, string p) {
+[[maybe_unused]] bool Leetcode_solution::isMatch_Wildcard(string s, string p) {
     // 若相等或者直接匹配整个字符串则直接返回真
     if (s == p || p == "*") {
         return true;
@@ -2071,8 +2061,8 @@ bool Leetcode_solution::isMatch_Wildcard(string s, string p) {
         return false;
     }
     // 创建一个dp数组并将所有元素其置为假,dp[0][0]初始化为false
-    int ls = s.size();
-    int lp = p.size();
+    int ls = static_cast<int>(s.size());
+    int lp = static_cast<int>(p.size());
     bool dp[lp + 1][ls + 1];
     for (int i = 0; i < lp + 1; ++i) {
         for (int j = 0; j < ls + 1; ++j) {
@@ -2115,8 +2105,8 @@ bool Leetcode_solution::isMatch_Wildcard(string s, string p) {
 /* 给定一个没有重复数字的序列，返回其所有可能的全排列
  * */
 // 递归生成全排列
-vector<vector<int>> Leetcode_solution::permute(vector<int> &nums) {
-    int le = nums.size();
+[[maybe_unused]] vector<vector<int>> Leetcode_solution::permute(vector<int> &nums) {
+    int le = static_cast<int>(nums.size());
     vector<int> temp;
     vector<vector<int>> res;
     vector<int> map_my(le, 1);
@@ -2127,7 +2117,7 @@ vector<vector<int>> Leetcode_solution::permute(vector<int> &nums) {
 // 递归生成全排列
 void
 Leetcode_solution::co_permute(vector<int> &nums, vector<int> &my_map, const vector<int> &li, vector<vector<int>> &res) {
-    int le = nums.size();
+    int le = static_cast<int>(nums.size());
     if (li.size() == le) {
         res.push_back(li);
     }
@@ -2146,9 +2136,9 @@ Leetcode_solution::co_permute(vector<int> &nums, vector<int> &my_map, const vect
 /* 给定一个无序的整数数组，找到其中最长上升子序列的长度
  * */
 // 动态规划--复杂度O(n^2),dp存储由当前数字结尾的上升子序列的长度
-int Leetcode_solution::lengthOfLIS(vector<int> &nums) {
+[[maybe_unused]] int Leetcode_solution::lengthOfLIS(vector<int> &nums) {
     // 创建dp数组,用于存储最大长度
-    int le = nums.size();
+    int le = static_cast<int>(nums.size());
     vector<int> dp(le, 1);
     // 填充dp数组
     for (int i = 1; i < le; ++i) {
@@ -2173,15 +2163,15 @@ int Leetcode_solution::lengthOfLIS(vector<int> &nums) {
  * 找到给定的二维数组中最大的岛屿面积。(如果没有岛屿，则返回面积为0)
  * */
 // 深度搜索-dps
-int Leetcode_solution::maxAreaOfIsland(vector<vector<int>> &grid) {
+[[maybe_unused]] int Leetcode_solution::maxAreaOfIsland(vector<vector<int>> &grid) {
     // 判断是否存在元素
     if (grid.empty() || grid[0].empty()) {
         return 0;
     }
     //记录最大值和二维数组大小
     int max = 0;
-    int row = grid.size();
-    int col = grid[0].size();
+    int row = static_cast<int>(grid.size());
+    int col = static_cast<int>(grid[0].size());
     // 遍历将遍历到的部分进行扩展搜索直到无法扩展
     for (int i = 0; i < row; ++i) {
         for (int j = 0; j < col; ++j) {
@@ -2218,8 +2208,8 @@ int Leetcode_solution::dps_maxAreaOfIsland(vector<vector<int>> &grid, int dx, in
 
 
 // 动态规划-复杂度为O(n^2)
-int Leetcode_solution::jump_1(vector<int> &nums) {
-    int le = nums.size();
+[[maybe_unused]] int Leetcode_solution::jump_1(vector<int> &nums) {
+    int le = static_cast<int>(nums.size());
     if (le == 0) {
         return 0;
     }
@@ -2236,12 +2226,12 @@ int Leetcode_solution::jump_1(vector<int> &nums) {
     }
     int res = dp[0];
     free(dp);
-    return dp[0];
+    return res;
 }
 
 // 模拟跳跃
-int Leetcode_solution::jump_2(vector<int> &nums) {
-    int le = nums.size();
+[[maybe_unused]] int Leetcode_solution::jump_2(vector<int> &nums) {
+    int le = static_cast<int>(nums.size());
     int steps = 0;
     int start = 0;
     int end = 1;
@@ -2264,7 +2254,7 @@ int Leetcode_solution::jump_2(vector<int> &nums) {
  * 你可以假设字符串中只包含大小写英文字母（a至z）
  * */
 // 一次遍历,若出现重复则计数，不重复则加入
-string Leetcode_solution::compressString(const string &S) {
+[[maybe_unused]] string Leetcode_solution::compressString(const string &S) {
     if (S.empty()) {
         return S;
     }
@@ -2292,7 +2282,7 @@ string Leetcode_solution::compressString(const string &S) {
 /* 给定一个可包含重复数字的序列，返回所有不重复的全排列
  * */
 // 利用map去重,同时保证得以不会漏掉结果
-vector<vector<int>> Leetcode_solution::permuteUnique(vector<int> &nums) {
+[[maybe_unused]] vector<vector<int>> Leetcode_solution::permuteUnique(vector<int> &nums) {
     // 生成map
     map<int, int> info;
     for (auto i:nums) {
@@ -2300,14 +2290,13 @@ vector<vector<int>> Leetcode_solution::permuteUnique(vector<int> &nums) {
     }
     vector<vector<int>> res;
     vector<int> temp;
-    dps_permuteUnique(info, temp, res, nums.size());
+    dps_permuteUnique(info, temp, res, static_cast<int>(nums.size()));
     return res;
 }
 
 // 取map里的值进行全排列,在同一个层中每个数只能取一次
 void
 Leetcode_solution::dps_permuteUnique(map<int, int> &my_map, const vector<int> &li, vector<vector<int>> &res, int size) {
-    int le = my_map.size();
     // 长度足够则进行返回
     if (li.size() == size) {
         res.push_back(li);
@@ -2331,9 +2320,9 @@ Leetcode_solution::dps_permuteUnique(map<int, int> &my_map, const vector<int> &l
  * 将图像顺时针旋转 90 度
  * */
 // 对每个位置进行旋转操作,仅仅移动为操作过的部分,时间复杂度为O(n^2),空间复杂度为O(1)
-void Leetcode_solution::rotate(vector<vector<int>> &matrix) {
+[[maybe_unused]] void Leetcode_solution::rotate(vector<vector<int>> &matrix) {
     // 矩阵维数n
-    int n = matrix.size();
+    int n = static_cast<int>(matrix.size());
     // 遍历未移动的数字,数量为n^2/4个每个进行4次移动,即一次旋转操作
     for (int i = 0; i < n / 2; ++i) {
         for (int j = 0; j < n - 1 - 2 * i; ++j) {
@@ -2356,7 +2345,7 @@ void Leetcode_solution::rotate(vector<vector<int>> &matrix) {
  * 返回词汇表 words 中你掌握的所有单词的 长度之和
  * */
 // 利用哈希表进行检索,每个单词一个哈希表,单词哈希表每项应该小于给定字母组合的哈希表
-int Leetcode_solution::countCharacters(vector<string> &words, const string &chars) {
+[[maybe_unused]] int Leetcode_solution::countCharacters(vector<string> &words, const string &chars) {
     // 两个用于对照的哈希表
     int info[26];
     int ch[26];
@@ -2370,7 +2359,7 @@ int Leetcode_solution::countCharacters(vector<string> &words, const string &char
     int count = 0;
     // 对单词进行计数
     for (const auto &word:words) {
-        int le = word.size();
+        int le = static_cast<int>(word.size());
 
         for (auto c:word) {
             ++info[c - 'a'];
@@ -2393,7 +2382,7 @@ int Leetcode_solution::countCharacters(vector<string> &words, const string &char
  * 字母异位词指字母相同，但排列不同的字符串
  * */
 // 哈希表做法
-vector<vector<string>> Leetcode_solution::groupAnagrams(vector<string> &strs) {
+[[maybe_unused]] vector<vector<string>> Leetcode_solution::groupAnagrams(vector<string> &strs) {
     // 以哈希表为map下标进行存储字符串
     map<vector<int>, vector<string>> info;
     for (const auto &word:strs) {
@@ -2418,17 +2407,17 @@ vector<vector<string>> Leetcode_solution::groupAnagrams(vector<string> &strs) {
  * 每一种解法包含一个明确的 n 皇后问题的棋子放置方案,该方案中 'Q' 和 '.' 分别代表了皇后和空位
  * */
 // 递归回溯法-时间复杂度O(n!),空间复杂度O(n),需要5*N的空间分别报存行,对角线信息
-vector<vector<string>> Leetcode_solution::solveNQueens(int n) {
+[[maybe_unused]] vector<vector<string>> Leetcode_solution::solveNQueens(int n) {
     // 存储结果
     vector<vector<string>> res;
     // 存储可供填写的棋盘
-    vector<string> temp(n, string(n, '.'));
+    vector<string> temp(static_cast<unsigned long long int>(n), string(static_cast<unsigned long long int>(n), '.'));
     // 判断在列上是否存在皇后,由(x,y)映射为col[y]
-    vector<bool> col(n, true);
+    vector<bool> col(static_cast<unsigned long long int>(n), true);
     // 判断左斜对角线上是否有皇后,由(x,y)映射为x-y+n-1
-    vector<bool> left_line(2 * n - 1, true);
+    vector<bool> left_line(static_cast<unsigned long long int>(2 * n - 1), true);
     // 判断右斜对角线上是否有皇后,由(x,y)映射为x+y
-    vector<bool> right_line(2 * n - 1, true);
+    vector<bool> right_line(static_cast<unsigned long long int>(2 * n - 1), true);
     // 递归进行摆放棋子,回溯进行删减
     solveNQueens_dg(col, left_line, right_line, temp, 0, res);
     return res;
@@ -2439,7 +2428,7 @@ void
 Leetcode_solution::solveNQueens_dg(vector<bool> &col, vector<bool> &left, vector<bool> &right, vector<string> &temp,
                                    int deep,
                                    vector<vector<string>> &res) {
-    int n = col.size();
+    int n = static_cast<int>(col.size());
     // 深度即为已经放置的棋子数量,因此当深度等于要摆放的总棋子数时将答案加入
     if (deep == n) {
         res.push_back(temp);
@@ -2471,8 +2460,8 @@ Leetcode_solution::solveNQueens_dg(vector<bool> &col, vector<bool> &left, vector
  * 返回其最大和
  * */
 // 动态规划,贪心算法-时间复杂度O(n),空间复杂度O(1)
-int Leetcode_solution::maxSubArray(vector<int> &nums) {
-    int le = nums.size();
+[[maybe_unused]] int Leetcode_solution::maxSubArray(vector<int> &nums) {
+    int le = static_cast<int>(nums.size());
     int dp = nums[0];
     int before_num = nums[0];
     // 将每个数和之前的最大和相比较直到,若之前为负数则后一个直接取得,否则加在之前的上面,再进行取最大值操作
@@ -2491,7 +2480,7 @@ int Leetcode_solution::maxSubArray(vector<int> &nums) {
 // 若想不覆盖则需要满足:
 // 矩形左边应大于另一个右边,右边应该小于另一个左边,下边应大于另一个上边,上边应小于另一个下边
 // 因此若是覆盖则应该不满足以上条件
-bool Leetcode_solution::isRectangleOverlap(vector<int> &rec1, vector<int> &rec2) {
+[[maybe_unused]] bool Leetcode_solution::isRectangleOverlap(vector<int> &rec1, vector<int> &rec2) {
     return !(rec2[2] <= rec1[0] || rec2[0] >= rec1[2] || rec2[3] <= rec1[1] || rec2[1] >= rec1[3]);
 }
 
@@ -2500,15 +2489,15 @@ bool Leetcode_solution::isRectangleOverlap(vector<int> &rec1, vector<int> &rec2)
  * 请按照顺时针螺旋顺序，返回矩阵中的所有元素
  * */
 // 转圈模拟取值
-vector<int> Leetcode_solution::spiralOrder(vector<vector<int>> &matrix) {
+[[maybe_unused]] vector<int> Leetcode_solution::spiralOrder(vector<vector<int>> &matrix) {
     // 存储数字
     vector<int> res;
     if (matrix.empty()) {
         return res;
     }
     // 创建定位坐标
-    int row = matrix.size();
-    int col = matrix[0].size();
+    int row = static_cast<int>(matrix.size());
+    int col = static_cast<int>(matrix[0].size());
     int r1 = 0, r2 = row - 1;
     int c1 = 0, c2 = col - 1;
     while (r1 <= r2 && c1 <= c2) {
@@ -2544,11 +2533,11 @@ vector<int> Leetcode_solution::spiralOrder(vector<vector<int>> &matrix) {
  * 判断你是否能够到达最后一个位置
  * */
 // 模拟跳跃,若跳过去末尾则说明可以达到末尾,若leftPoint超越rightPoint说明已经无法前进则无法到达终点
-bool Leetcode_solution::canJump(vector<int> &nums) {
+[[maybe_unused]] bool Leetcode_solution::canJump(vector<int> &nums) {
     int leftPoint = 0;
     int rightPoint = 0;
     int maxReach = 0;
-    int le = nums.size();
+    int le = static_cast<int>(nums.size());
     // 模拟跳跃
     while (leftPoint <= rightPoint) {
         for (int i = leftPoint; i <= rightPoint; ++i) {
@@ -2572,7 +2561,7 @@ bool Leetcode_solution::canJump(vector<int> &nums) {
  * 假设字符串的长度不会超过 1010
  * */
 // 哈希表
-int Leetcode_solution::longestPalindrome(const string &s) {
+[[maybe_unused]] int Leetcode_solution::longestPalindrome(const string &s) {
     // 小写映射为前26个,大写映射为后26个
     int counter[52] = {0};
     for (auto i:s) {
@@ -2604,7 +2593,7 @@ int Leetcode_solution::longestPalindrome(const string &s) {
 /* 输入整数数组 arr ，找出其中最小的 k 个数
  * */
 // 桶排序
-vector<int> Leetcode_solution::getLeastNumbers(vector<int> &arr, int k) {
+[[maybe_unused]] vector<int> Leetcode_solution::getLeastNumbers(vector<int> &arr, int k) {
     int info[10001] = {0};
     for (auto i:arr) {
         ++info[i];
@@ -2627,7 +2616,7 @@ vector<int> Leetcode_solution::getLeastNumbers(vector<int> &arr, int k) {
 /* 给出一个区间的集合，请合并所有重叠的区间
  * */
 // 先将区间排序,则可合并的区间一定是连续的区间,后只需要一次遍历即可
-vector<vector<int>> Leetcode_solution::mergeRange(vector<vector<int>> &intervals) {
+[[maybe_unused]] vector<vector<int>> Leetcode_solution::mergeRange(vector<vector<int>> &intervals) {
     if (intervals.empty()) {
         return intervals;
     }
@@ -2653,7 +2642,8 @@ vector<vector<int>> Leetcode_solution::mergeRange(vector<vector<int>> &intervals
  * 在列表中插入一个新的区间，你需要确保列表中的区间仍然有序且不重叠(如果有必要的话，可以合并区间)
  * */
 // 一次遍历,在插入位置进行插入,后接合并
-vector<vector<int>> Leetcode_solution::insertRange(vector<vector<int>> &intervals, vector<int> &newInterval) {
+[[maybe_unused]] vector<vector<int>>
+Leetcode_solution::insertRange(vector<vector<int>> &intervals, vector<int> &newInterval) {
     vector<vector<int>> res;
     int lastNode = -1;
     int t = 0;
@@ -2700,8 +2690,8 @@ vector<vector<int>> Leetcode_solution::insertRange(vector<vector<int>> &interval
  * 说明：一个单词是指仅由字母组成、不包含任何空格字符的 最大子字符串
  * */
 // 先去尾部空格,然后扫描下一个空格的位置,作差即为长度
-int Leetcode_solution::lengthOfLastWord(string s) {
-    int l = s.size();
+[[maybe_unused]] int Leetcode_solution::lengthOfLastWord(string s) {
+    int l = static_cast<int>(s.size());
     int wordLen = 0;
     int t = l - 1;
     while (s[t] == ' ') {
@@ -2718,8 +2708,8 @@ int Leetcode_solution::lengthOfLastWord(string s) {
 /* 给定一个正整数 n，生成一个包含 1 到 n2 所有元素，且元素按顺时针顺序螺旋排列的正方形矩阵
  * */
 // 模拟旋转生成矩阵
-vector<vector<int>> Leetcode_solution::generateMatrix(int n) {
-    vector<vector<int>> res(n, vector<int>(n, 0));
+[[maybe_unused]] vector<vector<int>> Leetcode_solution::generateMatrix(int n) {
+    vector<vector<int>> res(static_cast<unsigned long long int>(n), vector<int>(n, 0));
     int numPut = 0, deep = 0, p = 0, q = 0, dp = 0, dq = 1;
     while (n * n > numPut) {
         numPut++;
@@ -2749,9 +2739,9 @@ vector<vector<int>> Leetcode_solution::generateMatrix(int n) {
  * 给定 n 和 k，返回第 k 个排列
  * */
 // 通过阶乘进行映射,k除以对应位置下一位的阶乘可以得到偏移量,从而直接从剩余数字中选择出对应位置数字
-string Leetcode_solution::getPermutation(int n, int k) {
+[[maybe_unused]] string Leetcode_solution::getPermutation(int n, int k) {
     // res存储结果,初始化为n个'0'
-    string res(n, '0');
+    string res(static_cast<unsigned long long int>(n), '0');
     // 生成阶乘数组和标志数组
     int *info = static_cast<int *>(malloc(sizeof(int) * n));
     info[0] = 1;
@@ -2792,7 +2782,7 @@ string Leetcode_solution::getPermutation(int n, int k) {
  * 从一个水壶向另外一个水壶倒水，直到装满或者倒空
  * */
 // 模拟加水逐步增加,比目标值小则加较少的水,比目标值大则减去较大的水
-bool Leetcode_solution::canMeasureWater(int x, int y, int z) {
+[[maybe_unused]] bool Leetcode_solution::canMeasureWater(int x, int y, int z) {
     // 两个偶数杯子不能产生奇数水量且两个杯子应该能盛放下目标水量
     if ((x % 2 == 0 && y % 2 == 0 && z % 2) || x + y < z) {
         return false;
@@ -2835,7 +2825,7 @@ bool Leetcode_solution::canMeasureWater(int x, int y, int z) {
  * 你可以假设数组是非空的，并且给定的数组总是存在多数元素
  * */
 // 由于是多数元素,可以依靠人数碾压,先取一个候选多数元素,当不同时进行多数元素-1,到最后一定只有多数元素是由于>0被保存下来
-int Leetcode_solution::majorityElement(vector<int> &nums) {
+[[maybe_unused]] int Leetcode_solution::majorityElement(vector<int> &nums) {
     int k = 0;
     int temp = nums[0];
     for (auto i:nums) {
@@ -2851,7 +2841,7 @@ int Leetcode_solution::majorityElement(vector<int> &nums) {
 /* 给定一个链表,旋转链表,将链表每个节点向右移动 k 个位置,其中 k 是非负数
  * */
 // 形成闭合链表环,重新选取断点
-ListNode *Leetcode_solution::rotateRight(ListNode *head, int k) {
+[[maybe_unused]] ListNode *Leetcode_solution::rotateRight(ListNode *head, int k) {
     // 形成闭环并计数
     int len = 1;
     auto p = head;
@@ -2877,12 +2867,12 @@ ListNode *Leetcode_solution::rotateRight(ListNode *head, int k) {
 /* 给定整数数组 A，每次 move 操作将会选择任意 A[i]，并将其递增 1
  * 返回使 A 中的每个值都是唯一的最少操作次数
  * */
-int Leetcode_solution::minIncrementForUnique(vector<int> &A) {
+[[maybe_unused]] int Leetcode_solution::minIncrementForUnique(vector<int> &A) {
     if (A.empty()) {
         return 0;
     }
     sort(A.begin(), A.end());
-    int le = A.size();
+    int le = static_cast<int>(A.size());
     int res = 0;
     for (int j = 1; j < le; ++j) {
         if (A[j] <= A[j - 1]) {
@@ -2897,9 +2887,9 @@ int Leetcode_solution::minIncrementForUnique(vector<int> &A) {
  * 返回最长字符串 X，要求满足 X 能除尽 str1 且 X 能除尽 str2
  * */
 // 辗转相除法,求字符串最大公因式
-string Leetcode_solution::gcdOfStrings(string str1, string str2) {
-    int a = 0, b = str1.size();
-    int c = 0, d = str2.size();
+[[maybe_unused]] string Leetcode_solution::gcdOfStrings(string str1, string str2) {
+    int a = 0, b = static_cast<int>(str1.size());
+    int c = 0, d = static_cast<int>(str2.size());
     while (a < b && c < d) {
         int i = a, j = c;
         while (i < b && j < d) {
@@ -2928,7 +2918,7 @@ string Leetcode_solution::gcdOfStrings(string str1, string str2) {
  * 如果有两个中间结点，则返回第二个中间结点
  * */
 // 快慢指针法-快指针走两步,慢指针走一步从而使得当快指针到末尾时,慢指针置走了一半
-ListNode *Leetcode_solution::middleNode(ListNode *head) {
+[[maybe_unused]] ListNode *Leetcode_solution::middleNode(ListNode *head) {
     auto left = head;
     auto right = head;
     // 步进指针
@@ -2946,7 +2936,7 @@ ListNode *Leetcode_solution::middleNode(ListNode *head) {
  * 问总共有多少条不同的路径？
  * */
 // 动态规划
-int Leetcode_solution::uniquePaths(int m, int n) {
+[[maybe_unused]] int Leetcode_solution::uniquePaths(int m, int n) {
     // 存储上一行的总路径数
     auto counter = static_cast<int *>(malloc(sizeof(int) * m));
     for (int i = 0; i < m; ++i) {
@@ -2961,7 +2951,7 @@ int Leetcode_solution::uniquePaths(int m, int n) {
     int res = counter[m - 1];
     free(counter);
     // 最后一行,最后一个即为结果
-    return counter[m - 1];
+    return res;
 }
 
 // 不同路径 II
@@ -2970,9 +2960,9 @@ int Leetcode_solution::uniquePaths(int m, int n) {
  * 现在考虑网格中有障碍物,那么从左上角到右下角将会有多少条不同的路径？
  * */
 // 动态规划在不同路径的基础上,将有障碍物的点置为0
-int Leetcode_solution::uniquePathsWithObstacles(vector<vector<int>> &obstacleGrid) {
-    int n = obstacleGrid.size();
-    int m = obstacleGrid[0].size();
+[[maybe_unused]] int Leetcode_solution::uniquePathsWithObstacles(vector<vector<int>> &obstacleGrid) {
+    int n = static_cast<int>(obstacleGrid.size());
+    int m = static_cast<int>(obstacleGrid[0].size());
     // 若起点或者终点有障碍物则不存在路径,返回0
     if (obstacleGrid[0][0] || obstacleGrid[n - 1][m - 1]) {
         return 0;
@@ -3004,9 +2994,9 @@ int Leetcode_solution::uniquePathsWithObstacles(vector<vector<int>> &obstacleGri
  * 说明：每次只能向下或者向右移动一步
  * */
 // 动态规划-使用一行数组存储上一行取得的最大值
-int Leetcode_solution::minPathSum(vector<vector<int>> &grid) {
-    int n = grid.size();
-    int m = grid[0].size();
+[[maybe_unused]] int Leetcode_solution::minPathSum(vector<vector<int>> &grid) {
+    int n = static_cast<int>(grid.size());
+    int m = static_cast<int>(grid[0].size());
     auto dp = static_cast<int *>(malloc(sizeof(int) * m));
     // 判断第一行每个点的总和,和为前一个加上自身
     dp[0] = grid[0][0];
@@ -3033,7 +3023,7 @@ int Leetcode_solution::minPathSum(vector<vector<int>> &grid) {
 /* 验证给定的字符串是否可以解释为十进制数字
  * */
 // 有限状态机解法
-bool Leetcode_solution::isNumber(const string &s) {
+[[maybe_unused]] bool Leetcode_solution::isNumber(const string &s) {
     // 状态机映射表,将{BLANK,SIGN,NUM,DOT,E}映射为要跳转的状态
     int info[9][5]{
             {0,  1,  2,  3,  -1},   // 0状态,未检测状态
@@ -3047,7 +3037,7 @@ bool Leetcode_solution::isNumber(const string &s) {
             {8,  -1, -1, -1, -1}    // 8状态,检测完成
     };
     int state = 0;
-    int le = s.size();
+    int le = static_cast<int>(s.size());
     for (int lastNode = 0; lastNode < le; ++lastNode) {
         int t = 0;
         // 判断取得的字符
@@ -3088,12 +3078,12 @@ bool Leetcode_solution::isNumber(const string &s) {
  * 给定一个预约请求序列,替按摩师找到最优的预约集合(总预约时间最长),返回总的分钟数
  * */
 // 动态规划,若扫描到nums[i]则只需要将nums[i]加上前i-2个数字中的最大值即可为以当前数字结尾的最大值
-int Leetcode_solution::massage(vector<int> &nums) {
+[[maybe_unused]] int Leetcode_solution::massage(vector<int> &nums) {
     // 避免出现空数组
     if (nums.empty()) {
         return 0;
     }
-    int le = nums.size();
+    int le = static_cast<int>(nums.size());
     // 保存第i-1个数字
     int before_right = 0;
     // 保存第i-2个数字
@@ -3116,7 +3106,7 @@ int Leetcode_solution::massage(vector<int> &nums) {
  * 你可以假设除了整数 0 之外，这个整数不会以零开头
  * */
 // 从末尾判断是否溢出,只要存在一次不溢出则直接返回原数组,遍历完毕若溢出则进行头部加1
-vector<int> Leetcode_solution::plusOne(vector<int> &digits) {
+[[maybe_unused]] vector<int> Leetcode_solution::plusOne(vector<int> &digits) {
     int le = static_cast<int>(digits.size()) - 1;
     // 标记是否要+1,默认为有个1要加
     bool overflow_flag = true;
@@ -3145,8 +3135,8 @@ vector<int> Leetcode_solution::plusOne(vector<int> &digits) {
  * 请你返回最终形体的表面积
  * */
 // 求出总的方块数,总的接触面数,将总面数减去接触面抵消的面从而得到表面积
-int Leetcode_solution::surfaceArea(vector<vector<int>> &grid) {
-    int n = grid.size();
+[[maybe_unused]] int Leetcode_solution::surfaceArea(vector<vector<int>> &grid) {
+    int n = static_cast<int>(grid.size());
     // 总块数
     int blockNum = 0;
     // 总接触面数
@@ -3178,12 +3168,12 @@ int Leetcode_solution::surfaceArea(vector<vector<int>> &grid) {
  * 输入为非空字符串且只包含数字 1 和
  * */
 // 进行逐位加和,标记是否溢出,溢出为在下一位被处理
-string Leetcode_solution::addBinary(const string &a, const string &b) {
-    int l1 = a.size();
-    int l2 = b.size();
+[[maybe_unused]] string Leetcode_solution::addBinary(const string &a, const string &b) {
+    int l1 = static_cast<int>(a.size());
+    int l2 = static_cast<int>(b.size());
     int lr = l1 > l2 ? l1 : l2;
     bool ofs = false;
-    string res(lr, '0');
+    string res(static_cast<unsigned long long int>(lr), '0');
     // 逐位加和
     for (int i = lr - 1; i >= 0; --i) {
         // 上一次溢出处理
@@ -3217,10 +3207,10 @@ string Leetcode_solution::addBinary(const string &a, const string &b) {
  * 如果我们的地图上只有陆地或者海洋，请返回 -1
  * */
 // 动态规划-从左上角扫描后再从右下角扫描,取最大值为结果
-int Leetcode_solution::maxDistance(vector<vector<int>> &grid) {
-    int n = grid.size();
+[[maybe_unused]] int Leetcode_solution::maxDistance(vector<vector<int>> &grid) {
+    int n = static_cast<int>(grid.size());
     int INF = int(1E6);
-    vector<vector<int>> f(n, vector<int>(n, 0));
+    vector<vector<int>> f(static_cast<unsigned long long int>(n), vector<int>(n, 0));
     vector<vector<int>> &a = grid;
     for (int i = 0; i < n; ++i) {
         for (int j = 0; j < n; ++j) {
@@ -3261,7 +3251,7 @@ int Leetcode_solution::maxDistance(vector<vector<int>> &grid) {
  * 从数字0开始每次删除第3个数字，则删除的前4个数字依次是2、0、4、1，因此最后剩下的数字是3
  * */
 // 约瑟夫环问题,在多次删除后,只剩下一个数字其下标为0,根据分析下标变化可反推出剩余的数字在原数组的位置
-int Leetcode_solution::lastRemaining(int n, int m) {
+[[maybe_unused]] int Leetcode_solution::lastRemaining(int n, int m) {
     // 初始下标
     int lastNode = 0;
     // 反推,上一次下标=(步长+当前下标)%上一次长度
@@ -3285,7 +3275,7 @@ int Leetcode_solution::lastRemaining(int n, int m) {
  * 即便有多个满足要求的答案存在,你也只需返回其中任意一个
  * */
 // 求出每个括号所在深度,并从中间分开或者根据奇偶性分开
-vector<int> Leetcode_solution::maxDepthAfterSplit(string seq) {
+[[maybe_unused]] vector<int> Leetcode_solution::maxDepthAfterSplit(string seq) {
     // 取得深度表,将深度大于一半的置为1,否则置为0
     /*if(seq.empty()){return vector<int>{};}
     int le = seq.size();
@@ -3304,7 +3294,7 @@ vector<int> Leetcode_solution::maxDepthAfterSplit(string seq) {
     }
     return res;*/
     // 取得深度表，将深度偶数置为1,奇数置为0
-    int le = seq.size();
+    int le = static_cast<int>(seq.size());
     vector<int> res(le, 0);
     int deep = 0;
     // 若形成((则deep+1,若形成))则deep-1,若形成)(或()则deep不变
@@ -3329,13 +3319,13 @@ vector<int> Leetcode_solution::maxDepthAfterSplit(string seq) {
  * 输入单词数组 words 至少包含一个单词
 */
 // 首先按照单词间间隔一个空格进行分行,若无法容纳更多单词,则将剩余空格进行分配
-vector<string> Leetcode_solution::fullJustify(vector<string> &words, int maxWidth) {
-    int wordsSum = words.size();
+[[maybe_unused]] vector<string> Leetcode_solution::fullJustify(vector<string> &words, int maxWidth) {
+    int wordsSum = static_cast<int>(words.size());
     vector<string> res;
     // 遍历单词
     for (int i = 0; i < wordsSum; ++i) {
         int st = i;         // 记录行开始位置
-        int line = words[i].size();         // 记录行单词空格占用数量
+        int line = static_cast<int>(words[i].size());         // 记录行单词空格占用数量
         // 循环取词,直到放不下
         while (i + 1 < wordsSum && line + words[i + 1].size() < maxWidth) {
             line += (int) words[i + 1].size() + 1;
@@ -3350,10 +3340,10 @@ vector<string> Leetcode_solution::fullJustify(vector<string> &words, int maxWidt
                 temp += ' ';
                 temp += words[lastNode];
             }
-            temp += string(blanks, ' ');     // 补齐空格
+            temp += string(static_cast<unsigned long long int>(blanks), ' ');     // 补齐空格
             res.push_back(temp);
         } else if (i == st) {        // 只有一个单词,空格接在后面
-            res.push_back(words[i] + string(blanks, ' '));
+            res.push_back(words[i] + string(static_cast<unsigned long long int>(blanks), ' '));
         } else {          // 多个单词进行平均分配空格
             int nums = i - st;
             vector<int> info(i - st, blanks / nums);
@@ -3364,7 +3354,7 @@ vector<string> Leetcode_solution::fullJustify(vector<string> &words, int maxWidt
             }
             string temp(words[st]);
             for (int lastNode = st + 1; lastNode <= i; ++lastNode) {
-                temp += string(info[lastNode - st - 1], ' ');
+                temp += string(static_cast<unsigned long long int>(info[lastNode - st - 1]), ' ');
                 temp += words[lastNode];
             }
             res.push_back(temp);
@@ -3386,9 +3376,9 @@ vector<string> Leetcode_solution::fullJustify(vector<string> &words, int maxWidt
  * 下一个状态是通过将上述规则同时应用于当前状态下的每个细胞所形成的，其中细胞的出生和死亡是同时发生的
  * */
 // 将状态映射为唯一值并将映射值分成两类,分别填入1,0
-void Leetcode_solution::gameOfLife(vector<vector<int>> &board) {
-    int m = board.size();
-    int n = board[0].size();
+[[maybe_unused]] void Leetcode_solution::gameOfLife(vector<vector<int>> &board) {
+    int m = static_cast<int>(board.size());
+    int n = static_cast<int>(board[0].size());
     for (int row = 0; row < m; ++row) {
         for (int col = 0; col < n; ++col) {
             int temp = 0;
@@ -3423,12 +3413,12 @@ void Leetcode_solution::gameOfLife(vector<vector<int>> &board) {
  * 最后一个目录名（如果存在）不能以 / 结尾
  * 此外,规范路径必须是表示绝对路径的最短字符串
  * */
-string Leetcode_solution::simplifyPath(string path) {
+[[maybe_unused]] string Leetcode_solution::simplifyPath(string path) {
     path += '/';
-    int le = path.size();
+    int le = static_cast<int>(path.size());
     vector<int> dv(le, 0);
     int before = 0;
-    string res(le, '/');
+    string res(static_cast<unsigned long long int>(le), '/');
     int s_lastNode = 0;
     int temp = 0;
     for (int k = 0; k < le; ++k) {
@@ -3472,7 +3462,7 @@ string Leetcode_solution::simplifyPath(string path) {
                 res[s_lastNode] = path[k];
         }
     }
-    return s_lastNode == 0 ? "/" : res.substr(0, s_lastNode);
+    return s_lastNode == 0 ? "/" : res.substr(0, static_cast<unsigned long long int>(s_lastNode));
 }
 
 // 编辑距离
@@ -3483,10 +3473,10 @@ string Leetcode_solution::simplifyPath(string path) {
  * 替换一个字符
  * */
 // dp数组记录对应字符段的最少距离
-int Leetcode_solution::minDistance(string word1, string word2) {
-    int l1 = word1.size();
-    int l2 = word2.size();
-    vector<vector<int>> dp(l2 + 1, vector<int>(l1 + 1, 0));
+[[maybe_unused]] int Leetcode_solution::minDistance(string word1, string word2) {
+    int l1 = static_cast<int>(word1.size());
+    int l2 = static_cast<int>(word2.size());
+    vector<vector<int>> dp(static_cast<unsigned long long int>(l2 + 1), vector<int>(l1 + 1, 0));
     for (int i = 0; i < l1 + 1; ++i) {
         dp[0][i] = i;
     }
@@ -3508,11 +3498,11 @@ int Leetcode_solution::minDistance(string word1, string word2) {
 /* 给定一个 m x n 的矩阵，如果一个元素为 0
  * 则将其所在行和列的所有元素都设为 0,请使用原地算法
  * */
-void Leetcode_solution::setZeroes(vector<vector<int>> &matrix) {
-    int row = matrix.size();
-    int col = matrix[0].size();
-    vector<bool> info_col(col, false);
-    vector<bool> info_row(row, false);
+[[maybe_unused]] void Leetcode_solution::setZeroes(vector<vector<int>> &matrix) {
+    int row = static_cast<int>(matrix.size());
+    int col = static_cast<int>(matrix[0].size());
+    vector<bool> info_col(static_cast<unsigned long long int>(col), false);
+    vector<bool> info_row(static_cast<unsigned long long int>(row), false);
     for (int i = 0; i < row; ++i) {
         for (int j = 0; j < col; ++j) {
             if (matrix[i][j] == 0) {
@@ -3536,12 +3526,12 @@ void Leetcode_solution::setZeroes(vector<vector<int>> &matrix) {
  * 每行的第一个整数大于前一行的最后一个整数
  * */
 // 当做是一个一维数组,进行二分法,判断值大小时采用坐标映射(x,y)=(mid/col,mid%col)
-bool Leetcode_solution::searchMatrix(vector<vector<int>> &matrix, int target) {
+[[maybe_unused]] bool Leetcode_solution::searchMatrix(vector<vector<int>> &matrix, int target) {
     if (matrix.empty() || matrix[0].empty()) {
         return false;
     }
-    int row = matrix.size();
-    int col = matrix[0].size();
+    int row = static_cast<int>(matrix.size());
+    int col = static_cast<int>(matrix[0].size());
     int left = 0;
     int right = row * col - 1;
     while (left <= right) {
@@ -3567,9 +3557,9 @@ bool Leetcode_solution::searchMatrix(vector<vector<int>> &matrix, int target) {
  * 不能使用代码库中的排序函数来解决这道题
  * */
 // 分拣法,将0分在右边,2分在左边,中间就为1;
-void Leetcode_solution::sortColors(vector<int> &nums) {
+[[maybe_unused]] void Leetcode_solution::sortColors(vector<int> &nums) {
     int left = -1;
-    int right = nums.size();
+    int right = static_cast<int>(nums.size());
     for (int i = 0; i < right; ++i) {
         if (nums[i] == 0) {
             ++left;
@@ -3590,7 +3580,7 @@ void Leetcode_solution::sortColors(vector<int> &nums) {
 /* 给你一个字符串S、一个字符串T,请在字符串S里面找出:包含 T 所有字母的最小子串
  * */
 // 哈希表记录待取字母和已经取得字母,采用滑动窗口,若多取及时舍弃,利用哈希表的总数来核实是否匹配从而降低复杂度
-string Leetcode_solution::minWindow(const string &s, const string &t) {
+[[maybe_unused]] string Leetcode_solution::minWindow(const string &s, const string &t) {
     int needs[128] = {0}; // 模拟哈希表
     int hadGet[128] = {0};// 模拟哈希表
     int needSum = 0;    // 统计哈希表needs的总数
@@ -3619,14 +3609,14 @@ string Leetcode_solution::minWindow(const string &s, const string &t) {
             }
         }
     }
-    return s.substr(res_st, res_le);
+    return s.substr(static_cast<unsigned long long int>(res_st), static_cast<unsigned long long int>(res_le));
 }
 
 // 组合
 /* 给定两个整数 n 和 k，返回 1 ... n 中所有可能的 k 个数的组合
  * */
 // 递归当长度符合条件时进行插入
-vector<vector<int>> Leetcode_solution::combine(int n, int k) {
+[[maybe_unused]] vector<vector<int>> Leetcode_solution::combine(int n, int k) {
     vector<vector<int>> res;
     vector<int> temp;
     co_combine(1, n + 1, k, temp, res);
@@ -3650,7 +3640,7 @@ void Leetcode_solution::co_combine(int start, int n, int max, vector<int> &p, ve
  * 说明：解集不能包含重复的子集
  * */
 // 递归--在每一层都进行加入结果、直到和所给数组长度一致
-vector<vector<int>> Leetcode_solution::subsets(vector<int> &nums) {
+[[maybe_unused]] vector<vector<int>> Leetcode_solution::subsets(vector<int> &nums) {
     vector<vector<int>> res{{}};
     vector<int> temp;
     co_subsets(0, nums, temp, res);
@@ -3677,9 +3667,9 @@ void Leetcode_solution::co_subsets(int start, vector<int> &nums, vector<int> &p,
  * 同一个单元格内的字母不允许被重复使用
  * */
 // 递归-首先寻找第一个字母、从第一个字母处开始深度搜索、期间利用#占位防止重复搜索
-bool Leetcode_solution::exist(vector<vector<char>> &board, const string &word) {
-    int row = board.size();
-    int col = board[0].size();
+[[maybe_unused]] bool Leetcode_solution::exist(vector<vector<char>> &board, const string &word) {
+    int row = static_cast<int>(board.size());
+    int col = static_cast<int>(board[0].size());
     // 寻找第一个字母作为起点进行深度搜索
     for (int i = 0; i < row; ++i) {
         for (int j = 0; j < col; ++j) {
@@ -3704,8 +3694,8 @@ bool Leetcode_solution::co_exist(vector<vector<char>> &board, const string &word
     if (lastNode == word.size()) {
         return true;
     }
-    int row = board.size();
-    int col = board[0].size();
+    int row = static_cast<int>(board.size());
+    int col = static_cast<int>(board[0].size());
     // 判断下方
     if (x + 1 < row && board[x + 1][y] != '#' && board[x + 1][y] == word[lastNode]) {
         board[x + 1][y] = '#';
@@ -3750,7 +3740,7 @@ bool Leetcode_solution::co_exist(vector<vector<char>> &board, const string &word
  * 不要使用额外的数组空间，你必须在原地修改输入数组并在使用 O(1) 额外空间的条件下完成
  * */
 // 遍历并填入
-int Leetcode_solution::removeDuplicates2(vector<int> &nums) {
+[[maybe_unused]] int Leetcode_solution::removeDuplicates2(vector<int> &nums) {
     int lastNode = -1;
     int count = 1;
     for (int i = 0; i < nums.size(); ++i) {
@@ -3775,9 +3765,9 @@ int Leetcode_solution::removeDuplicates2(vector<int> &nums) {
  * 但它不能进入方格 [35, 38]，因为3+5+3+8=19。请问该机器人能够到达多少个格子？
  * */
 // 判断上方和左方是否有路径,有路径即可到达
-int Leetcode_solution::movingCount(int m, int n, int k) {
+[[maybe_unused]] int Leetcode_solution::movingCount(int m, int n, int k) {
     if (!k) return 1;
-    vector<vector<int> > vis(m, vector<int>(n, 0));
+    vector<vector<int> > vis(static_cast<unsigned long long int>(m), vector<int>(n, 0));
     int ans = 1;
     vis[0][0] = 1;
     for (int i = 0; i < m; ++i) {
@@ -3815,8 +3805,8 @@ int Leetcode_solution::co_movingCount(int x) {
 /* 给定一个字符串，逐个翻转字符串中的每个单词
  * */
 // 从后向前扫描单词起始点后进行拷贝最后进行输出
-string Leetcode_solution::reverseWords(string s) {
-    int le = s.size();
+[[maybe_unused]] string Leetcode_solution::reverseWords(string s) {
+    int le = static_cast<int>(s.size());
     int en = le;
     string res;
     for (int i = le - 1; i >= 0; --i) {
@@ -3824,7 +3814,7 @@ string Leetcode_solution::reverseWords(string s) {
             en = i + 1;
         }
         if (s[i] != ' ' && (i == 0 || s[i - 1] == ' ')) {
-            res += s.substr(i, en - i);
+            res += s.substr(static_cast<unsigned long long int>(i), static_cast<unsigned long long int>(en - i));
             res += ' ';
         }
     }
@@ -3839,7 +3829,7 @@ string Leetcode_solution::reverseWords(string s) {
  * 你的目标是确切地知道 F 的值是多少
  * 无论 F 的初始值如何，你确定 F 的值的最小移动次数是多少?
  * */
-int Leetcode_solution::superEggDrop(int K, int N) {
+[[maybe_unused]] int Leetcode_solution::superEggDrop(int K, int N) {
     // 鸡蛋数量为k时,每层的次数
     int dp[N + 1];
     // 对于每层楼1个鸡蛋所需要的投掷次数
@@ -3870,11 +3860,11 @@ int Leetcode_solution::superEggDrop(int K, int N) {
  * 编写一个函数来判断给定的目标值是否存在于数组中。若存在返回 true，否则返回 false
  * */
 // 相对于I将两端重复值去掉一边即可
-bool Leetcode_solution::searchII(vector<int> &nums, int target) {
+[[maybe_unused]] bool Leetcode_solution::searchII(vector<int> &nums, int target) {
     if (nums.empty()) {
         return -1;
     }
-    int le = nums.size(), res = -1, pot = le - 1;
+    int le = static_cast<int>(nums.size()), res, pot = le - 1;
     int st = 0;
     // 二分查找查找翻转点
     while (nums[st] == nums[pot]) {
@@ -3908,7 +3898,7 @@ bool Leetcode_solution::searchII(vector<int> &nums, int target) {
 /* 给定一个排序链表，删除所有重复的元素，使得每个元素只出现一次
  * */
 // 和记录中上一个值相比较看是否相同,相同则跳过
-ListNode *Leetcode_solution::deleteDuplicates(ListNode *head) {
+[[maybe_unused]] ListNode *Leetcode_solution::deleteDuplicates(ListNode *head) {
     ListNode res(0);
     ListNode *lastNode = &res;
     ListNode *p = head;
@@ -3932,7 +3922,7 @@ ListNode *Leetcode_solution::deleteDuplicates(ListNode *head) {
 /* 给定一个排序链表，删除所有含有重复数字的节点，只保留原始链表中 没有重复出现的数字
  * */
 // 和记录的末尾相比较,若相同则删除末尾并跳过
-ListNode *Leetcode_solution::deleteDuplicatesII(ListNode *head) {
+[[maybe_unused]] ListNode *Leetcode_solution::deleteDuplicatesII(ListNode *head) {
     ListNode res(0);
     ListNode *lastNode = &res;
     ListNode *p = head;
@@ -3965,7 +3955,7 @@ ListNode *Leetcode_solution::deleteDuplicatesII(ListNode *head) {
  * 它们的每个节点只存储一位数字。将这两数相加会返回一个新的链表
  * 你可以假设除了数字 0 之外，这两个数字都不会以零开头
  * */
-ListNode *Leetcode_solution::addTwoNumbers(ListNode *l1, ListNode *l2) {
+[[maybe_unused]] ListNode *Leetcode_solution::addTwoNumbers(ListNode *l1, ListNode *l2) {
     stack<int> s1, s2;
     while (l1) {
         s1.push(l1->val);
@@ -3996,10 +3986,10 @@ ListNode *Leetcode_solution::addTwoNumbers(ListNode *l1, ListNode *l2) {
 /* 给定一个由 0 和 1 组成的矩阵，找出每个元素到最近的 0 的距离
  * 两个相邻元素间的距离为 1
  * */
-vector<vector<int>> Leetcode_solution::updateMatrix(vector<vector<int>> &matrix) {
-    int m = matrix.size(), n = matrix[0].size();
+[[maybe_unused]] vector<vector<int>> Leetcode_solution::updateMatrix(vector<vector<int>> &matrix) {
+    int m = static_cast<int>(matrix.size()), n = static_cast<int>(matrix[0].size());
     // 初始化动态规划的数组，所有的距离值都设置为一个很大的数
-    vector<vector<int>> dist(m, vector<int>(n, INT_MAX / 2));
+    vector<vector<int>> dist(static_cast<unsigned long long int>(m), vector<int>(n, INT_MAX / 2));
     // 如果 (i, j) 的元素为 0，那么距离为 0
     for (int i = 0; i < m; ++i) {
         for (int j = 0; j < n; ++j) {
@@ -4037,11 +4027,11 @@ vector<vector<int>> Leetcode_solution::updateMatrix(vector<vector<int>> &matrix)
 /* 给定 n 个非负整数，用来表示柱状图中各个柱子的高度。每个柱子彼此相邻，且宽度为 1
  * 求在该柱状图中，能够勾勒出来的矩形的最大面积
  * */
-int Leetcode_solution::largestRectangleArea(vector<int> &heights) {
+[[maybe_unused]] int Leetcode_solution::largestRectangleArea(vector<int> &heights) {
     if (heights.empty()) {
         return 0;
     }
-    int le = heights.size();
+    int le = static_cast<int>(heights.size());
     // 模拟栈--存储下标
     int *dp = (int *) malloc(sizeof(int) * (le + 1));
     int lastNode = 0;
@@ -4072,9 +4062,9 @@ int Leetcode_solution::largestRectangleArea(vector<int> &heights) {
  * 请你找出一个可以满足使[S2,M] 从 S1 获得的最大整数 M
  * */
 // 贪心,当可以整组划分时之后使用除法进行化简
-int Leetcode_solution::getMaxRepetitions(string s1, int n1, string s2, int n2) {
-    int l1 = s1.size();
-    int l2 = s2.size();
+[[maybe_unused]] int Leetcode_solution::getMaxRepetitions(string s1, int n1, string s2, int n2) {
+    int l1 = static_cast<int>(s1.size());
+    int l2 = static_cast<int>(s2.size());
     int i = 0;
     int j = 0;
     int sum = 0;
@@ -4103,12 +4093,12 @@ int Leetcode_solution::getMaxRepetitions(string s1, int n1, string s2, int n2) {
  * 此外，你可以假设该网格的四条边均被水包围
  * */
 // 广度搜索BFS
-int Leetcode_solution::numIslands(vector<vector<char>> &grid) {
+[[maybe_unused]] int Leetcode_solution::numIslands(vector<vector<char>> &grid) {
     if (grid.empty() || grid[0].empty()) {
         return 0;
     }
-    int row = grid.size();
-    int col = grid[0].size();
+    int row = static_cast<int>(grid.size());
+    int col = static_cast<int>(grid[0].size());
     int res = 0;
     // 对每个进行广度搜索,搜索过的为一个整岛,置空
     for (int i = 0; i < row; ++i) {
@@ -4123,8 +4113,8 @@ int Leetcode_solution::numIslands(vector<vector<char>> &grid) {
 }
 
 void Leetcode_solution::numIslandsBFS(vector<vector<char>> &grid, int x, int y) {
-    int row = grid.size();
-    int col = grid[0].size();
+    int row = static_cast<int>(grid.size());
+    int col = static_cast<int>(grid[0].size());
     grid[x][y] = '0';
     if (x - 1 >= 0 && grid[x - 1][y] == '1') {
         numIslandsBFS(grid, x - 1, y);
@@ -4146,8 +4136,8 @@ void Leetcode_solution::numIslandsBFS(vector<vector<char>> &grid, int x, int y) 
  * 如果某个 连续 子数组中恰好有 k 个奇数数字，我们就认为这个子数组是「优美子数组」
  * 请返回这个数组中「优美子数组」的数目
  * */
-int Leetcode_solution::numberOfSubArrays(vector<int> &nums, int k) {
-    int le = nums.size();
+[[maybe_unused]] int Leetcode_solution::numberOfSubArrays(vector<int> &nums, int k) {
+    int le = static_cast<int>(nums.size());
     int left = 0;
     int right = 0;
     int count = 0;
@@ -4186,7 +4176,7 @@ int Leetcode_solution::numberOfSubArrays(vector<int> &nums, int k) {
 /* 给定一棵二叉树,想象自己站在它的右侧,按照从顶部到底部的顺序,返回从右侧所能看到的节点值
  * */
 // 按照右->根->左进行遍历树,同时记录当前最深层数,仅当刷新最深层数时进行插入结果
-vector<int> Leetcode_solution::rightSideView(TreeNode *root) {
+[[maybe_unused]] vector<int> Leetcode_solution::rightSideView(TreeNode *root) {
     vector<int> res;
     int max = -1;
     co_rightSideView(root, max, 0, res);
@@ -4208,12 +4198,12 @@ void Leetcode_solution::co_rightSideView(TreeNode *root, int &max, int deep, vec
 /* 给定一个仅包含 0 和 1 的二维二进制矩阵，找出只包含 1 的最大矩形，并返回其面积
  * */
 // 栈做法(类似柱状图)-时间O(MN),空间O(M)
-int Leetcode_solution::maximalRectangle(vector<vector<char>> &matrix) {
+[[maybe_unused]] int Leetcode_solution::maximalRectangle(vector<vector<char>> &matrix) {
     if (matrix.empty() || matrix[0].empty()) {
         return 0;
     }
-    int row = matrix.size();
-    int col = matrix[0].size();
+    int row = static_cast<int>(matrix.size());
+    int col = static_cast<int>(matrix[0].size());
     int max = 0;
     int *dp = static_cast<int *>(malloc(sizeof(int) * (col + 1)));
     int lastNode = 0;
@@ -4221,7 +4211,7 @@ int Leetcode_solution::maximalRectangle(vector<vector<char>> &matrix) {
     for (int i = 0; i < row; ++i) {
         for (int j = 0; j < col + 1; ++j) {
             if (i > 0 && j < col && matrix[i][j] == '1') {
-                matrix[i][j] = matrix[i - 1][j] + matrix[i][j] - 48;
+                matrix[i][j] = static_cast<char>(matrix[i - 1][j] + matrix[i][j] - 48);
             }
             if (j < col) {
                 cout << matrix[i][j] << " ";
@@ -4245,12 +4235,12 @@ int Leetcode_solution::maximalRectangle(vector<vector<char>> &matrix) {
 /* 在一个由 0 和 1 组成的二维矩阵内，找到只包含 1 的最大正方形，并返回其面积
  * */
 // 动态规划,自己为1,且当左,左上,上均为n×n的时候,才能扩充为(n+1)×(n+1)
-int Leetcode_solution::maximalSquare(vector<vector<char>> &matrix) {
+[[maybe_unused]] int Leetcode_solution::maximalSquare(vector<vector<char>> &matrix) {
     if (matrix.empty() || matrix[0].empty()) {
         return 0;
     }
-    int row = matrix.size();
-    int col = matrix[0].size();
+    int row = static_cast<int>(matrix.size());
+    int col = static_cast<int>(matrix[0].size());
     // 压缩数组,一维代替二维
     int *dp = new int[col + 1];
     for (int lastNode = 0; lastNode <= col; ++lastNode) {
@@ -4283,7 +4273,7 @@ int Leetcode_solution::maximalSquare(vector<vector<char>> &matrix) {
  * 你应当保留两个分区中每个节点的初始相对位置
  * */
 // 利用哑节点作为两个篮子,以x作为分界,放入篮子
-ListNode *Leetcode_solution::partition(ListNode *head, int x) {
+[[maybe_unused]] ListNode *Leetcode_solution::partition(ListNode *head, int x) {
     ListNode left(0);
     ListNode right(0);
     ListNode *p = head;
@@ -4309,7 +4299,7 @@ ListNode *Leetcode_solution::partition(ListNode *head, int x) {
  * 要求时间复杂度是O(n)，空间复杂度是O(1)
  * */
 // 利用了亦或的特性,0^1=1,0^0=1^1=0,若两数字相同则会亦或为0,最后结果为不同数字的亦或
-vector<int> Leetcode_solution::singleNumbers(vector<int> &nums) {
+[[maybe_unused]] vector<int> Leetcode_solution::singleNumbers(vector<int> &nums) {
     unsigned int ret = 0;
     // 得到两个不同数字的亦或,其余成为0
     for (int n : nums)
@@ -4335,7 +4325,7 @@ vector<int> Leetcode_solution::singleNumbers(vector<int> &nums) {
  * 给出两个长度相等的字符串 s1 和 s2，判断 s2 是否是 s1 的扰乱字符串
  * */
 // 若为扰乱字符串,则其子串也为扰乱字符串
-bool Leetcode_solution::isScramble(const string &s1, const string &s2) {
+[[maybe_unused]] bool Leetcode_solution::isScramble(const string &s1, const string &s2) {
     if (s1.size() != s2.size())
         return false;
     return isScrambleRecursion(s1, s2);
@@ -4353,10 +4343,14 @@ bool Leetcode_solution::isScrambleRecursion(const string &s1, const string &s2) 
     //i从1到s1.size-1，不能从下标0开始，至少分割1个字符出来，否则无法跳出循环
     for (int i = 1; i < s1.size(); i++) {
         //将s1分割成[0,i)[i,s1.size)对应s2匹配可能是[0,i)[i,s1.size)也可能是[s2.size-i,s2.size)[0,s2.size()-i)
-        bool flag1 = isScrambleRecursion(s1.substr(0, i), s2.substr(0, i)) &&
-                     isScrambleRecursion(s1.substr(i, s1.size() - i), s2.substr(i, s2.size() - i));
-        bool flag2 = isScrambleRecursion(s1.substr(0, i), s2.substr(s2.size() - i, i)) &&
-                     isScrambleRecursion(s1.substr(i, s1.size() - i), s2.substr(0, s2.size() - i));
+        bool flag1 = isScrambleRecursion(s1.substr(0, static_cast<unsigned long long int>(i)), s2.substr(0,
+                                                                                                         static_cast<unsigned long long int>(i))) &&
+                     isScrambleRecursion(s1.substr(static_cast<unsigned long long int>(i), s1.size() - i), s2.substr(
+                             static_cast<unsigned long long int>(i), s2.size() - i));
+        bool flag2 = isScrambleRecursion(s1.substr(0, static_cast<unsigned long long int>(i)), s2.substr(s2.size() - i,
+                                                                                                         static_cast<unsigned long long int>(i))) &&
+                     isScrambleRecursion(s1.substr(static_cast<unsigned long long int>(i), s1.size() - i),
+                                         s2.substr(0, s2.size() - i));
         if (flag1 || flag2)
             return true;
     }
@@ -4371,7 +4365,7 @@ bool Leetcode_solution::isScrambleRecursion(const string &s1, const string &s2) 
  * 如果 n 是快乐数就返回 True ；不是，则返回 False
  * */
 // 快慢指针法,若不能为1则会陷入循环,慢指针将会追上快指针,isHappyNext用于生成下一个数
-bool Leetcode_solution::isHappy(int n) {
+[[maybe_unused]] bool Leetcode_solution::isHappy(int n) {
     int slow = n;
     int fast = n;
     do {
@@ -4402,7 +4396,7 @@ int Leetcode_solution::isHappyNext(int n) {
  * 使 nums1 成为一个有序数组
  * */
 // 从第m+n位置进行插入,比较插入,最后若nums2不为空则将剩余数字直接插入
-void Leetcode_solution::arrayMerge(vector<int> &nums1, int m, vector<int> &nums2, int n) {
+[[maybe_unused]] void Leetcode_solution::arrayMerge(vector<int> &nums1, int m, vector<int> &nums2, int n) {
     while (m && n) {
         if (nums1[m - 1] >= nums2[n - 1]) {
             nums1[m + n - 1] = nums1[m - 1];
@@ -4438,7 +4432,7 @@ vector<int> Leetcode_solution::grayCode(int n) {
     x <<= static_cast<unsigned int>(n - 1);
     // 生成n-1位的格雷编码
     auto res = grayCode(n - 1);
-    int l = res.size();
+    int l = static_cast<int>(res.size());
     // 镜像n-1的格雷编码并与x取交,将结果加入回n-1格雷编码队列,此时结果为
     for (int i = l - 1; i >= 0; --i) {
         res.push_back(x | static_cast<unsigned int>(res[i]));
@@ -4474,7 +4468,7 @@ vector<int> Leetcode_solution::grayCode(int n) {
  * 说明：解集不能包含重复的子集
  * */
 // 主函数进行排序,并调用递归;递归进行查重,并压入结果
-vector<vector<int>> Leetcode_solution::subsetsWithDup(vector<int> &nums) {
+[[maybe_unused]] vector<vector<int>> Leetcode_solution::subsetsWithDup(vector<int> &nums) {
     sort(nums.begin(), nums.end());
     vector<int> temp;
     vector<vector<int>> res{vector<int>{}};
@@ -4485,7 +4479,7 @@ vector<vector<int>> Leetcode_solution::subsetsWithDup(vector<int> &nums) {
 
 void
 Leetcode_solution::recursiveSubsetsWithDup(vector<int> &nums, vector<vector<int>> &res, vector<int> &temp, int deep) {
-    int ln = nums.size();
+    int ln = static_cast<int>(nums.size());
     // 长度符合要求则停止递归
     if (ln == temp.size()) {
         return;
@@ -4508,8 +4502,8 @@ Leetcode_solution::recursiveSubsetsWithDup(vector<int> &nums, vector<vector<int>
  * 给定一个只包含数字的非空字符串，请计算解码方法的总数
  * */
 // 类似斐波那契,爬楼梯
-int Leetcode_solution::numDecoding(string s) {
-    int l = s.size();
+[[maybe_unused]] int Leetcode_solution::numDecoding(string s) {
+    int l = static_cast<int>(s.size());
     if (s[0] == '0') {
         return 0;
     }
@@ -4535,7 +4529,7 @@ int Leetcode_solution::numDecoding(string s) {
 /* 反转从位置 m 到 n 的链表。请使用一趟扫描完成反转
  * 说明: 1 ≤ m ≤ n ≤ 链表长度
  * */
-ListNode *Leetcode_solution::reverseBetween(ListNode *head, int m, int n) {
+[[maybe_unused]] ListNode *Leetcode_solution::reverseBetween(ListNode *head, int m, int n) {
     ListNode nodeFirst(0);  //使用哑节点避免head为nullptr
     nodeFirst.next = head;
     ListNode *p = nodeFirst.next;   // 遍历元素
@@ -4572,7 +4566,7 @@ ListNode *Leetcode_solution::reverseBetween(ListNode *head, int m, int n) {
 /* 给定一个只包含数字的字符串，复原它并返回所有可能的 IP 地址格式
  * */
 // 分段截取,截取4段数字,3个点,若最后长度为s.size()+3==temp.size(),说明点的位置正确,加入结果,否则舍去
-vector<string> Leetcode_solution::restoreIpAddresses(string s) {
+[[maybe_unused]] vector<string> Leetcode_solution::restoreIpAddresses(string s) {
     vector<string> res;
     string temp;
     coRestoreIpAddresses(s, res, temp, 0, 0);
@@ -4588,7 +4582,7 @@ void Leetcode_solution::coRestoreIpAddresses(string &s, vector<string> &res, con
         return;
     }
     for (int i = 1; i < 4 && i + st <= s.size(); ++i) {
-        string p(s.substr(st, i));
+        string p(s.substr(static_cast<unsigned long long int>(st), static_cast<unsigned long long int>(i)));
         if (p.size() != 1 && p[0] == '0') {
             return;
         }
@@ -4606,7 +4600,7 @@ void Leetcode_solution::coRestoreIpAddresses(string &s, vector<string> &res, con
 /* 给定一个二叉树，返回它的中序遍历
  * */
 // 栈做法,连续压入左节点,直到不能压入,后弹出并记录左根右
-vector<int> Leetcode_solution::inorderTraversal(TreeNode *root) {
+[[maybe_unused]] vector<int> Leetcode_solution::inorderTraversal(TreeNode *root) {
     vector<int> res;
     stack<TreeNode *> s;
     TreeNode *curr = root;
@@ -4627,7 +4621,7 @@ vector<int> Leetcode_solution::inorderTraversal(TreeNode *root) {
 /* 给定一个整数 n，生成所有由 1 ... n 为节点所组成的二叉搜索树
  * */
 // 取一节点将数字分为两部分,进行递归求解
-vector<TreeNode *> Leetcode_solution::generateTrees(int n) {
+[[maybe_unused]] vector<TreeNode *> Leetcode_solution::generateTrees(int n) {
     if (n == 0) {
         return vector<TreeNode *>{};
     }
@@ -4663,7 +4657,7 @@ vector<TreeNode *> Leetcode_solution::generate_trees(int start, int end) {
 /* 给定一个整数 n，求以 1 ... n 为节点组成的二叉搜索树有多少种？
  * */
 // 即计算卡特兰数,可采取动态规划和公式
-int Leetcode_solution::numTrees(int n) {
+[[maybe_unused]] int Leetcode_solution::numTrees(int n) {
     vector<int> G(n + 1, 0);
     G[0] = 1;
     G[1] = 1;
@@ -4680,7 +4674,7 @@ int Leetcode_solution::numTrees(int n) {
 /* 给定三个字符串 s1, s2, s3, 验证 s3 是否是由 s1 和 s2 交错组成的
  * */
 // 动态规划,二维数组压缩一维
-bool Leetcode_solution::isInterleave(string s1, string s2, string s3) {
+[[maybe_unused]] bool Leetcode_solution::isInterleave(string s1, string s2, string s3) {
     if (s3.length() != s1.length() + s2.length()) {
         return false;
     }
@@ -4709,7 +4703,7 @@ bool Leetcode_solution::isInterleave(string s1, string s2, string s3) {
  * 所有左子树和右子树自身必须也是二叉搜索树
  * */
 // (迭代)中序遍历结果为升序,即右>根>左
-bool Leetcode_solution::isValidBST(TreeNode *root) {
+[[maybe_unused]] bool Leetcode_solution::isValidBST(TreeNode *root) {
     long long res = static_cast<long long>(INT_MIN) - 1;
     stack<TreeNode *> s;
     TreeNode *curr = root;
@@ -4741,8 +4735,8 @@ bool Leetcode_solution::isValidBST(TreeNode *root) {
  * 返回你想要完成在给定的列表 days 中列出的每一天的旅行所需要的最低消费
  * */
 // 倒序递归
-int Leetcode_solution::mincostTickets(vector<int> &days, vector<int> &costs) {
-    int le = days.size();
+[[maybe_unused]] int Leetcode_solution::mincostTickets(vector<int> &days, vector<int> &costs) {
+    int le = static_cast<int>(days.size());
     int dp[366] = {0};
     int lastNode = le - 1;
     for (int i = 365; i > 0; --i) {
@@ -4779,7 +4773,7 @@ bool Leetcode_solution::isSameTree(TreeNode *p, TreeNode *q) {
 // 对称二叉树
 /* 给定一个二叉树，检查它是否是镜像对称的
  * */
-bool Leetcode_solution::isSymmetric(TreeNode *root) {
+[[maybe_unused]] bool Leetcode_solution::isSymmetric(TreeNode *root) {
     return coIsSymmetric(root, root);
 }
 
@@ -4796,7 +4790,7 @@ bool Leetcode_solution::coIsSymmetric(TreeNode *root_l, TreeNode *root_r) {
  * 即逐层地，从左到右访问所有节点
  * */
 // 队列迭代法
-vector<vector<int>> Leetcode_solution::levelOrder(TreeNode *root) {
+[[maybe_unused]] vector<vector<int>> Leetcode_solution::levelOrder(TreeNode *root) {
     queue<TreeNode *> platform;
     if (root) {
         platform.push(root);
@@ -4827,7 +4821,7 @@ vector<vector<int>> Leetcode_solution::levelOrder(TreeNode *root) {
  * 说明：
  * 你的算法应该具有线性时间复杂度。 你可以不使用额外空间来实现吗
  * */
-int Leetcode_solution::singleNumber(vector<int> &nums) {
+[[maybe_unused]] int Leetcode_solution::singleNumber(vector<int> &nums) {
     unsigned int sign = 0;
     for (auto i:nums) {
         sign ^= static_cast<unsigned int>(i);
@@ -4840,7 +4834,7 @@ int Leetcode_solution::singleNumber(vector<int> &nums) {
  * 即先从左往右，再从右往左进行下一层遍历，以此类推，层与层之间交替进行
  */
 // 层序遍历生成层序结果,奇数翻转偶数不翻转
-vector<vector<int>> Leetcode_solution::zigzagLevelOrder(TreeNode *root) {
+[[maybe_unused]] vector<vector<int>> Leetcode_solution::zigzagLevelOrder(TreeNode *root) {
     queue<TreeNode *> platform;
     if (root) {
         platform.push(root);
@@ -4881,7 +4875,7 @@ vector<vector<int>> Leetcode_solution::zigzagLevelOrder(TreeNode *root) {
 /* 给定一个整数数组和一个整数 k，你需要找到该数组中和为 k 的连续的子数组的个数
  * */
 // 根据递推公式pre[i] = pre[i-1] + nums[i]和dp[i][j] = dp[0][j] - dp[0][i]进行优化
-int Leetcode_solution::subarraySum(vector<int> &nums, int k) {
+[[maybe_unused]] int Leetcode_solution::subarraySum(vector<int> &nums, int k) {
     unordered_map<int, int> mp; // 记录和出现的次数
     mp[0] = 1;  // 和为0必定出现1次
     int count = 0, pre = 0; // 计数和已遍历的所有项总和
@@ -4900,8 +4894,8 @@ int Leetcode_solution::subarraySum(vector<int> &nums, int k) {
  * 注意:你可以假设树中没有重复的元素
  * */
 // 利用前序与中序性质递归建树,前序第一个为根节点,中序以前序的根节点为间隔分为左右两树
-TreeNode *Leetcode_solution::buildTree1(vector<int> &preorder, vector<int> &inorder) {
-    return coBuildTree1(preorder, 0, preorder.size(), inorder, 0, inorder.size());
+[[maybe_unused]] TreeNode *Leetcode_solution::buildTree1(vector<int> &preorder, vector<int> &inorder) {
+    return coBuildTree1(preorder, 0, static_cast<int>(preorder.size()), inorder, 0, static_cast<int>(inorder.size()));
 }
 
 TreeNode *Leetcode_solution::coBuildTree1(vector<int> &preorder, int x, int y, vector<int> &inorder, int p, int q) {
@@ -4924,8 +4918,8 @@ TreeNode *Leetcode_solution::coBuildTree1(vector<int> &preorder, int x, int y, v
  * 注意:你可以假设树中没有重复的元素
  * */
 // 利用中序与后序性质递归建树,后序最后一个为根节点,中序以前序的根节点为间隔分为左右两树
-TreeNode *Leetcode_solution::buildTree2(vector<int> &inorder, vector<int> &postorder) {
-    return coBuildTree2(inorder, 0, inorder.size(), postorder, 0, postorder.size());
+[[maybe_unused]] TreeNode *Leetcode_solution::buildTree2(vector<int> &inorder, vector<int> &postorder) {
+    return coBuildTree2(inorder, 0, static_cast<int>(inorder.size()), postorder, 0, static_cast<int>(postorder.size()));
 }
 
 TreeNode *Leetcode_solution::coBuildTree2(vector<int> &inorder, int x, int y, vector<int> &postorder, int p, int q) {
@@ -4949,7 +4943,7 @@ TreeNode *Leetcode_solution::coBuildTree2(vector<int> &inorder, int x, int y, ve
  * 形式上，我们希望索引的数字 i 和 j 满足  i < j 且有 (time[i] + time[j]) % 60 == 0
  * */
 // 余数仅不能整除的部分起作用,故对每项取余并记录个数,可以在O(1)的时间复杂度内取得另一半的个数
-int Leetcode_solution::numPairsDivisibleBy60(vector<int> &time) {
+[[maybe_unused]] int Leetcode_solution::numPairsDivisibleBy60(vector<int> &time) {
     int dp[60] = {0};
     int s = 0;
     for (auto i:time) {
@@ -4967,7 +4961,7 @@ int Leetcode_solution::numPairsDivisibleBy60(vector<int> &time) {
 // 建立两个数组maxF,minF,一个存储最大值,一个存储最小值,当nums[i]为负数时最小值将会可能大于最大值
 // maxF[i]存储maxF[i-1]*nums[i],minF[i]*nums[i],nums[i]最大值
 // minF[i]存储maxF[i-1]*nums[i],minF[i]*nums[i],nums[i]最小值
-int Leetcode_solution::maxProduct(vector<int> &nums) {
+[[maybe_unused]] int Leetcode_solution::maxProduct(vector<int> &nums) {
     int maxF = nums[0], minF = nums[0], ans = nums[0];
     for (int i = 1; i < nums.size(); ++i) {
         int mx = maxF, mn = minF;
@@ -4984,7 +4978,7 @@ int Leetcode_solution::maxProduct(vector<int> &nums) {
  * */
 // 双向向内收缩,若出现不匹配则删除两端其中一个且删除后为回文串
 // validPalindrome主函数,checkPalindrome回文串判断函数
-bool Leetcode_solution::validPalindrome(string s) {
+[[maybe_unused]] bool Leetcode_solution::validPalindrome(string s) {
     int low = 0, high = static_cast<int>(s.size()) - 1;
     while (low < high) {
         char c1 = s[low], c2 = s[high];
@@ -5010,7 +5004,7 @@ bool Leetcode_solution::checkPalindrome(const string &s, int low, int high) {
 // 位1的个数
 /* 编写一个函数,输入是一个无符号整数,返回其二进制表达式中数字位数为 ‘1’ 的个数,也被称为汉明重量
  * */
-int Leetcode_solution::hammingWeight(uint32_t n) {
+[[maybe_unused]] int Leetcode_solution::hammingWeight(uint32_t n) {
     int weight = 0;
     while (n) {
         ++weight;
@@ -5025,7 +5019,7 @@ int Leetcode_solution::hammingWeight(uint32_t n) {
  * 说明: 叶子节点是指没有子节点的节点
  * */
 // 以nullptr分层,不压入nullptr,层序遍历的第一个无子节点的深度即为结果
-int Leetcode_solution::minDepth(TreeNode *root) {
+[[maybe_unused]] int Leetcode_solution::minDepth(TreeNode *root) {
     if (root == nullptr) {
         return 0;
     }
@@ -5060,7 +5054,7 @@ int Leetcode_solution::minDepth(TreeNode *root) {
  * 说明：本题中，我们将空字符串定义为有效的回文串
  * */
 // 解法1：将字母数字单独挑出来,大写转小写，然后进行回文判断;解法2,非字母数字转换为空格,判断回文时自动跳过空格
-bool isPalindrome(string s) {
+[[maybe_unused]] bool isPalindrome(string s) {
     for (auto &i:s) {
         if (i >= 'A' && i <= 'Z') {
             i -= 'A' - 'a';
@@ -5093,8 +5087,8 @@ bool isPalindrome(string s) {
  * 请你返回满足以下条件的最长子字符串的长度
  * 每个元音字母，即 'a'，'e'，'i'，'o'，'u' ，在子字符串中都恰好出现了偶数次
  * */
-int Leetcode_solution::findTheLongestSubstring(string s) {
-    unsigned int status = 0, n = s.length();
+[[maybe_unused]] int Leetcode_solution::findTheLongestSubstring(string s) {
+    unsigned int status = 0, n = static_cast<unsigned int>(s.length());
     int ans = 0;
     vector<int> pos(1u << 5u, -1);
     pos[0] = 0;
@@ -5138,7 +5132,7 @@ bool Leetcode_solution::hasPathSum(struct TreeNode *root, int sum) {
 // 路径总和 II
 /* 给定一个二叉树和一个目标和，找到所有从根节点到叶子节点路径总和等于给定目标和的路径
  * */
-vector<vector<int>> Leetcode_solution::pathSum(TreeNode *root, int sum) {
+[[maybe_unused]] vector<vector<int>> Leetcode_solution::pathSum(TreeNode *root, int sum) {
     vector<int> temp;
     vector<vector<int>> res;
     coPathSum(root, sum, temp, res);
@@ -5167,7 +5161,7 @@ void Leetcode_solution::coPathSum(struct TreeNode *root, int sum, vector<int> &t
  * 此外，你可以认为原始数据不包含数字，所有的数字只表示重复的次数 k ，例如不会出现像 3a 或 2[4] 的输入
  * */
 // 类似于等式求值操作为[],参数为a,b,等式为a[b]=bbb···b<共a个>
-string Leetcode_solution::decodeString(string s) {
+[[maybe_unused]] string Leetcode_solution::decodeString(string s) {
     if (s.empty()) {
         return "";
     }
@@ -5237,9 +5231,9 @@ int Leetcode_solution::rob1(vector<int> &nums, int start, int end) {
  * 给定一个代表每个房屋存放金额的非负整数数组，计算你在不触动警报装置的情况下，能够偷窃到的最高金额
  * */
 // 环形转两个单排利用打家劫舍 I的单排算法
-int Leetcode_solution::rob2(vector<int> &nums) {
+[[maybe_unused]] int Leetcode_solution::rob2(vector<int> &nums) {
     int st = 0;
-    int en = nums.size();
+    int en = static_cast<int>(nums.size());
     int left = rob1(nums, st, en - 1);
     int right = rob1(nums, st + 1, en);
     return left > right ? left : right;
@@ -5252,7 +5246,7 @@ int Leetcode_solution::rob2(vector<int> &nums) {
  * 如果两个直接相连的房子在同一天晚上被打劫，房屋将自动报警
  * 计算在不触动警报的情况下，小偷一晚能够盗取的最高金额
  * */
-int Leetcode_solution::rob3(TreeNode *root) {
+[[maybe_unused]] int Leetcode_solution::rob3(TreeNode *root) {
     int left = 0, right = 0;
     rob3dp(root, left, right);
     return max(left, right);
@@ -5272,7 +5266,7 @@ void Leetcode_solution::rob3dp(TreeNode *root, int &left, int &right) {
 // 回文链表
 /* 请判断一个链表是否为回文链表
  * */
-bool Leetcode_solution::isPalindrome(ListNode *head) {
+[[maybe_unused]] bool Leetcode_solution::isPalindrome(ListNode *head) {
     ListNode *fast = head;
     ListNode *slow = head;
     int l = 0;
@@ -5307,7 +5301,7 @@ bool Leetcode_solution::isPalindrome(ListNode *head) {
  * 对每一个孩子，检查是否存在一种方案，将额外的 extraCandies 个糖果分配给孩子们之后，此孩子有 最多 的糖果。注意，允许有多个孩子同时拥有 最多 的糖果数目
  * */
 // 6.1儿童节快乐
-vector<bool> Leetcode_solution::kidsWithCandies(vector<int> &candies, int extraCandies) {
+[[maybe_unused]] vector<bool> Leetcode_solution::kidsWithCandies(vector<int> &candies, int extraCandies) {
     int max = 0;
     vector<bool> res(candies.size());
     for (auto i:candies) {
@@ -5323,8 +5317,8 @@ vector<bool> Leetcode_solution::kidsWithCandies(vector<int> &candies, int extraC
 /* 给定一个三角形，找出自顶向下的最小路径和。每一步只能移动到下一行中相邻的结点上
  * 相邻的结点 在这里指的是 下标 与 上一层结点下标 相同或者等于 上一层结点下标 + 1 的两个结点
  * */
-int Leetcode_solution::minimumTotal(vector<vector<int>> &triangle) {
-    int row = triangle.size();
+[[maybe_unused]] int Leetcode_solution::minimumTotal(vector<vector<int>> &triangle) {
+    int row = static_cast<int>(triangle.size());
     vector<int> temp(row, 0);
     for (int i = row - 1; i >= 0; --i) {
         for (int j = 0; j < triangle[i].size(); ++j) {
@@ -5339,8 +5333,8 @@ int Leetcode_solution::minimumTotal(vector<vector<int>> &triangle) {
 /* 给你一个长度为 n 的整数数组 nums，其中 n > 1，返回输出数组 output
  * 其中 output[i] 等于 nums 中除 nums[i] 之外其余各元素的乘积
  * */
-vector<int> Leetcode_solution::productExceptSelf(vector<int> &nums) {
-    int le = nums.size();
+[[maybe_unused]] vector<int> Leetcode_solution::productExceptSelf(vector<int> &nums) {
+    int le = static_cast<int>(nums.size());
     vector<int> res(le, 1);
     for (int i = 1; i < le; ++i) {
         res[i] = res[i - 1] * nums[i - 1];
@@ -5356,16 +5350,15 @@ vector<int> Leetcode_solution::productExceptSelf(vector<int> &nums) {
 // 最长连续序列
 /* 给定一个未排序的整数数组，找出最长连续序列的长度
  * 要求算法的时间复杂度为 O(n)*/
-int Leetcode_solution::longestConsecutive(vector<int> &nums) {
+[[maybe_unused]] int Leetcode_solution::longestConsecutive(vector<int> &nums) {
     unordered_set<int> map;
     for (auto i:nums) {
         map.insert(i);
     }
     int res = 1;
-    int cur = 1;
     for (auto i:map) {
         if (map.find(i - 1) == map.end()) {
-            cur = 1;
+            int cur = 1;
             while (map.find(i + cur) != map.end()) {
                 cur++;
             }
@@ -5381,8 +5374,8 @@ int Leetcode_solution::longestConsecutive(vector<int> &nums) {
  * 形式上，如果 dislikes[i] = [a, b]，表示不允许将编号为 a 和 b 的人归入同一组
  * 当可以用这种方法将每个人分进两组时，返回 true；否则返回 false
  * */
-bool Leetcode_solution::possibleBipartition(int N, vector<vector<int>> &dislikes) {
-    vector<vector<int>> graph(N + 1, vector<int>(0));
+[[maybe_unused]] bool Leetcode_solution::possibleBipartition(int N, vector<vector<int>> &dislikes) {
+    vector<vector<int>> graph(static_cast<unsigned long long int>(N + 1), vector<int>(0));
     for (auto &i:dislikes) {
         graph[i[0]].push_back(i[1]);
         graph[i[1]].push_back(i[0]);
@@ -5414,7 +5407,7 @@ bool Leetcode_solution::possibleBipartitiondfs(int node, int c, vector<int> &col
  * 提示：气温 列表长度的范围是 [1, 30000]
  * 每个气温的值的均为华氏度，都是在 [30, 100] 范围内的整数
  * */
-vector<int> Leetcode_solution::dailyTemperatures(vector<int> &T) {
+[[maybe_unused]] vector<int> Leetcode_solution::dailyTemperatures(vector<int> &T) {
     vector<int> stackTemp(T.size(), -1);
     vector<int> res(T.size(), 0);
     int lastNodeTop = -1;
@@ -5437,7 +5430,7 @@ vector<int> Leetcode_solution::dailyTemperatures(vector<int> &T) {
  * 拆分时可以重复使用字典中的单词
  * 你可以假设字典中没有重复的单词
  * */
-bool Leetcode_solution::wordBreak(const string &s, vector<string> &wordDict) {
+[[maybe_unused]] bool Leetcode_solution::wordBreak(const string &s, vector<string> &wordDict) {
     auto wordDictSet = unordered_set<string>();
     for (auto &word: wordDict) {
         wordDictSet.insert(word);
@@ -5446,7 +5439,8 @@ bool Leetcode_solution::wordBreak(const string &s, vector<string> &wordDict) {
     dp[0] = true;
     for (int i = 1; i <= s.size(); ++i) {
         for (int j = 0; j < i; ++j) {
-            if (dp[j] && wordDictSet.find(s.substr(j, i - j)) != wordDictSet.end()) {
+            if (dp[j] && wordDictSet.find(s.substr(static_cast<unsigned long long int>(j),
+                                                   static_cast<unsigned long long int>(i - j))) != wordDictSet.end()) {
                 dp[i] = true;
                 break;
             }
@@ -5460,7 +5454,7 @@ bool Leetcode_solution::wordBreak(const string &s, vector<string> &wordDict) {
  * 找出该数组中满足其和 ≥ s 的长度最小的连续子数组
  * 并返回其长度。如果不存在符合条件的连续子数组，返回 0
  * */
-int Leetcode_solution::minSubArrayLen(int s, vector<int> &nums) {
+[[maybe_unused]] int Leetcode_solution::minSubArrayLen(int s, vector<int> &nums) {
     int st = -1;    // 左开
     int en = -1;    // 右闭
     int sum = 0;    // 总和
@@ -5471,7 +5465,7 @@ int Leetcode_solution::minSubArrayLen(int s, vector<int> &nums) {
         sum += i;
         while (en >= st && sum >= s) {  // 先判断长度是否更新，后左侧去除数字循环判断
             if (flag) {
-                l = nums.size();
+                l = static_cast<int>(nums.size());
                 flag = false;
             }
             l = en - st <= l ? en - st : l;
@@ -5488,7 +5482,7 @@ int Leetcode_solution::minSubArrayLen(int s, vector<int> &nums) {
  * 你必须正好使用k块木板。编写一个方法，生成跳水板所有可能的长度
  * 返回的长度需要从小到大排列
  * */
-vector<int> Leetcode_solution::divingBoard(int shorter, int longer, int k) {
+[[maybe_unused]] vector<int> Leetcode_solution::divingBoard(int shorter, int longer, int k) {
     if (k == 0) {
         return vector<int>{};
     }
@@ -5509,8 +5503,8 @@ vector<int> Leetcode_solution::divingBoard(int shorter, int longer, int k) {
 /* 给定一个整数数组 nums，按要求返回一个新数组 counts
  * 数组 counts 有该性质:counts[i]的值是nums[i]右侧小于nums[i]的元素的数量
  * */
-vector<int> Leetcode_solution::countSmaller(vector<int> &nums) {
-    int l = nums.size();
+[[maybe_unused]] vector<int> Leetcode_solution::countSmaller(vector<int> &nums) {
+    int l = static_cast<int>(nums.size());
     vector<int> res(l, 0);
     if (l > 1) {
         for (int i = l - 2; i >= 0; --i) {
@@ -5533,10 +5527,10 @@ vector<int> Leetcode_solution::countSmaller(vector<int> &nums) {
  * 其他房间要么是空的（房间里的值为 0），要么包含增加骑士健康点数的魔法球（若房间里的值为正整数，则表示骑士将增加健康点数）
  * 为了尽快到达公主，骑士决定每次只向右或向下移动一步
  * */
-int Leetcode_solution::calculateMinimumHP(vector<vector<int>> &dungeon) {
-    int row = dungeon.size();
-    int col = dungeon[0].size();
-    vector<vector<int>> temp(row, vector<int>(col, 1));
+[[maybe_unused]] int Leetcode_solution::calculateMinimumHP(vector<vector<int>> &dungeon) {
+    int row = static_cast<int>(dungeon.size());
+    int col = static_cast<int>(dungeon[0].size());
+    vector<vector<int>> temp(static_cast<unsigned long long int>(row), vector<int>(col, 1));
     for (int i = row - 1; i >= 0; i--) {
         for (int j = col - 1; j >= 0; j--) {
             int k;
@@ -5558,13 +5552,13 @@ int Leetcode_solution::calculateMinimumHP(vector<vector<int>> &dungeon) {
  * 对于每个单元格，你可以往上，下，左，右四个方向移动
  * 你不能在对角线方向上移动或移动到边界外（即不允许环绕）
  * */
-int Leetcode_solution::longestIncreasingPath(vector<vector<int>> &matrix) {
+[[maybe_unused]] int Leetcode_solution::longestIncreasingPath(vector<vector<int>> &matrix) {
     if (matrix.empty() || matrix[0].empty()) {
         return 0;
     }
-    int row = matrix.size();
-    int col = matrix[0].size();
-    vector<vector<int>> temp(row, vector<int>(col, 1));
+    int row = static_cast<int>(matrix.size());
+    int col = static_cast<int>(matrix[0].size());
+    vector<vector<int>> temp(static_cast<unsigned long long int>(row), vector<int>(col, 1));
     int max = 1;
     for (int i = 0; i < row; ++i) {
         for (int j = 0; j < col; ++j) {
@@ -5597,17 +5591,17 @@ int Leetcode_solution::longestIncreasingPath(vector<vector<int>> &matrix) {
  * num1 和num2 都只包含数字 0-9
  * num1 和num2 都不包含任何前导零
  * */
-string Leetcode_solution::addStrings(string num1, string num2) {
+[[maybe_unused]] string Leetcode_solution::addStrings(string num1, string num2) {
     if (num1 == "0") {
         return num2;
     } else if (num2 == "0") {
         return num1;
     }
-    int l1 = num1.size();
-    int l2 = num2.size();
+    int l1 = static_cast<int>(num1.size());
+    int l2 = static_cast<int>(num2.size());
     int lr = max(l1, l2) + 1;
     int flagOF = 0;
-    string res(lr, '0');
+    string res(static_cast<unsigned long long int>(lr), '0');
     for (int i = 0; i < lr; ++i) {
         if (i < l1) {
             res[lr - 1 - i] = num1[l1 - 1 - i];
@@ -5616,13 +5610,13 @@ string Leetcode_solution::addStrings(string num1, string num2) {
         if (i < l2) {
             temp += num2[l2 - 1 - i] - '0';
             flagOF = temp / 10;
-            res[lr - 1 - i] = temp - flagOF * 10 + '0';
+            res[lr - 1 - i] = static_cast<char>(temp - flagOF * 10 + '0');
         }
         flagOF = temp / 10;
-        res[lr - 1 - i] = temp - flagOF * 10 + '0';
+        res[lr - 1 - i] = static_cast<char>(temp - flagOF * 10 + '0');
     }
     if (res[0] == '0') {
-        return res.substr(1, lr);
+        return res.substr(1, static_cast<unsigned long long int>(lr));
     }
     return res;
 }
@@ -5632,7 +5626,7 @@ string Leetcode_solution::addStrings(string num1, string num2) {
  * 例如，如果一个字符在每个字符串中出现 3 次，但不是 4 次，则需要在最终答案中包含该字符 3 次
  * 你可以按任意顺序返回答案
  * */
-vector<string> Leetcode_solution::ommonChars(vector<string> &A) {
+[[maybe_unused]] vector<string> Leetcode_solution::ommonChars(vector<string> &A) {
     vector<string> p;
     if (A.empty()) {  // 如果A数组为空则直接返回空
         return p;
@@ -5663,7 +5657,7 @@ vector<string> Leetcode_solution::ommonChars(vector<string> &A) {
  * 偶尔，在键入字符 c 时，按键可能会被长按，而字符可能被输入 1 次或多次
  * 你将会检查键盘输入的字符 typed。如果它对应的可能是你的朋友的名字（其中一些字符可能被长按），那么就返回 True
  * */
-bool Leetcode_solution::isLongPressedName(string name, string typed) {
+[[maybe_unused]] bool Leetcode_solution::isLongPressedName(string name, string typed) {
     int left = 0;
     int right = 0;
     while (right < typed.size()) {
@@ -5685,9 +5679,9 @@ bool Leetcode_solution::isLongPressedName(string name, string typed) {
  * 同一个字母只会出现在其中的一个片段
  * 返回一个表示每个字符串片段的长度的列表
  * */
-vector<int> Leetcode_solution::partitionLabels(string S) {
+[[maybe_unused]] vector<int> Leetcode_solution::partitionLabels(string S) {
     int last[26];
-    int length = S.size();
+    int length = static_cast<int>(S.size());
     for (int i = 0; i < length; i++) {
         last[S[i] - 'a'] = i;
     }
@@ -5711,7 +5705,7 @@ vector<int> Leetcode_solution::partitionLabels(string S) {
  * 我们需要将这些片段进行再剪辑，并将剪辑后的内容拼接成覆盖整个运动过程的片段（[0, T]）
  * 返回所需片段的最小数目，如果无法完成该任务，则返回 -1
  * */
-int Leetcode_solution::videoStitching(vector<vector<int>> &clips, int T) {
+[[maybe_unused]] int Leetcode_solution::videoStitching(vector<vector<int>> &clips, int T) {
     vector<int> dp(T + 1, INT_MAX - 1); // dp[i]表示[0,i)的最优解
     dp[0] = 0;  // 当[0，0)时解的个数为0
     for (int i = 1; i <= T; i++) {  // 对每个位置进行计算dp[i]
@@ -5755,8 +5749,8 @@ int Leetcode_solution::videoStitching(vector<vector<int>> &clips, int T) {
  * 给出一个整数数组 A，返回最长 “山脉” 的长度
  * 如果不含有 “山脉” 则返回 0
  * */
-int Leetcode_solution::longestMountain(vector<int> &A) {
-    int n = A.size();
+[[maybe_unused]] int Leetcode_solution::longestMountain(vector<int> &A) {
+    int n = static_cast<int>(A.size());
     int ans = 0;
     int left = 0;
     while (left + 2 < n) {  // 山脉最短长度为3
@@ -5812,7 +5806,7 @@ public:
  * 由于返回类型是整数，结果只保留整数的部分，小数部分将被舍去
  * */
 // 此处采用二分查找的第二类模板,当符合mid^2<=x时,left移动到mid+1处,并记录mid.
-int Leetcode_solution::mySqrt(int x) {
+[[maybe_unused]] int Leetcode_solution::mySqrt(int x) {
     int res = 0;
     int left = 1, right = x;
     while (left <= right) {
@@ -5833,7 +5827,7 @@ int Leetcode_solution::mySqrt(int x) {
  * 请找出其中最小的元素
  * 你可以假设数组中不存在重复元素
  * */
-int Leetcode_solution::findMin(vector<int> &nums) {
+[[maybe_unused]] int Leetcode_solution::findMin(vector<int> &nums) {
     if (nums.size() == 1) { // 仅有一个元素则唯一元素为最小
         return nums[0];
     }
@@ -5866,7 +5860,7 @@ int Leetcode_solution::findMin(vector<int> &nums) {
  * 返回的结果必须要是按升序排好的
  * 如果有两个数与 x 的差值一样，优先选择数值较小的那个数
  * */
-vector<int> Leetcode_solution::findClosestElements(vector<int> &arr, int k, int x) {
+[[maybe_unused]] vector<int> Leetcode_solution::findClosestElements(vector<int> &arr, int k, int x) {
     int left = 0, right = static_cast<int>(arr.size()) - k;   // 结果相当于一个长度为k的窗口
     while (left < right) {  // 二分法寻找窗口的左侧起始点
         int mid = left + (right - left) / 2;
@@ -5889,8 +5883,8 @@ vector<int> Leetcode_solution::findClosestElements(vector<int> &arr, int k, int 
  * 如果字符 key[i] 已经对齐到12:00方向，您需要按下中心按钮进行拼写，这也将算作 1 步
  * 按完之后，您可以开始拼写 key 的下一个字符（下一阶段）, 直至完成所有拼写
  * */
-int Leetcode_solution::findRotateSteps(string ring, string key) {
-    int n = ring.size(), m = key.size();
+[[maybe_unused]] int Leetcode_solution::findRotateSteps(string ring, string key) {
+    int n = static_cast<int>(ring.size()), m = static_cast<int>(key.size());
     vector<int> pos[26];
     for (int i = 0; i < n; ++i) {
         pos[ring[i] - 'a'].push_back(i);
@@ -5929,8 +5923,8 @@ int Leetcode_solution::findRotateSteps(string ring, string key) {
  * 最远只能到达j处,故结果只能在[i,j]区间之外寻找
  * 故当i处循环结束后,无法到达之后,只需要从可以到达的最远处,即i+1处开始遍历即可
  * */
-int Leetcode_solution::canCompleteCircuit(vector<int> &gas, vector<int> &cost) {
-    int n = gas.size(); // gas 的长度
+[[maybe_unused]] int Leetcode_solution::canCompleteCircuit(vector<int> &gas, vector<int> &cost) {
+    int n = static_cast<int>(gas.size()); // gas 的长度
     int i = 0;  // 遍历起始点
     while (i < n) { // 从每个位置计算一次
         int sumOfGas = 0, sumOfCost = 0;    // gas总和,cost总和
@@ -5960,7 +5954,7 @@ int Leetcode_solution::canCompleteCircuit(vector<int> &gas, vector<int> &cost) {
  * 每次迭代中，插入排序只从输入数据中移除一个待排序的元素，找到它在序列中适当的位置，并将其插入
  * 重复直到所有输入数据插入完为止
  * */
-ListNode *Leetcode_solution::insertionSortList(ListNode *head) {
+[[maybe_unused]] ListNode *Leetcode_solution::insertionSortList(ListNode *head) {
     ListNode res(0);    // 哑结点
     res.next = head;    // 接上链表
     ListNode *p = head; // 链表待排节点
@@ -6055,9 +6049,9 @@ public:
 */
 // 根据求交集,交集一定小于等于集合中最小的集合
 // 故根据集合右端点进行排序,再从左进行贪心计算
-int Leetcode_solution::findMinArrowShots(vector<vector<int>> &points) {
+[[maybe_unused]] int Leetcode_solution::findMinArrowShots(vector<vector<int>> &points) {
     if (points.size() < 2) {
-        return points.size();
+        return static_cast<int>(points.size());
     }   // 数量小于2直接返回
     // 根据右端点排序
     sort(points.begin(), points.end(), [](const vector<int> &a, const vector<int> &b) { return a[1] < b[1]; });
@@ -6102,7 +6096,7 @@ bool Leetcode_solution::exists(TreeNode *root, int level, int k) {
     return node != nullptr; // 若节点不为空则存在,否则不存在
 }
 
-int Leetcode_solution::countNodes(TreeNode *root) {
+[[maybe_unused]] int Leetcode_solution::countNodes(TreeNode *root) {
     if (root == nullptr) {  // 节点为空返回0个
         return 0;
     }
@@ -6130,8 +6124,8 @@ int Leetcode_solution::countNodes(TreeNode *root) {
  * */
 // 桶排序,计算平均值,可知最大距离一定大于等于平均值,故将桶的范围设定为小于平均值
 // 故最大距离一定在两个桶之间产生
-int Leetcode_solution::maximumGap(vector<int> &nums) {
-    int n = nums.size();    // 数组数量
+[[maybe_unused]] int Leetcode_solution::maximumGap(vector<int> &nums) {
+    int n = static_cast<int>(nums.size());    // 数组数量
     if (n < 2) {
         return 0;
     }
@@ -6139,7 +6133,8 @@ int Leetcode_solution::maximumGap(vector<int> &nums) {
     int maxVal = *max_element(nums.begin(), nums.end());    // 最大值
     int d = max(1, (maxVal - minVal) / (n - 1));    // 平均值
     int bucketSize = (maxVal - minVal) / d + 1;     // 桶的数量,在平均的基础上+1,从而使得桶大小小于平均长度
-    vector<pair<int, int>> bucket(bucketSize, {-1, -1});  // 存储 (桶内最小值，桶内最大值) 对，(-1, -1) 表示该桶是空的
+    vector<pair<int, int>> bucket(static_cast<unsigned long long int>(bucketSize),
+                                  {-1, -1});  // 存储 (桶内最小值，桶内最大值) 对，(-1, -1) 表示该桶是空的
     for (int i = 0; i < n; i++) {   // 向桶内存储数组
         int idx = (nums[i] - minVal) / d;   // 计算桶编号
         if (bucket[idx].first == -1) {  // 若桶是空的,直接加入
@@ -6164,7 +6159,7 @@ int Leetcode_solution::maximumGap(vector<int> &nums) {
 /* 给定一个二叉树，原地将它展开为一个单链表
  * */
 // 右树接到左树的右下角,左树整体移动到右树
-void Leetcode_solution::flatten(TreeNode *root) {
+[[maybe_unused]] void Leetcode_solution::flatten(TreeNode *root) {
     TreeNode *p = root;
     while (p != nullptr) {  // 判断是否还有剩余节点
         TreeNode *q = p->left;   // 取左树
@@ -6196,7 +6191,7 @@ int Leetcode_solution::isBalancedTreeheight(TreeNode *root) {
     }
 }
 
-bool Leetcode_solution::isBalanced(TreeNode *root) {
+[[maybe_unused]] bool Leetcode_solution::isBalanced(TreeNode *root) {
     return isBalancedTreeheight(root) >= 0; // 若不为-1则平衡
 }
 
@@ -6207,7 +6202,7 @@ bool Leetcode_solution::isBalanced(TreeNode *root) {
 // 欧拉筛(线性筛):i从2起,若i为质数则加入质数列表P[]
 // 然后分别将i*P[j],0<=j<P.size()对应的数置为合数,若i%P[j]==0则停止循环
 // 由于能整除则之后的合数,必有i被(i/P[j])*P[j+1]整除故避免多次置为合数
-int Leetcode_solution::countPrimes(int n) {
+[[maybe_unused]] int Leetcode_solution::countPrimes(int n) {
     vector<int> primes; // 质数列表
     vector<int> isPrime(n, 1);  // 质数标记
     for (int i = 2; i < n; ++i) {   // 遍历标记
@@ -6221,7 +6216,7 @@ int Leetcode_solution::countPrimes(int n) {
             }
         }
     }
-    return primes.size();   // 返回合数列表大小,即合数数量
+    return static_cast<int>(primes.size());   // 返回合数列表大小,即合数数量
 }
 
 // 翻转矩阵后的得分
@@ -6233,9 +6228,9 @@ int Leetcode_solution::countPrimes(int n) {
  * */
 // 保证第一列均为1,保证后面1的总数最多,故可采用模拟法
 // 由于二进制权重不同,可直接进行加权相加,避免模拟
-int Leetcode_solution::matrixScore(vector<vector<int>> &A) {
+[[maybe_unused]] int Leetcode_solution::matrixScore(vector<vector<int>> &A) {
     if (A.empty() || A[0].empty()) return 0;    // 若空数组返回0
-    int row = A.size(), col = A[0].size(), q = 1, res = 0;  // 数组尺寸,权值,结果和
+    int row = static_cast<int>(A.size()), col = static_cast<int>(A[0].size()), q = 1, res = 0;  // 数组尺寸,权值,结果和
     for (int j = col - 1; j >= 0; --j) {    // 最后一列遍历到第一列
         int s = 0;  // 当前列中的1的数量,受第一列是否为0的影响
         for (int i = 0; i < row; ++i) { // 计数
@@ -6253,7 +6248,7 @@ int Leetcode_solution::matrixScore(vector<vector<int>> &A) {
  * 同时这个整数需要满足其各个位数上的数字是单调递增
  * 当且仅当每个相邻位数上的数字 x 和 y 满足 x <= y 时，我们称这个整数是单调递增的
  * */
-int Leetcode_solution::monotoneIncreasingDigits(int N) {
+[[maybe_unused]] int Leetcode_solution::monotoneIncreasingDigits(int N) {
     string temp = to_string(N); // 数字转字符串处理
     size_t n = temp.size(); // 字符串长度
     size_t i = 1;   // 起始坐标
@@ -6274,7 +6269,7 @@ int Leetcode_solution::monotoneIncreasingDigits(int N) {
 }
 
 // 单词规律
-bool Leetcode_solution::wordPattern(string pattern, string s) {
+[[maybe_unused]] bool Leetcode_solution::wordPattern(string pattern, string s) {
     unordered_map<char, string> char2s;  // {char, string} 对
     unordered_map<string, char> s2char;  // {string, char} 对
     int sIndex = 0; // 字符串起始下标
@@ -6282,7 +6277,8 @@ bool Leetcode_solution::wordPattern(string pattern, string s) {
     for (int i = 0; i <= s.size(); ++i) {
         if (i == s.size() || s[i] == ' ') {
             // 当前字符串
-            string t = s.substr(sIndex, i - sIndex);
+            string t = s.substr(static_cast<unsigned long long int>(sIndex),
+                                static_cast<unsigned long long int>(i - sIndex));
             // 字符对应的字符串不对则返回false
             if (char2s.find(pattern[pIndex]) != char2s.end() && char2s[pattern[pIndex]] != t) {
                 return false;

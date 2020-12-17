@@ -35,9 +35,9 @@ struct TreeNode {
 
 
 // 数组构建链表,可选是否排序
-ListNode *makeListNodeChain(vector<int>&, bool = true);
+[[maybe_unused]] ListNode *makeListNodeChain(vector<int>&, bool = true);
 // 链表打印
-void printListNodeChain(ListNode *, const string & = "->");
+[[maybe_unused]] void printListNodeChain(ListNode *, const string & = "->");
 
 
 
@@ -57,20 +57,20 @@ bool checkInSearchTree(TreeNode *root, int val);
 
 
 // 哈希map
-class MyHashMap {
+class [[maybe_unused]] MyHashMap {
     TreeNode *data;
 public:
     /** Initialize your data structure here. */
     MyHashMap();
 
     /** value will always be non-negative. */
-    void put(int key, int value);
+    [[maybe_unused]] void put(int key, int value);
 
     /** Returns the value to which the specified key is mapped, or -1 if this map contains no mapping for the key */
-    int get(int key);
+    [[maybe_unused]] int get(int key);
 
     /** Removes the mapping of the specified value key if this map contains a mapping for the key */
-    void remove(int key);
+    [[maybe_unused]] void remove(int key);
 };
 
 #endif //MY_BASE_STRUCTS_H

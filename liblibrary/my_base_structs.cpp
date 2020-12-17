@@ -5,7 +5,7 @@
 #include "my_base_structs.h"
 
 // 创建链表,vector<int>为链表值,bool值为控制是否排序
-ListNode *makeListNodeChain(vector<int> &s, bool sortControl) {
+[[maybe_unused]] ListNode *makeListNodeChain(vector<int> &s, bool sortControl) {
     if (sortControl) {
         sort(s.begin(), s.end());
     }
@@ -19,7 +19,7 @@ ListNode *makeListNodeChain(vector<int> &s, bool sortControl) {
 }
 
 // 打印链表,按顺序打印,end可控制分隔符
-void printListNodeChain(ListNode *head, const string &end) {
+[[maybe_unused]] void printListNodeChain(ListNode *head, const string &end) {
     while (head != nullptr) {
         cout << head->val;
         if (head->next) {
@@ -93,7 +93,8 @@ bool checkInSearchTree(TreeNode *root, int val) {
 MyHashMap::MyHashMap() {
     data = nullptr;
 }
-void MyHashMap::put(int key, int value) {
+
+[[maybe_unused]] void MyHashMap::put(int key, int value) {
     if (data == nullptr) {
         data = new TreeNode(key, value);
         return;
@@ -119,7 +120,7 @@ void MyHashMap::put(int key, int value) {
     }
 }
 
-int MyHashMap::get(int key) {
+[[maybe_unused]] int MyHashMap::get(int key) {
     auto p = data;
     while (p != nullptr) {
         if (p->val > key) {
@@ -133,6 +134,6 @@ int MyHashMap::get(int key) {
     return -1;
 }
 
-void MyHashMap::remove(int key) {
+[[maybe_unused]] void MyHashMap::remove(int key) {
     data = removeFromSearchTree(data, key);
 }

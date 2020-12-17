@@ -16,13 +16,13 @@
  * 说明/提示(数据规模)
  * 1<=N,M<=100
  * */
-void Luogu_solution::Luogu_P1830() {
+[[maybe_unused]] void Luogu_solution::Luogu_P1830() {
     //===========开始录入数据=======================
     int n, m, x, y;
     cin >> n >> m >> x >> y;
-    vector<vector<int>> bombs(x, vector<int>(4));
-    vector<vector<int>> strongholds(y, vector<int>(2));
-    vector<vector<int>> res(y, vector<int>(2, 0));
+    vector<vector<int>> bombs(static_cast<unsigned long long int>(x), vector<int>(4));
+    vector<vector<int>> strongholds(static_cast<unsigned long long int>(y), vector<int>(2));
+    vector<vector<int>> res(static_cast<unsigned long long int>(y), vector<int>(2, 0));
     for (int i = 0; i < x; ++i) cin >> bombs[i][0] >> bombs[i][1] >> bombs[i][2] >> bombs[i][3];
     for (int i = 0; i < y; ++i) cin >> strongholds[i][0] >> strongholds[i][1];
     //===========录入数据结束=======================
@@ -63,11 +63,11 @@ void Luogu_solution::Luogu_P1830() {
  * 0<= n,m,k <=3×10^4
  * 1<= ai,bi <=2147483647。
  * */
-void Luogu_solution::Luogu_P2006() {
+[[maybe_unused]] void Luogu_solution::Luogu_P2006() {
     //===========开始录入数据=======================
     int k, m, n;
     cin >> k >> m >> n;
-    vector<vector<int>> info(m, vector<int>(2));
+    vector<vector<int>> info(static_cast<unsigned long long int>(m), vector<int>(2));
     for (int i = 0; i < m; ++i) cin >> info[i][0] >> info[i][1];
     //===========录入数据结束=======================
     vector<int> res;
@@ -90,14 +90,14 @@ void Luogu_solution::Luogu_P2006() {
  * 输入格式:两个数，M和N，中间用空格隔
  * 输出格式:共一行，一个十进制表示的式子
  * */
-void Luogu_solution::Luogu_P2084() {
+[[maybe_unused]] void Luogu_solution::Luogu_P2084() {
     //===========开始录入数据=======================
     string M, N;
     cin >> M >> N;
     // cout << M << " " <<N << "\n";
     //===========录入数据结束=======================
     string res;
-    int n = N.size();
+    int n = static_cast<int>(N.size());
     bool flag = false;
     for (int i = 0; i < N.size(); ++i) {
         if (N[i] != '0') {
@@ -124,7 +124,7 @@ void Luogu_solution::Luogu_P2084() {
  * 输出格式：输出这4个人是否喜欢这个数字，如果喜欢则输出1，否则输出0，用空格分隔
  * 数据规模：0<= x <=1000
  * */
-void Luogu_solution::Luogu_5710() {
+[[maybe_unused]] void Luogu_solution::Luogu_5710() {
     //===========开始录入数据=======================
     int x;
     cin >> x;

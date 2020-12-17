@@ -18,15 +18,15 @@
 #define STUDY_CODE_LUOGU_SOLUTION_H
 using namespace std;
 
-class Luogu_solution {
+class [[maybe_unused]] Luogu_solution {
 public:
-    static void Luogu_P1830();
+    [[maybe_unused]] static void Luogu_P1830();
 
-    static void Luogu_P2006();
+    [[maybe_unused]] static void Luogu_P2006();
 
-    static void Luogu_P2084();
+    [[maybe_unused]] static void Luogu_P2084();
 
-    static void Luogu_5710();
+    [[maybe_unused]] static void Luogu_5710();
 };
 
 

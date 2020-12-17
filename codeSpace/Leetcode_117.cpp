@@ -11,7 +11,6 @@
  * 如果找不到下一个右侧节点，则将 next 指针设置为 NULL
  * 初始状态下，所有?next 指针都被设置为 NULL
  * */
-#include <vector>
 
 // Definition for a Node.
 class Node {
