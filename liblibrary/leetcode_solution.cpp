@@ -6298,3 +6298,34 @@ int Leetcode_solution::isBalancedTreeheight(TreeNode *root) {
     return pIndex == pattern.size();    // 模式串未匹配完也算失败
 }
 
+// 316. 去除重复字母
+/* 给你一个字符串s,请你去除字符串中重复的字母,使得每个字母只出现一次
+ * 需保证返回结果的字典序最小（要求不能打乱其他字符的相对位置）
+ * 数据规模:1 <= s.length <= 104 ,s由小写英文字母组成
+ * */
+[[maybe_unused]] string Leetcode_solution::removeDuplicateLetters(string &s) {
+    vector<int> vis(26), num(26);   // 记录是否访问,记录数量
+    for (char ch : s) { // 计数
+        num[ch - 'a']++;
+    }
+    string stk; // 结果字符串
+    for (char ch : s) { // 逐个判断
+        if (!vis[ch - 'a']) {   // 如果没插入字符
+            while (!stk.empty() && stk.back() > ch) {   // 循环取出
+                if (num[stk.back() - 'a'] > 0) {    // 若后面还有剩余
+                    vis[stk.back() - 'a'] = 0;  // 重置为未访问
+                    stk.pop_back(); // 删除字符
+                } else {
+                    break;  // 不剩则不能删除,直接跳出循环
+                }
+            }
+            vis[ch - 'a'] = 1;  // 记录为访问过
+            stk.push_back(ch);  // 加入字符
+        }
+        num[ch - 'a'] -= 1; // 剩余字符-1
+    }
+    return stk; // 返回结果
+}
+
+
+

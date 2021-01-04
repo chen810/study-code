@@ -488,6 +488,8 @@ public:
     [[maybe_unused]] static int monotoneIncreasingDigits(int N);
 
     [[maybe_unused]] static bool wordPattern(string pattern, string s);
+
+    [[maybe_unused]] static string removeDuplicateLetters(string &s);
 };
 
 #endif //LEETCODE_STU_SOLUTION_H
