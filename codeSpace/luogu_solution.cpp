@@ -2,7 +2,10 @@
 // Created by WOOO on 2020/12/7.
 //
 
-#include "luogu_solution.h"
+#include <iostream>
+#include <string>
+#include <vector>
+#include "../liblibrary/my_base_structs.h"
 
 // P1830 轰炸III
 /* 题目背景
@@ -16,7 +19,7 @@
  * 说明/提示(数据规模)
  * 1<=N,M<=100
  * */
-[[maybe_unused]] void Luogu_solution::Luogu_P1830() {
+void Luogu_P1830() {
     //===========开始录入数据=======================
     int n, m, x, y;
     cin >> n >> m >> x >> y;
@@ -63,7 +66,7 @@
  * 0<= n,m,k <=3×10^4
  * 1<= ai,bi <=2147483647。
  * */
-[[maybe_unused]] void Luogu_solution::Luogu_P2006() {
+void Luogu_P2006() {
     //===========开始录入数据=======================
     int k, m, n;
     cin >> k >> m >> n;
@@ -90,7 +93,7 @@
  * 输入格式:两个数，M和N，中间用空格隔
  * 输出格式:共一行，一个十进制表示的式子
  * */
-[[maybe_unused]] void Luogu_solution::Luogu_P2084() {
+void Luogu_P2084() {
     //===========开始录入数据=======================
     string M, N;
     cin >> M >> N;
@@ -124,7 +127,7 @@
  * 输出格式：输出这4个人是否喜欢这个数字，如果喜欢则输出1，否则输出0，用空格分隔
  * 数据规模：0<= x <=1000
  * */
-[[maybe_unused]] void Luogu_solution::Luogu_5710() {
+void Luogu_5710() {
     //===========开始录入数据=======================
     int x;
     cin >> x;

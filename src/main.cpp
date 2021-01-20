@@ -1,7 +1,6 @@
-#include "leetcode_solution.h"
-#include "luogu_solution.h"
+#include "my_base_structs.h"
 #include <iostream>
-
+#include <map>
 using namespace std;
 
 int main() {
@@ -17,6 +16,6 @@ int main() {
             }
         }
     }
-        cout << dp[count] << endl;
+    cout << dp[count] << endl;
     return 0;
 }
