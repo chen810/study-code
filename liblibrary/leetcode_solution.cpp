@@ -13,7 +13,7 @@
  * O = 2*n
  * 时间复杂度O(n)
  * */
-void Leetcode_solution::bucketSort(vector<int> &nums) {
+[[maybe_unused]] void Leetcode_solution::bucketSort(vector<int> &nums) {
     // 容器中数字数量大于1才进行排序
     if (nums.empty()) return;
     // 判断排序数据的最大值与最小值
@@ -6326,6 +6326,8 @@ int Leetcode_solution::isBalancedTreeheight(TreeNode *root) {
     }
     return stk; // 返回结果
 }
+
+
 
 
 

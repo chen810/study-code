@@ -20,13 +20,13 @@
 using namespace std;
 
 
-class Leetcode_solution {
+class [[maybe_unused]] Leetcode_solution {
     static void mergeSort_sort(vector<int> &, int, int);
 
     static void mergeSort_merge(vector<int> &, int, int, int);
 
 public:
-    static void bucketSort(vector<int> &);
+    [[maybe_unused]] static void bucketSort(vector<int> &);
 
     [[maybe_unused]] static void bubbleSort(vector<int> &);
 
