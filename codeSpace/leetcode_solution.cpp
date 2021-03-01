@@ -974,7 +974,7 @@ int strStr_1(const string &haystack, const string &needle) {
 // KMP算法辅助函数,用于生成待匹配字符串的最长公共前后缀长度,用数组进行记录
 vector<int> next_map(string p) {
     int le = static_cast<int>(p.size()), k = 0;
-    vector<int> table(static_cast<unsigned long long int>(le));
+    vector<int> table(static_cast<unsigned long long>(le));
     // 前0个字符匹配固定为0
     table[0] = 0;
     // 进行扫描,若前指针等于尾指针处的值,则将k自增1并赋值给数组对应位置
