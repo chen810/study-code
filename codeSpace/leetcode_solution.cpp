@@ -64,17 +64,35 @@ void bubbleSort(vector<int> &nums) {
  * */
 void insertionSort(vector<int> &nums) {
     // 从第一个待求数值位遍历到末尾
-    for (int i = 0; i < nums.size(); ++i) {
-        // 保存待排数值,并循环向前检测下一个取得的数值
-        int temp = nums[i], j = i;
-        // 待排数值到达头部或者大于一个数,并插在开头或者那个数之后
-        while (j > 0 && nums[j - 1] > temp) {
-            nums[j] = nums[j - 1];
-            --j;
+    for (int i = 1; i < nums.size(); ++i) {
+        if(nums[i]<nums[i-1]){
+            // 保存待排数值,并循环向前检测下一个取得的数值
+            int temp = nums[i], j = i;
+            // 待排数值到达头部或者大于一个数,并插在开头或者那个数之后
+            while (j > 0 && nums[j-1] > temp) {
+                nums[j] = nums[j-1];
+                --j;
+            }
+            nums[j] = temp;
         }
-        nums[j] = temp;
     }
 }
+// 希尔排序
+void shellSort(vector<int> &nums){
+    for (int d = nums.size()/2; d >=1 ; d/= 2) {
+        for (int i = d; i < n; ++i) {
+            if(nums[i]<nums[i-d]){
+                int temp = nums[i];
+                int j = i-d;
+                for (;j>=0&&temp < nums[j]; j-=d) {
+                    nums[j+d] = nums[j];
+                }
+                nums[j+d] = temp;
+            }
+        }
+    }
+}
+
 
 // 归并排序算法:主函数-mergeSort,辅助函数mergeSort_sort,mergeSort_merge
 /* 归并排序,利用分治思想,使用mergeSort_sort将其分为一个个小的数列,直至为1
